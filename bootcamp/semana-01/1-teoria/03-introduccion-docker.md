@@ -1,10 +1,12 @@
-# Introducción a Docker y Contenedores
+# Introducción a Docker y Contenedores (Parte 1: Fundamentos)
 
 ## 🎯 Objetivo
 
-Comprender qué son los contenedores, cómo Docker revolucionó la implantación de software, y los conceptos fundamentales para trabajar con contenedores.
+Comprender qué son los contenedores, por qué Docker es importante para implantación de software, y los conceptos básicos para comenzar a trabajar con Docker.
 
-**Tiempo estimado**: 45 minutos
+**Tiempo estimado**: 30 minutos (lectura + discusión)
+
+> ℹ️ **Nota**: Esta es la Parte 1 (fundamentos). En Semana 2 veremos Docker Compose, arquitectura avanzada y mejores prácticas.
 
 ---
 
@@ -357,477 +359,14 @@ docker run --name api --network mi-red mi-api:1.0
 
 ---
 
-## 🏗️ Docker Compose
+## 🏗️ ¿Qué veremos en Semana 2?
 
-**¿Qué es?**  
-Herramienta para definir y ejecutar aplicaciones multi-contenedor usando un archivo YAML.
+En la siguiente sesión profundizaremos en:
 
-**¿Para qué?**  
-En lugar de ejecutar múltiples comandos `docker run`, defines todo en un archivo y lo ejecutas con un comando.
-
-![Docker Compose Workflow](../assets/5-docker-compose-workflow.svg)
-
-**Ejemplo sin Docker Compose** (tedioso):
-
-```bash
-# Crear red
-docker network create mi-app-net
-
-# Crear volumen
-docker volume create postgres_data
-
-# Ejecutar PostgreSQL
-docker run -d --name db \
-  --network mi-app-net \
-  -v postgres_data:/var/lib/postgresql/data \
-  -e POSTGRES_PASSWORD=secret \
-  postgres:15
-
-# Ejecutar API
-docker run -d --name api \
-  --network mi-app-net \
-  -e DATABASE_URL=postgresql://postgres:secret@db:5432/mydb \
-  -p 3000:3000 \
-  mi-api:1.0
-
-# Ejecutar Nginx
-docker run -d --name web \
-  --network mi-app-net \
-  -p 80:80 \
-  nginx:latest
-```
-
-**Ejemplo con Docker Compose** (elegante):
-
-```yaml
-# ¿Qué? Archivo docker-compose.yml
-# ¿Para qué? Definir toda la aplicación multi-contenedor
-
-# IMPORTANTE: Usar sintaxis de Docker Compose v2
-# Versión instalada: Docker Compose v2.39.4+
-
-services:
-  # ¿Qué? Servicio de base de datos
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_PASSWORD: secret
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    # ¿Qué? Nombre de red automático: <nombre_proyecto>_default
-
-  # ¿Qué? Servicio de API REST
-  api:
-    image: mi-api:1.0
-    environment:
-      DATABASE_URL: postgresql://postgres:secret@db:5432/mydb
-    ports:
-      - '3000:3000'
-    depends_on:
-      - db # ¿Para qué? Garantiza que db inicie antes que api
-
-  # ¿Qué? Servicio de servidor web
-  web:
-    image: nginx:latest
-    ports:
-      - '80:80'
-    depends_on:
-      - api
-
-volumes:
-  postgres_data: # ¿Qué? Define el volumen nombrado
-```
-
-**Ejecutar todo**:
-
-```bash
-# ¿Qué? Inicia todos los servicios definidos
-# ¿Para qué? Levantar toda la aplicación con un comando
-# ¿Cómo? Crea redes, volúmenes y contenedores automáticamente
-docker compose up -d
-
-# -d = detached mode (segundo plano)
-```
-
-**Ver estado**:
-
-```bash
-# ¿Qué? Muestra el estado de los servicios
-docker compose ps
-```
-
-**Ver logs**:
-
-```bash
-# ¿Qué? Muestra logs de todos los servicios
-docker compose logs -f
-
-# Solo de un servicio:
-docker compose logs -f api
-```
-
-**Detener todo**:
-
-```bash
-# ¿Qué? Detiene y elimina contenedores, redes
-# ¿Para qué? Limpiar el ambiente (volúmenes persisten)
-docker compose down
-```
-
----
-
-## 🎨 Ventajas de Docker en Implantación
-
-### 1. **Portabilidad Total**
-
-**Problema tradicional**:
-
-```
-Desarrollador: "Funciona en mi máquina" 🤷
-Producción: Crash 💥
-```
-
-**Con Docker**:
-
-```bash
-# Lo mismo en todas partes:
-docker compose up
-
-# Funciona en:
-- ✅ Tu laptop (Windows/Mac/Linux)
-- ✅ Servidor de pruebas (Ubuntu)
-- ✅ Servidor de producción (Rocky Linux)
-- ✅ GCP / AWS / Azure
-```
-
----
-
-### 2. **Ambientes Reproducibles**
-
-**Sin Docker**: "Necesitas instalar Node.js 20, PostgreSQL 15, Redis 7, configurar..."
-
-**Con Docker**:
-
-```yaml
-services:
-  app:
-    image: node:20
-  db:
-    image: postgres:15
-  cache:
-    image: redis:7
-```
-
-Listo. Cualquier desarrollador hace `docker compose up` y tiene el ambiente completo.
-
----
-
-### 3. **Aislamiento de Dependencias**
-
-**Problema**: Dos proyectos requieren diferentes versiones de Python.
-
-**Sin Docker**:
-
-```bash
-# Proyecto A necesita Python 3.9
-# Proyecto B necesita Python 3.11
-# 😖 Conflicto!
-```
-
-**Con Docker**:
-
-```bash
-# Proyecto A
-docker run -v ./proyecto-a:/app python:3.9 python app.py
-
-# Proyecto B
-docker run -v ./proyecto-b:/app python:3.11 python app.py
-
-# ✅ Sin conflicto, cada uno en su contenedor
-```
-
----
-
-### 4. **Despliegue Rápido**
-
-**Proceso tradicional**:
-
-1. Instalar sistema operativo (30 min)
-2. Instalar dependencias (45 min)
-3. Configurar servicios (1 hora)
-4. Debugging de configuraciones (2 horas)
-5. **Total: ~4-5 horas**
-
-**Proceso con Docker**:
-
-```bash
-git clone https://github.com/mi-empresa/mi-app.git
-cd mi-app
-docker compose up -d
-# ✅ Total: 5 minutos
-```
-
----
-
-### 5. **Escalabilidad Horizontal**
-
-**Escalar servicios**:
-
-```bash
-# ¿Qué? Escalar el servicio "api" a 5 instancias
-# ¿Para qué? Manejar más carga distribuyendo el trabajo
-docker compose up -d --scale api=5
-
-# Ahora tienes:
-# - 1 contenedor de PostgreSQL
-# - 5 contenedores de API (balanceo de carga)
-# - 1 contenedor de Nginx
-```
-
----
-
-### 6. **Rollback Fácil**
-
-**Algo salió mal en producción**:
-
-```bash
-# ¿Qué? Revertir a la versión anterior
-# ¿Para qué? Recuperar estabilidad inmediatamente
-docker compose down
-docker compose pull mi-app:1.4  # versión anterior
-docker compose up -d
-
-# ✅ Rollback en 30 segundos
-```
-
----
-
-## 🚀 Flujo de Trabajo con Docker
-
-### Desarrollo → Producción
-
-```
-1. DESARROLLO (Tu Laptop)
-   └── Escribes código
-   └── Pruebas en contenedor local
-   └── docker compose up
-
-2. COMMIT & PUSH
-   └── git push origin main
-
-3. CI/CD (GitHub Actions)
-   └── Ejecuta tests automáticos
-   └── Construye imagen Docker
-   └── Publica a Docker Hub / Registry
-
-4. STAGING (Servidor de pruebas)
-   └── docker compose pull
-   └── docker compose up -d
-   └── Validación final
-
-5. PRODUCCIÓN (Servidor real)
-   └── docker compose pull
-   └── docker compose up -d
-   └── Monitoreo
-```
-
-**¿Para qué este flujo?**  
-Garantiza que el código que funciona en tu laptop funcione **exactamente igual** en producción.
-
----
-
-## 📦 Ejemplo Completo: Sistema de Blog
-
-**Arquitectura**:
-
-- Frontend: React (puerto 3000)
-- API: Node.js + Express (puerto 4000)
-- Base de datos: PostgreSQL (puerto 5432)
-- Caché: Redis (puerto 6379)
-- Proxy: Nginx (puerto 80)
-
-**docker-compose.yml**:
-
-```yaml
-# ¿Qué? Definición completa de un blog con 5 servicios
-# ¿Para qué? Desplegar todo el stack con un comando
-
-# Sintaxis: Docker Compose v2 (no v1)
-
-services:
-  # ¿Qué? Base de datos PostgreSQL
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: blogdb
-      POSTGRES_USER: bloguser
-      POSTGRES_PASSWORD: ${DB_PASSWORD} # ¿Cómo? Lee de archivo .env
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck: # ¿Para qué? Verificar que el servicio está listo
-      test: ['CMD-SHELL', 'pg_isready -U bloguser']
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # ¿Qué? Caché Redis
-  cache:
-    image: redis:7-alpine
-    command: redis-server --appendonly yes
-    volumes:
-      - redis_data:/data
-
-  # ¿Qué? API Backend
-  api:
-    image: mi-blog-api:1.0
-    environment:
-      DATABASE_URL: postgresql://bloguser:${DB_PASSWORD}@db:5432/blogdb
-      REDIS_URL: redis://cache:6379
-      NODE_ENV: production
-    ports:
-      - '4000:4000'
-    depends_on:
-      db:
-        condition: service_healthy # ¿Para qué? Espera a que DB esté lista
-      cache:
-        condition: service_started
-
-  # ¿Qué? Frontend React
-  frontend:
-    image: mi-blog-frontend:1.0
-    environment:
-      REACT_APP_API_URL: http://api:4000
-    depends_on:
-      - api
-
-  # ¿Qué? Nginx como reverse proxy
-  nginx:
-    image: nginx:latest
-    ports:
-      - '80:80'
-      - '443:443'
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./certs:/etc/nginx/certs:ro
-    depends_on:
-      - frontend
-      - api
-
-volumes:
-  postgres_data: # ¿Qué? Persistencia de base de datos
-  redis_data: # ¿Qué? Persistencia de caché
-```
-
-**Archivo .env**:
-
-```bash
-# ¿Qué? Variables de ambiente sensibles
-# ¿Para qué? No exponer passwords en código
-DB_PASSWORD=supersecret123
-```
-
-**Levantar todo**:
-
-```bash
-# ¿Qué? Inicia los 5 servicios
-# ¿Cómo? Crea volúmenes, redes, y contenedores en orden correcto
-docker compose up -d
-
-# Ver logs en tiempo real:
-docker compose logs -f
-
-# Ver estado:
-docker compose ps
-```
-
-**Resultado**:
-
-- `http://localhost` → Frontend React
-- `http://localhost/api` → API REST
-- PostgreSQL corriendo en puerto 5432 (solo accesible internamente)
-- Redis corriendo en puerto 6379 (solo accesible internamente)
-
----
-
-## ⚠️ Mejores Prácticas
-
-### 1. **Usar .dockerignore**
-
-**¿Para qué?** Evitar copiar archivos innecesarios a la imagen.
-
-```
-# .dockerignore
-node_modules/
-.git/
-.env
-*.log
-Dockerfile
-docker-compose.yml
-```
-
----
-
-### 2. **Imágenes Ligeras**
-
-**Mal**:
-
-```dockerfile
-FROM ubuntu:22.04  # 77 MB base
-RUN apt-get update && apt-get install -y python3
-```
-
-**Bien**:
-
-```dockerfile
-FROM python:3.11-alpine  # 17 MB base
-```
-
-**Diferencia**: 77 MB vs 17 MB → 4.5x más ligera
-
----
-
-### 3. **Nunca Hardcodear Secrets**
-
-**Mal**:
-
-```yaml
-environment:
-  POSTGRES_PASSWORD: mysecretpassword # ❌ Expuesto en código
-```
-
-**Bien**:
-
-```yaml
-environment:
-  POSTGRES_PASSWORD: ${DB_PASSWORD} # ✅ Lee de .env
-```
-
----
-
-### 4. **Usar Health Checks**
-
-**¿Para qué?** Verificar que el servicio está realmente listo (no solo iniciado).
-
-```yaml
-services:
-  db:
-    image: postgres:15
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres']
-      interval: 10s
-      timeout: 5s
-      retries: 5
-```
-
----
-
-### 5. **Limpiar Recursos No Usados**
-
-```bash
-# ¿Qué? Elimina imágenes, contenedores, volúmenes y redes no usados
-# ¿Para qué? Liberar espacio en disco
-docker system prune -a --volumes
-```
+- **Docker Compose**: Gestión de aplicaciones multi-contenedor
+- **Arquitectura interna de Docker**: Cómo funciona bajo el capó
+- **Docker en producción**: Mejores prácticas y seguridad
+- **Orquestación**: Introducción a Kubernetes (conceptos)
 
 ---
 
@@ -889,24 +428,14 @@ vs múltiples comandos `docker run` largos y propensos a errores.
 
 ### Pregunta 4
 
-¿Docker Compose v1 o v2? ¿Cuál es la diferencia en comandos?
+¿Para qué necesitamos volúmenes en Docker?
 
 <details>
 <summary>Ver respuesta</summary>
 
-**Docker Compose v1** (deprecated):
+Los contenedores son **efímeros**: cuando se eliminan, se pierden todos los datos internos.
 
-```bash
-docker-compose up  # con guion
-```
-
-**Docker Compose v2** (actual, recomendado):
-
-```bash
-docker compose up  # sin guion, integrado en Docker CLI
-```
-
-La sintaxis v2 está integrada en Docker CLI y es más rápida. Siempre usar v2 en proyectos nuevos.
+Los **volúmenes** permiten persistir datos fuera del contenedor, esto es crítico para bases de datos, logs, y cualquier dato que deba sobrevivir al ciclo de vida del contenedor.
 
 </details>
 
@@ -914,16 +443,14 @@ La sintaxis v2 está integrada en Docker CLI y es más rápida. Siempre usar v2 
 
 ### Pregunta 5
 
-Menciona 3 ventajas de usar Docker para implantación.
+Menciona 2 ventajas de usar Docker para implantación.
 
 <details>
 <summary>Ver respuesta</summary>
 
 1. **Portabilidad**: Funciona igual en desarrollo, pruebas y producción
-2. **Reproducibilidad**: Ambientes idénticos garantizados
-3. **Despliegue rápido**: Minutos en lugar de horas
-4. **Aislamiento**: Dependencias no entran en conflicto (también válido)
-5. **Escalabilidad**: Fácil escalar horizontalmente (también válido)
+2. **Despliegue rápido**: Minutos en lugar de horas
+3. **Aislamiento**: Dependencias no entran en conflicto (también válido)
 
 </details>
 

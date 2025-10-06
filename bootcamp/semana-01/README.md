@@ -6,6 +6,8 @@
 - **Modalidad**: Presencial
 - **Prerequisitos**: Conocimientos básicos de sistemas operativos
 
+> ⚠️ **TAREA PREVIA OPCIONAL** (48h antes de la sesión): Para optimizar el tiempo en clase, se recomienda intentar instalar Docker previamente. Ver [Guía de instalación previa](#-tarea-previa-opcional-recomendada) al final de este documento.
+
 ---
 
 ## 🎯 Objetivos de Aprendizaje
@@ -24,18 +26,18 @@ Al finalizar esta semana, los aprendices serán capaces de:
 
 ### Teoría (1-teoria/)
 
-- Introducción a la implantación de software
-- Proceso de implantación en 5 fases
-- Hardware de servidores (RACK, BLADE, arreglos de discos)
-- Especificaciones de hardware por ambiente
-- Introducción a contenedores y Docker
+- **01-introduccion-implantacion.md** (45 min) - Proceso de implantación en 5 fases
+- **02-hardware-servidores.md** (45 min) - Hardware de servidores (RACK, BLADE, arreglos de discos)
+- **03-introduccion-docker.md** (30 min) - Fundamentos de contenedores y Docker
+
+> 📝 **Nota**: La teoría de Docker se dividió en 2 partes. Parte 1 (fundamentos) en esta semana, Parte 2 (Docker Compose y avanzado) en Semana 2.
 
 ### Prácticas (2-practicas/)
 
-- Instalación de Docker y Docker Compose v2
-- Configuración de ambiente de desarrollo
-- Primer contenedor: Hello World
-- Exploración de imágenes y contenedores
+- **01-instalar-docker.md** (30-45 min según SO) - Instalación de Docker y Docker Compose v2
+- **02-primer-contenedor-postgresql.md** (45 min) - Primer contenedor y PostgreSQL con persistencia
+
+> ⏱️ **Optimización de tiempo**: Si instalaste Docker previamente (tarea opcional), la Práctica 1 tomará solo 10-15 min de verificación.
 
 ### Recursos (3-recursos/)
 
@@ -52,48 +54,55 @@ Al finalizar esta semana, los aprendices serán capaces de:
 
 ---
 
-## ⏰ Distribución del Tiempo (6 horas)
+## ⏰ Distribución del Tiempo (6 horas optimizadas)
+
+> 💡 **Optimización realizada**: Teoría de Docker reducida a 30 min (lo esencial), contenido avanzado movido a Semana 2. Instalación previa opcional libera 30-40 min en clase.
 
 ### Bloque 1: Introducción y Fundamentos (2 horas)
 
-- **Hora 1 (0:00 - 1:00)** | Bienvenida y Teoría: Proceso de implantación de software
+- **Hora 1 (0:00 - 1:00)** | Bienvenida y Teoría: Proceso de implantación
 
-  - 0:00 - 0:15 | Bienvenida y presentación del bootcamp
-  - 0:15 - 1:00 | Proceso de implantación en 5 fases
+  - 0:00 - 0:15 | Bienvenida, presentación del bootcamp, y **entrega de asignación de dominios**
+  - 0:15 - 1:00 | Proceso de implantación en 5 fases (teoría + ejemplos)
 
 - **Hora 2 (1:00 - 2:00)** | Teoría: Hardware de Servidores
-  - 1:00 - 1:30 | Tipos de servidores (RACK, BLADE, Tower)
-  - 1:30 - 2:00 | Arreglos de discos (RAID) y especificaciones
+  - 1:00 - 1:45 | Tipos de servidores (RACK, BLADE), RAID, especificaciones
+  - 1:45 - 2:00 | Q&A y transición
 
 ---
 
-### ☕ BREAK (30 min)
+### ☕ BREAK (30 min - 2:00 - 2:30)
 
 ---
 
-### Bloque 2: Contenedores y Docker (2 horas)
+### Bloque 2: Docker - Teoría y Práctica (2 horas)
 
-- **Hora 3 (2:30 - 3:30)** | Teoría: Introducción a Docker
+- **Hora 3 (2:30 - 3:30)** | Teoría: Introducción a Docker (REDUCIDO)
 
-  - 2:30 - 3:00 | ¿Qué son contenedores? Docker vs VMs
-  - 3:00 - 3:30 | Conceptos: imágenes, contenedores, volúmenes, redes
+  - 2:30 - 3:00 | ¿Qué son contenedores? Docker vs VMs, conceptos fundamentales
+  - 3:00 - 3:10 | Q&A rápido
+  - 3:10 - 3:30 | Transición y preparación para práctica
 
-- **Hora 4 (3:30 - 4:30)** | Demo y Práctica: Instalación de Docker
-  - 3:30 - 4:00 | Demostración de instalación en diferentes sistemas
-  - 4:00 - 4:30 | Práctica guiada: Instalar Docker en máquina personal
+- **Hora 4 (3:30 - 4:30)** | Práctica: Instalación y Verificación Docker
+
+  - 3:30 - 3:40 | **Verificación de instalaciones previas** (quienes hicieron tarea)
+  - 3:40 - 4:10 | **Instalación guiada** para quienes NO instalaron previamente
+  - 4:10 - 4:30 | Resolución de problemas técnicos (permisos, virtualización)
 
 ---
 
-### Bloque 3: Práctica Aplicada (1.5 horas)
+### Bloque 3: Práctica Aplicada con PostgreSQL (1.5 horas)
 
 - **Hora 5 (4:30 - 5:30)** | Práctica: Primeros Contenedores
 
-  - 4:30 - 5:00 | Primer contenedor: Hello World
-  - 5:00 - 5:30 | Explorar Docker (images, containers, ps, logs)
+  - 4:30 - 4:45 | Hello World (verificación básica)
+  - 4:45 - 5:30 | PostgreSQL: ejecutar, conectar, crear tabla (Parte 1 y 2)
 
-- **Hora 6 (5:30 - 6:00)** | Práctica: PostgreSQL y Cierre
-  - 5:30 - 5:45 | Desplegar PostgreSQL en contenedor
-  - 5:45 - 6:00 | Presentación de asignación semanal y Q&A
+- **Hora 6 (5:30 - 6:00)** | Persistencia y Cierre
+  - 5:30 - 5:45 | PostgreSQL con volúmenes (persistencia)
+  - 5:45 - 6:00 | Resumen de la sesión, recordatorio de asignación semanal, Q&A final
+
+> ⏱️ **Buffer**: Con estas optimizaciones, hay ~15-20 min de margen para estudiantes que necesiten ayuda adicional.
 
 ---
 
