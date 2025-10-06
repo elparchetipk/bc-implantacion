@@ -1,14 +1,15 @@
-# Práctica 2: Primer Contenedor PostgreSQL
+# Práctica 2: Primer Contenedor PostgreSQL (Simplificada para Semana 1)
 
 ## 🎯 Objetivos
 
 - Ejecutar PostgreSQL en un contenedor Docker
 - Conectarse a la base de datos desde el host
-- Crear bases de datos y tablas
-- Entender volúmenes para persistencia de datos
-- Aprender comandos esenciales de gestión
+- Crear una tabla y datos de prueba
+- Entender persistencia básica de datos
 
-**Tiempo estimado**: 45 minutos
+**Tiempo estimado**: 40 minutos
+
+> 📝 **Nota**: Esta es una versión simplificada. En Semana 2 veremos Docker Compose y configuraciones avanzadas.
 
 ---
 
@@ -218,184 +219,238 @@ SELECT * FROM productos;
 
 ---
 
-### Paso 4: Probar la persistencia
+### Paso 4: Entender qué pasó (IMPORTANTE)
+
+**Sin volumen**:
+
+```
+Contenedor creado → Datos guardados → Contenedor eliminado → ❌ Datos perdidos
+```
+
+**Con volumen**:
+
+```
+Contenedor creado → Datos guardados en volumen → Contenedor eliminado → ✅ Datos persisten
+Nuevo contenedor → Monta el mismo volumen → ✅ Datos disponibles
+```
+
+---
+
+## � Parte 2: PostgreSQL con Persistencia (Volúmenes)
+
+Ahora vamos a hacer lo mismo pero con **persistencia de datos**.
+
+### Paso 1: Crear un volumen nombrado
 
 ```bash
-# ¿Qué? Eliminar el contenedor (¡los datos están en el volumen!)
-docker rm -f postgres-persistent
+# ¿Qué? Crea un volumen para almacenar datos de PostgreSQL
+# ¿Para qué? Los datos sobreviven aunque eliminemos el contenedor
+docker volume create mi_postgres_data
+
+# ¿Qué? Ver el volumen creado
+docker volume ls | grep mi_postgres
+```
+
+---
+
+### Paso 2: Ejecutar PostgreSQL con volumen
+
+```bash
+# ¿Qué? Ejecuta PostgreSQL con volumen montado
+# ¿Para qué? Persistir datos fuera del contenedor
+# ¿Cómo? -v mapea el volumen a la carpeta de datos de PostgreSQL
+docker run -d \
+  --name postgres-persistente \
+  -e POSTGRES_PASSWORD=mipassword123 \
+  -e POSTGRES_USER=miusuario \
+  -e POSTGRES_DB=mibasededatos \
+  -p 5432:5432 \
+  -v mi_postgres_data:/var/lib/postgresql/data \
+  postgres:15
+
+# ¿Qué? Ver que está corriendo
+docker ps
+```
+
+---
+
+### Paso 3: Crear tabla y datos de prueba
+
+```bash
+# ¿Qué? Conectarse a PostgreSQL
+docker exec -it postgres-persistente psql -U miusuario -d mibasededatos
+```
+
+```sql
+-- Dentro de psql:
+
+-- ¿Qué? Crear tabla de productos
+CREATE TABLE productos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    precio DECIMAL(10,2) NOT NULL,
+    stock INTEGER DEFAULT 0
+);
+
+-- ¿Qué? Insertar datos de prueba
+INSERT INTO productos (nombre, precio, stock) VALUES
+('Laptop', 1200.00, 10),
+('Mouse', 25.50, 50),
+('Teclado', 89.99, 30);
+
+-- ¿Qué? Consultar los datos
+SELECT * FROM productos;
+
+-- Salir:
+\q
+```
+
+---
+
+### Paso 4: Probar la persistencia (¡MOMENTO CLAVE!)
+
+```bash
+# ¿Qué? Eliminar el contenedor (datos están en volumen)
+docker rm -f postgres-persistente
+
+# ¿Qué? Verificar que el contenedor fue eliminado
+docker ps -a | grep postgres-persistente
+# (no debe aparecer)
 
 # ¿Qué? Crear un NUEVO contenedor con el MISMO volumen
 docker run -d \
-  --name postgres-new \
-  -e POSTGRES_PASSWORD=securepassword \
-  -e POSTGRES_USER=admin \
-  -e POSTGRES_DB=productiondb \
-  -p 5433:5432 \
-  -v postgres_data:/var/lib/postgresql/data \
+  --name postgres-nuevo \
+  -e POSTGRES_PASSWORD=mipassword123 \
+  -e POSTGRES_USER=miusuario \
+  -e POSTGRES_DB=mibasededatos \
+  -p 5432:5432 \
+  -v mi_postgres_data:/var/lib/postgresql/data \
   postgres:15
 
 # ¿Qué? Verificar que los datos siguen ahí
-docker exec -it postgres-new psql -U admin -d productiondb -c "SELECT * FROM productos;"
+docker exec -it postgres-nuevo psql -U miusuario -d mibasededatos -c "SELECT * FROM productos;"
 ```
 
-**✅ Resultado**: Los 4 productos siguen en la base de datos. **¡Persistencia lograda!**
+**✅ Resultado esperado**: Los 3 productos siguen en la base de datos.
+
+**¡Persistencia lograda!** 🎉
 
 ---
 
-## 🔧 Parte 3: PostgreSQL con Docker Compose
+## 🎯 Comandos Esenciales de PostgreSQL (Resumen)
 
-Docker Compose simplifica la gestión. Vamos a crear un stack más completo.
-
-### Paso 1: Crear estructura de proyecto
-
-```bash
-# ¿Qué? Crear carpeta para el proyecto
-mkdir postgres-proyecto
-cd postgres-proyecto
-
-# ¿Qué? Crear carpeta para scripts de inicialización
-mkdir -p init-scripts
-```
-
----
-
-### Paso 2: Crear script de inicialización
-
-**Archivo `init-scripts/01-create-tables.sql`**:
+### Dentro de psql:
 
 ```sql
--- ¿Qué? Script de inicialización de la base de datos
--- ¿Para qué? Crear tablas automáticamente al iniciar PostgreSQL
--- ¿Cómo? PostgreSQL ejecuta archivos .sql en /docker-entrypoint-initdb.d/
-
--- Tabla de clientes
-CREATE TABLE IF NOT EXISTS clientes (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    telefono VARCHAR(20),
-    ciudad VARCHAR(50),
-    created_at TIMESTAMP DEFAULT NOW()
-);
-
--- Tabla de pedidos
-CREATE TABLE IF NOT EXISTS pedidos (
-    id SERIAL PRIMARY KEY,
-    cliente_id INTEGER REFERENCES clientes(id) ON DELETE CASCADE,
-    total DECIMAL(10,2) NOT NULL,
-    estado VARCHAR(20) DEFAULT 'pendiente',
-    fecha_pedido TIMESTAMP DEFAULT NOW()
-);
-
--- Datos de ejemplo
-INSERT INTO clientes (nombre, email, telefono, ciudad) VALUES
-('Ana Martínez', 'ana@example.com', '555-0101', 'Bogotá'),
-('Pedro Sánchez', 'pedro@example.com', '555-0102', 'Medellín'),
-('Laura Gómez', 'laura@example.com', '555-0103', 'Cali');
-
-INSERT INTO pedidos (cliente_id, total, estado) VALUES
-(1, 150.00, 'completado'),
-(1, 85.50, 'pendiente'),
-(2, 320.00, 'enviado'),
-(3, 95.75, 'completado');
-
--- Índices para mejorar rendimiento
-CREATE INDEX idx_pedidos_cliente ON pedidos(cliente_id);
-CREATE INDEX idx_pedidos_estado ON pedidos(estado);
+\l              -- Listar todas las bases de datos
+\dt             -- Listar todas las tablas
+\d productos    -- Describir estructura de la tabla "productos"
+\du             -- Listar usuarios
+\conninfo       -- Ver información de la conexión actual
+\q              -- Salir de psql
 ```
 
----
-
-### Paso 3: Crear docker-compose.yml
-
-**Archivo `docker-compose.yml`**:
-
-```yaml
-# ¿Qué? Definición de stack con PostgreSQL y Adminer
-# ¿Para qué? Gestionar base de datos y GUI de administración juntos
-
-# Sintaxis: Docker Compose v2
-
-services:
-  # ¿Qué? Servicio de base de datos PostgreSQL
-  db:
-    image: postgres:15
-    container_name: postgres-app
-    environment:
-      # ¿Qué? Configuración de PostgreSQL via variables de ambiente
-      POSTGRES_USER: appuser
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-defaultpassword} # Lee de .env o usa default
-      POSTGRES_DB: appdb
-    ports:
-      - '5434:5432' # ¿Para qué? Puerto diferente para evitar conflictos
-    volumes:
-      # ¿Qué? Volumen para persistencia de datos
-      - postgres_app_data:/var/lib/postgresql/data
-      # ¿Qué? Scripts de inicialización
-      # ¿Cómo? PostgreSQL ejecuta archivos .sql al primer inicio
-      - ./init-scripts:/docker-entrypoint-initdb.d:ro
-    healthcheck:
-      # ¿Qué? Verifica que PostgreSQL está listo para conexiones
-      # ¿Para qué? Otros servicios pueden esperar hasta que db esté listo
-      test: ['CMD-SHELL', 'pg_isready -U appuser -d appdb']
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped # ¿Para qué? Reinicia automáticamente si falla
-
-  # ¿Qué? Adminer - GUI web para administrar bases de datos
-  adminer:
-    image: adminer:latest
-    container_name: adminer-app
-    ports:
-      - '8082:8080'
-    environment:
-      # ¿Qué? Tema visual de Adminer
-      ADMINER_DEFAULT_SERVER: db
-    depends_on:
-      db:
-        condition: service_healthy # ¿Para qué? Espera a que db esté saludable
-    restart: unless-stopped
-
-volumes:
-  postgres_app_data: # ¿Qué? Volumen nombrado para datos de PostgreSQL
-    driver: local # ¿Cómo? Almacenado localmente en el host
-```
-
----
-
-### Paso 4: Crear archivo de variables de ambiente
-
-**Archivo `.env`**:
+### Desde el host:
 
 ```bash
-# ¿Qué? Variables de ambiente sensibles
-# ¿Para qué? No exponer contraseñas en docker-compose.yml
+# ¿Qué? Ejecutar comando SQL directamente (sin entrar a psql)
+docker exec -it postgres-nuevo psql -U miusuario -d mibasededatos -c "SELECT COUNT(*) FROM productos;"
 
-DB_PASSWORD=supersecretpassword123
+# ¿Qué? Ver logs de PostgreSQL
+docker logs postgres-nuevo
 
-# Nota: Este archivo NO debe subirse a git (agregar a .gitignore)
+# ¿Qué? Ver logs en tiempo real
+docker logs -f postgres-nuevo
 ```
 
 ---
 
-### Paso 5: Levantar el stack
+## 🧹 Limpieza (Opcional)
 
 ```bash
-# ¿Qué? Inicia todos los servicios definidos
-# ¿Para qué? Levantar PostgreSQL + Adminer simultáneamente
-docker compose up -d
+# ¿Qué? Detener y eliminar contenedor
+docker rm -f postgres-nuevo
 
-# Ver logs:
-docker compose logs -f
+# ¿Qué? Eliminar volumen (¡CUIDADO! esto borra los datos)
+docker volume rm mi_postgres_data
 
-# Ver estado:
-docker compose ps
+# ¿Qué? Eliminar todos los contenedores detenidos
+docker container prune -f
+
+# ¿Qué? Eliminar volúmenes no usados
+docker volume prune -f
 ```
 
 ---
 
-### Paso 6: Acceder a Adminer (GUI Web)
+## ✅ Verificación Final
+
+**Has completado la práctica si**:
+
+- ✅ Ejecutaste PostgreSQL en un contenedor
+- ✅ Te conectaste con `psql`
+- ✅ Creaste una tabla y datos
+- ✅ Probaste la persistencia (eliminar y recrear contenedor)
+- ✅ Los datos sobrevivieron
+
+---
+
+## 🚀 Próximos Pasos (Semana 2)
+
+En la siguiente sesión aprenderás:
+
+- **Docker Compose**: Gestionar PostgreSQL + otras aplicaciones con un archivo YAML
+- **Redes Docker**: Conectar contenedores entre sí
+- **Adminer**: GUI web para administrar PostgreSQL
+- **Configuraciones avanzadas**: Health checks, restart policies, variables de ambiente desde archivos
+
+---
+
+## 📚 Recursos Adicionales
+
+- [PostgreSQL Docker Hub](https://hub.docker.com/_/postgres)
+- [Docker Volumes Documentation](https://docs.docker.com/storage/volumes/)
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/15/)
+
+---
+
+## ❓ Troubleshooting
+
+### Error: "port is already allocated"
+
+```bash
+# Problema: Puerto 5432 ya está en uso
+# Solución: Usar otro puerto
+docker run -d -p 5433:5432 ... # Usa 5433 en el host
+```
+
+### Error: "permission denied" al ejecutar docker
+
+```bash
+# Problema: Usuario no está en grupo docker
+# Solución:
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+### No puedo conectarme a PostgreSQL
+
+```bash
+# ¿Qué? Verificar que el contenedor está corriendo
+docker ps
+
+# ¿Qué? Ver logs para identificar el error
+docker logs nombre-contenedor
+
+# ¿Qué? Verificar contraseña y usuario
+docker exec -it nombre-contenedor env | grep POSTGRES
+```
+
+---
+
+**Tiempo empleado**: ⏱️ ~40 minutos
+
+**¡Excelente trabajo!** 🎉 Ahora tienes PostgreSQL corriendo en Docker con persistencia de datos.
 
 **Abrir navegador**: [http://localhost:8082](http://localhost:8082)
 
