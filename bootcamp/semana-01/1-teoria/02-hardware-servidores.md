@@ -11,6 +11,7 @@ Conocer los tipos de hardware utilizados en servidores, sus características, y 
 ## 🖥️ ¿Qué es un Servidor?
 
 Un **servidor** es una computadora diseñada para:
+
 - Operar 24/7 sin interrupción
 - Procesar múltiples peticiones simultáneas
 - Soportar cargas de trabajo intensivas
@@ -18,15 +19,15 @@ Un **servidor** es una computadora diseñada para:
 
 **Diferencia clave con una PC de escritorio**:
 
-| Característica | PC Escritorio | Servidor |
-|----------------|---------------|----------|
-| **Uptime** | 8-12 horas/día | 24/7/365 |
-| **Usuarios** | 1 usuario | Cientos o miles |
-| **RAM** | 8-32 GB | 64-512 GB+ |
-| **Almacenamiento** | 1 disco | Múltiples discos (RAID) |
-| **Redundancia** | No | Sí (fuentes, ventiladores, discos) |
-| **CPU** | Consumer (i5, i7) | Server (Xeon, EPYC) |
-| **Costo** | $500-2000 | $3,000-50,000+ |
+| Característica     | PC Escritorio     | Servidor                           |
+| ------------------ | ----------------- | ---------------------------------- |
+| **Uptime**         | 8-12 horas/día    | 24/7/365                           |
+| **Usuarios**       | 1 usuario         | Cientos o miles                    |
+| **RAM**            | 8-32 GB           | 64-512 GB+                         |
+| **Almacenamiento** | 1 disco           | Múltiples discos (RAID)            |
+| **Redundancia**    | No                | Sí (fuentes, ventiladores, discos) |
+| **CPU**            | Consumer (i5, i7) | Server (Xeon, EPYC)                |
+| **Costo**          | $500-2000         | $3,000-50,000+                     |
 
 ---
 
@@ -40,6 +41,7 @@ Un **servidor** es una computadora diseñada para:
 Servidor con formato de torre, similar a una PC de escritorio pero más grande y robusto.
 
 **Características**:
+
 - ✅ Fácil de mantener (acceso a componentes)
 - ✅ No requiere rack
 - ✅ Económico para pequeñas empresas
@@ -47,6 +49,7 @@ Servidor con formato de torre, similar a una PC de escritorio pero más grande y
 - ❌ Difícil de escalar
 
 **Especificaciones típicas**:
+
 ```
 CPU: Intel Xeon E-2400 (4-8 cores)
 RAM: 32-64 GB ECC
@@ -55,7 +58,8 @@ Redundancia: Fuente de poder redundante (opcional)
 Precio: $2,000 - $5,000
 ```
 
-**¿Para qué se usa?**  
+**¿Para qué se usa?**
+
 - Pequeñas oficinas
 - Servidor de archivos
 - Controlador de dominio (Active Directory)
@@ -69,10 +73,12 @@ Precio: $2,000 - $5,000
 
 **¿Qué es?**  
 Servidor diseñado para montarse en un rack estándar de 19 pulgadas. Se miden en **"U"** (unidades de rack):
+
 - **1U** = 1.75 pulgadas (4.45 cm) de altura
 - Servidores vienen en 1U, 2U, 4U
 
 **Características**:
+
 - ✅ Diseño compacto (ahorro de espacio)
 - ✅ Fácil escalabilidad (apilar múltiples servidores)
 - ✅ Cableado organizado
@@ -81,6 +87,7 @@ Servidor diseñado para montarse en un rack estándar de 19 pulgadas. Se miden e
 - ❌ Más ruidosos
 
 **Especificaciones típicas (2U)**:
+
 ```
 CPU: Dual Intel Xeon Silver 4310 (12 cores c/u = 24 cores)
 RAM: 128-256 GB ECC DDR4
@@ -90,7 +97,8 @@ Red: 4 puertos Gigabit o 10Gb
 Precio: $8,000 - $20,000
 ```
 
-**¿Para qué se usa?**  
+**¿Para qué se usa?**
+
 - Datacenters empresariales
 - Servidores web de alto tráfico
 - Bases de datos de producción
@@ -104,12 +112,14 @@ Precio: $8,000 - $20,000
 
 **¿Qué es?**  
 "Cuchillas" (blades) de servidor que se insertan en un **chasis compartido**. El chasis provee:
+
 - Fuentes de poder compartidas
 - Ventiladores compartidos
 - Switches de red integrados
 - Backplane de conexión
 
 **Características**:
+
 - ✅ Máxima densidad (16+ blades en 10U)
 - ✅ Eficiencia energética
 - ✅ Cableado mínimo
@@ -118,6 +128,7 @@ Precio: $8,000 - $20,000
 - ❌ Vendor lock-in (HP, Dell, Cisco)
 
 **Especificaciones típicas**:
+
 ```
 Chasis: Soporta 8-16 blades
 Por Blade:
@@ -128,7 +139,8 @@ Red: 10/25/40 Gbps integrada
 Precio: $40,000 - $150,000 (chasis completo)
 ```
 
-**¿Para qué se usa?**  
+**¿Para qué se usa?**
+
 - Grandes datacenters
 - Cloud providers (AWS, GCP, Azure)
 - Empresas con cientos de servidores
@@ -155,6 +167,7 @@ Disco 2: 50MB
 ```
 
 **Características**:
+
 - ✅ Velocidad: Doble lectura/escritura
 - ✅ Capacidad: 100% (2x 1TB = 2TB)
 - ❌ **Sin redundancia**: Si 1 disco falla, pierdes TODO
@@ -175,6 +188,7 @@ Disco 2: 100MB (copia B)
 ```
 
 **Características**:
+
 - ✅ Redundancia: Si 1 disco falla, tienes backup
 - ✅ Lectura rápida (lee de ambos discos)
 - ❌ Capacidad: 50% (2x 1TB = 1TB útil)
@@ -197,6 +211,7 @@ Disco 3: Paridad (A XOR B)
 ```
 
 **Características**:
+
 - ✅ Buen balance rendimiento/redundancia
 - ✅ Capacidad: (N-1) discos útiles (3x 1TB = 2TB útil)
 - ✅ Tolera 1 disco fallido
@@ -218,6 +233,7 @@ Grupos A+B: Striping
 ```
 
 **Características**:
+
 - ✅ Excelente rendimiento
 - ✅ Alta redundancia (tolera hasta 2 discos si son de mirrors diferentes)
 - ❌ Capacidad: 50% (4x 1TB = 2TB útil)
@@ -229,12 +245,12 @@ Grupos A+B: Striping
 
 ## 📊 Comparación de RAID
 
-| RAID | Discos Mín. | Capacidad Útil | Redundancia | Rendimiento | Uso Recomendado |
-|------|-------------|----------------|-------------|-------------|-----------------|
-| **0** | 2 | 100% | ❌ Ninguna | ⚡⚡⚡ Excelente | Scratch, temporal |
-| **1** | 2 | 50% | ✅ 1 disco | ⚡⚡ Bueno | SO, datos críticos |
-| **5** | 3 | (N-1)/N | ✅ 1 disco | ⚡⚡ Bueno | Archivos, DB pequeñas |
-| **10** | 4 | 50% | ✅ 2 discos | ⚡⚡⚡ Excelente | DB producción |
+| RAID   | Discos Mín. | Capacidad Útil | Redundancia | Rendimiento      | Uso Recomendado       |
+| ------ | ----------- | -------------- | ----------- | ---------------- | --------------------- |
+| **0**  | 2           | 100%           | ❌ Ninguna  | ⚡⚡⚡ Excelente | Scratch, temporal     |
+| **1**  | 2           | 50%            | ✅ 1 disco  | ⚡⚡ Bueno       | SO, datos críticos    |
+| **5**  | 3           | (N-1)/N        | ✅ 1 disco  | ⚡⚡ Bueno       | Archivos, DB pequeñas |
+| **10** | 4           | 50%            | ✅ 2 discos | ⚡⚡⚡ Excelente | DB producción         |
 
 ---
 
@@ -243,16 +259,19 @@ Grupos A+B: Striping
 ### 1. CPU (Procesador)
 
 **CPUs para servidores**:
+
 - **Intel Xeon** (E, Silver, Gold, Platinum)
 - **AMD EPYC** (mejor relación precio/rendimiento)
 
 **Características clave**:
+
 - Múltiples cores (8-64+ cores por CPU)
 - Soporte para múltiples CPUs (dual, quad socket)
 - ECC memory support (detección de errores)
 - Mayor cache L3 (para manejar múltiples procesos)
 
 **¿Cómo elegir?**
+
 ```
 Aplicación Web ligera → 4-8 cores
 Base de datos mediana → 12-24 cores
@@ -264,6 +283,7 @@ Machine Learning → 32-64+ cores
 ### 2. RAM (Memoria)
 
 **Tipos**:
+
 - **ECC RAM**: Error-Correcting Code (detecta y corrige errores)
   - **¿Para qué?** Evitar corrupción de datos en operaciones críticas
   - **¿Cómo?** Bits de paridad extra validan integridad
@@ -271,17 +291,18 @@ Machine Learning → 32-64+ cores
 
 **¿Cuánta RAM necesito?**
 
-| Tipo de Aplicación | RAM Recomendada |
-|--------------------|-----------------|
-| Servidor web (Nginx/Apache) | 4-8 GB |
-| API REST (Node.js) | 8-16 GB |
-| Base de datos pequeña | 16-32 GB |
-| Base de datos mediana | 64-128 GB |
-| Base de datos grande | 256-512 GB+ |
-| Virtualización (10 VMs) | 128-256 GB |
-| Machine Learning | 256 GB - 1 TB+ |
+| Tipo de Aplicación          | RAM Recomendada |
+| --------------------------- | --------------- |
+| Servidor web (Nginx/Apache) | 4-8 GB          |
+| API REST (Node.js)          | 8-16 GB         |
+| Base de datos pequeña       | 16-32 GB        |
+| Base de datos mediana       | 64-128 GB       |
+| Base de datos grande        | 256-512 GB+     |
+| Virtualización (10 VMs)     | 128-256 GB      |
+| Machine Learning            | 256 GB - 1 TB+  |
 
-**Regla general**: 
+**Regla general**:
+
 ```
 RAM mínima = (Datos activos × 2) + (Procesos simultáneos × 2GB)
 ```
@@ -293,6 +314,7 @@ RAM mínima = (Datos activos × 2) + (Procesos simultáneos × 2GB)
 **Tipos de discos**:
 
 #### HDD (Hard Disk Drive)
+
 - **Tecnología**: Discos magnéticos giratorios
 - **Velocidad**: 7,200 - 15,000 RPM
 - **Capacidad**: 1-20 TB
@@ -300,6 +322,7 @@ RAM mínima = (Datos activos × 2) + (Procesos simultáneos × 2GB)
 - **Uso**: Backups, archivos, data warehouse
 
 #### SSD (Solid State Drive)
+
 - **Tecnología**: Memoria flash (sin partes móviles)
 - **Velocidad**: 10x más rápido que HDD
 - **Capacidad**: 256GB - 8TB
@@ -307,6 +330,7 @@ RAM mínima = (Datos activos × 2) + (Procesos simultáneos × 2GB)
 - **Uso**: Sistema operativo, bases de datos, aplicaciones
 
 #### NVMe (Non-Volatile Memory Express)
+
 - **Tecnología**: SSD con interfaz PCIe (no SATA)
 - **Velocidad**: 5-7x más rápido que SSD SATA
 - **Capacidad**: 500GB - 4TB
@@ -314,6 +338,7 @@ RAM mínima = (Datos activos × 2) + (Procesos simultáneos × 2GB)
 - **Uso**: Bases de datos de alto rendimiento, analytics
 
 **Comparación de velocidades**:
+
 ```
 HDD:     150 MB/s lectura
 SSD:     550 MB/s lectura
@@ -325,12 +350,14 @@ NVMe:  3,500 MB/s lectura
 ### 4. Red (Network)
 
 **Velocidades comunes**:
+
 - **1 Gbps** (Gigabit Ethernet): Estándar actual
 - **10 Gbps**: Para servidores de bases de datos
 - **25/40 Gbps**: Datacenters modernos
 - **100 Gbps**: Backbone de cloud providers
 
 **¿Cuándo necesito 10 Gbps?**
+
 - Bases de datos con alta concurrencia
 - Servidores de archivos corporativos
 - Streaming de video
@@ -380,6 +407,7 @@ Costo aproximado: $800 - $1,200
 
 **Ejemplo con Docker**:  
 Un laptop con estas specs puede correr cómodamente:
+
 - PostgreSQL en contenedor
 - API REST (Node.js/Python)
 - Frontend (React/Vue)
@@ -420,6 +448,7 @@ Costo aproximado: $2,500 - $4,000
 ```
 
 Si producción tiene:
+
 - 16 cores → Staging tiene 16 cores
 - 128 GB RAM → Staging tiene 128 GB RAM
 - RAID 10 → Staging tiene RAID 10
@@ -439,11 +468,11 @@ Para detectar problemas de rendimiento que solo aparecen bajo carga real.
 
 CPU: 16-24 cores (Dual Xeon Silver o AMD EPYC)
 RAM: 128-256 GB ECC
-Almacenamiento: 
+Almacenamiento:
   - SO: 2x 500GB SSD en RAID 1
   - Datos: 4x 2TB NVMe en RAID 10
 Red: 10 Gbps
-Redundancia: 
+Redundancia:
   - Fuentes de poder duales
   - Ventiladores redundantes
   - Discos en RAID
@@ -459,6 +488,7 @@ Costo aproximado: $15,000 - $30,000
 ### Método 1: Por Usuarios Simultáneos
 
 **Fórmula básica**:
+
 ```
 RAM (GB) = (Usuarios simultáneos / 50) × 4 GB
 CPU (cores) = (Usuarios simultáneos / 100) × 2 cores
@@ -466,6 +496,7 @@ CPU (cores) = (Usuarios simultáneos / 100) × 2 cores
 
 **Ejemplo**:  
 Sistema con 1,000 usuarios simultáneos:
+
 ```
 RAM = (1000 / 50) × 4 = 80 GB → Redondear a 128 GB
 CPU = (1000 / 100) × 2 = 20 cores → Elegir 24 cores
@@ -478,12 +509,14 @@ CPU = (1000 / 100) × 2 = 20 cores → Elegir 24 cores
 **Fórmula por workload**:
 
 #### Web Server (Nginx, Apache)
+
 ```
 RAM = 2 GB base + (1 GB × cada 100 req/seg)
 CPU = 4 cores base + (2 cores × cada 500 req/seg)
 ```
 
 #### Database Server (PostgreSQL, MySQL)
+
 ```
 RAM = Tamaño DB × 2 (mínimo)
 CPU = 8 cores base + (4 cores × cada 1000 transactions/seg)
@@ -491,6 +524,7 @@ Almacenamiento = Tamaño DB × 3 (para crecimiento + backups)
 ```
 
 #### API REST (Node.js, Python)
+
 ```
 RAM = 4 GB base + (2 GB × cada 1000 req/seg)
 CPU = 4 cores base + (4 cores × cada 2000 req/seg)
@@ -501,6 +535,7 @@ CPU = 4 cores base + (4 cores × cada 2000 req/seg)
 ### Método 3: Benchmarking
 
 **Proceso**:
+
 1. Instalar la aplicación en un servidor de prueba
 2. Generar carga sintética (herramientas como Apache JMeter, k6)
 3. Monitorear uso de recursos (CPU, RAM, disco, red)
@@ -508,11 +543,13 @@ CPU = 4 cores base + (4 cores × cada 2000 req/seg)
 
 **Ejemplo**:  
 Prueba con 500 usuarios:
+
 - CPU: 60% de uso en 8 cores
 - RAM: 45 GB usados
 - Disco: 200 IOPS
 
 Para soportar 2,000 usuarios:
+
 ```
 CPU: (8 cores × 4) × 1.3 = 42 cores → 48 cores
 RAM: (45 GB × 4) × 1.3 = 234 GB → 256 GB
@@ -528,6 +565,7 @@ En lugar de comprar hardware físico, usar máquinas virtuales en la nube:
 ### Google Cloud Platform (GCP) - Recomendado
 
 **Always Free Tier** (sin costo, permanente):
+
 ```
 VM: e2-micro instance
   - CPU: 2 vCPUs (shared)
@@ -542,6 +580,7 @@ Ideal para:
 ```
 
 **Free Trial** ($300 créditos por 90 días):
+
 ```
 Puedes crear instancias más grandes:
   - n2-standard-4: 4 vCPUs, 16 GB RAM
@@ -550,6 +589,7 @@ Puedes crear instancias más grandes:
 ```
 
 **Cálculo de costos** (después del free trial):
+
 ```
 n2-standard-4 (4 vCPUs, 16 GB):
   $146/mes en us-central1
@@ -561,6 +601,7 @@ n2-standard-8 (8 vCPUs, 32 GB):
 ```
 
 **Ventajas**:
+
 - ✅ No comprar hardware
 - ✅ Escalar en minutos
 - ✅ Pagar solo por uso
@@ -568,6 +609,7 @@ n2-standard-8 (8 vCPUs, 32 GB):
 - ✅ Alta disponibilidad
 
 **Desventajas**:
+
 - ❌ Costos recurrentes
 - ❌ Dependencia de internet
 - ❌ Vendor lock-in
@@ -583,16 +625,19 @@ Ver [GCP-SETUP.md](../../../_docs/GCP-SETUP.md) para guía completa de configura
 ### Análisis de Requisitos
 
 **Usuarios esperados**:
+
 - Concurrentes: 50-100 usuarios simultáneos (temporada alta)
 - Pico: 200 usuarios (eventos especiales)
 
 **Datos**:
+
 - Reservas: ~10,000/año
 - Clientes: ~5,000 registros
 - Habitaciones: 100 registros
 - Tamaño DB estimado: 5 GB
 
 **Servicios necesarios**:
+
 - Frontend (React)
 - API REST (Node.js)
 - Base de datos (PostgreSQL)
@@ -636,12 +681,14 @@ Costo: ~$150/mes ($1,800/año)
 **Para el hotel**: Empezar con GCP (n2-standard-4)
 
 **¿Por qué?**
+
 - ✅ Inversión inicial baja ($0 vs $8,000)
 - ✅ Escalabilidad (si crece, aumentar CPU/RAM en minutos)
 - ✅ No preocuparse por mantenimiento de hardware
 - ✅ Backups automáticos incluidos
 
 Después de 4 años:
+
 - Costo acumulado: $7,200
 - Si el negocio va bien, considerar servidor físico para largo plazo
 
@@ -650,6 +697,7 @@ Después de 4 años:
 ## ✅ Autoevaluación
 
 ### Pregunta 1
+
 ¿Cuál es la principal diferencia entre un servidor RACK y un servidor BLADE?
 
 <details>
@@ -664,6 +712,7 @@ Los servidores **BLADE** son "cuchillas" que se insertan en un chasis compartido
 ---
 
 ### Pregunta 2
+
 ¿Qué RAID recomendarías para una base de datos de producción crítica y por qué?
 
 <details>
@@ -672,6 +721,7 @@ Los servidores **BLADE** son "cuchillas" que se insertan en un chasis compartido
 **RAID 10** (1+0).
 
 **Razones**:
+
 - Excelente rendimiento (striping)
 - Alta redundancia (mirroring)
 - Tolera hasta 2 discos fallidos (si son de mirrors diferentes)
@@ -684,18 +734,21 @@ RAID 5 sería segunda opción si el presupuesto es limitado.
 ---
 
 ### Pregunta 3
+
 Un sistema espera 500 usuarios simultáneos. Calcula RAM y CPU necesarios usando el método de usuarios.
 
 <details>
 <summary>Ver respuesta</summary>
 
 Usando las fórmulas:
+
 ```
 RAM = (500 / 50) × 4 GB = 40 GB → Redondear a 64 GB
 CPU = (500 / 100) × 2 cores = 10 cores → Elegir 12 cores
 ```
 
 Recomendación final:
+
 - **CPU**: 12-16 cores
 - **RAM**: 64 GB (con posibilidad de expandir a 128 GB)
 
@@ -704,12 +757,14 @@ Recomendación final:
 ---
 
 ### Pregunta 4
+
 ¿Cuándo tiene sentido usar Cloud en lugar de hardware físico?
 
 <details>
 <summary>Ver respuesta</summary>
 
 **Usar Cloud cuando**:
+
 - Startup o proyecto nuevo (baja inversión inicial)
 - Carga variable (escalar según demanda)
 - Crecimiento rápido esperado
@@ -717,6 +772,7 @@ Recomendación final:
 - Necesidad de múltiples regiones geográficas
 
 **Usar hardware físico cuando**:
+
 - Carga estable y predecible a largo plazo
 - Restricciones de compliance (datos sensibles)
 - Ya existe datacenter propio
@@ -727,6 +783,7 @@ Recomendación final:
 ---
 
 ### Pregunta 5
+
 ¿Qué es ECC RAM y por qué es importante en servidores?
 
 <details>
@@ -737,6 +794,7 @@ Recomendación final:
 **¿Qué es?** Memoria con bits de paridad extra que detectan y corrigen errores de 1 bit.
 
 **¿Por qué es importante?**
+
 - Evita corrupción de datos en operaciones críticas
 - Aumenta confiabilidad en servidores 24/7
 - Esencial para bases de datos y transacciones financieras

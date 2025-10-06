@@ -30,12 +30,14 @@ La **implantación de software** es el proceso mediante el cual un sistema de so
 ### Fase 1: Análisis y Planificación
 
 **¿Qué hacemos?**
+
 - Revisar requisitos de hardware y software
 - Identificar el ambiente destino (on-premise, cloud, híbrido)
 - Evaluar restricciones (presupuesto, tiempo, personal)
 - Definir alcance de la implantación
 
 **Artefactos generados**:
+
 - Plan de implantación
 - Matriz de requisitos de hardware
 - Cronograma de actividades
@@ -48,12 +50,14 @@ La **implantación de software** es el proceso mediante el cual un sistema de so
 ### Fase 2: Preparación del Ambiente
 
 **¿Qué hacemos?**
+
 - Adquirir o configurar hardware
 - Instalar sistema operativo
 - Configurar redes y seguridad
 - Instalar dependencias (bases de datos, servidores web)
 
 **Tecnologías modernas**:
+
 - **Contenedores Docker**: Permite preparar ambientes reproducibles
 - **Infraestructura como Código**: Scripts que automatizan la configuración
 - **Cloud Computing**: Ambientes en minutos (GCP, AWS, Azure)
@@ -65,6 +69,7 @@ La **implantación de software** es el proceso mediante el cual un sistema de so
 ### Fase 3: Migración de Datos
 
 **¿Qué hacemos?**
+
 - Extraer datos del sistema anterior (Export)
 - Transformar datos al nuevo formato (Transform)
 - Cargar datos en el nuevo sistema (Load)
@@ -81,6 +86,7 @@ Datos Limpios → [Carga] → Nuevo Sistema
 ```
 
 **Riesgos**:
+
 - Pérdida de datos
 - Corrupción de información
 - Inconsistencias en relaciones
@@ -92,6 +98,7 @@ Datos Limpios → [Carga] → Nuevo Sistema
 ### Fase 4: Instalación y Configuración
 
 **¿Qué hacemos?**
+
 - Desplegar la aplicación
 - Configurar variables de ambiente
 - Establecer conexiones a bases de datos
@@ -112,19 +119,19 @@ services:
       DATABASE_URL: postgresql://user:pass@db:5432/mydb
       NODE_ENV: production
     ports:
-      - "3000:3000"  # ¿Para qué? Exponer puerto al host
+      - '3000:3000' # ¿Para qué? Exponer puerto al host
     depends_on:
-      - db  # ¿Cómo? Garantiza que DB inicie primero
+      - db # ¿Cómo? Garantiza que DB inicie primero
 
   db:
     image: postgres:15
     environment:
       POSTGRES_PASSWORD: supersecret
     volumes:
-      - postgres_data:/var/lib/postgresql/data  # ¿Para qué? Persistencia
+      - postgres_data:/var/lib/postgresql/data # ¿Para qué? Persistencia
 
 volumes:
-  postgres_data:  # ¿Qué? Volumen para almacenamiento permanente
+  postgres_data: # ¿Qué? Volumen para almacenamiento permanente
 ```
 
 ---
@@ -132,6 +139,7 @@ volumes:
 ### Fase 5: Pruebas y Validación
 
 **¿Qué hacemos?**
+
 - Pruebas funcionales (¿Funciona como se espera?)
 - Pruebas de rendimiento (¿Responde en tiempo aceptable?)
 - Pruebas de seguridad (¿Hay vulnerabilidades?)
@@ -158,7 +166,7 @@ volumes:
 ### 1. **Desarrollo (Development)**
 
 - **Propósito**: Escribir y probar código nuevo
-- **Características**: 
+- **Características**:
   - Hardware modesto
   - Datos de prueba (no reales)
   - Logs verbose para debugging
@@ -203,12 +211,14 @@ Código → Build → Test → Deploy → Monitor → Repeat
 ```
 
 **Herramientas**:
+
 - **GitHub Actions**: Automatización de workflows
 - **GitLab CI/CD**: Pipelines integrados
 - **Jenkins**: Sistema de CI/CD open source
 - **Docker**: Contenedores para despliegues consistentes
 
 **Beneficios**:
+
 - Deploys más frecuentes (varias veces al día)
 - Menos errores humanos
 - Rollback rápido si algo falla
@@ -222,13 +232,13 @@ Código → Build → Test → Deploy → Monitor → Repeat
 
 ### Requisitos Identificados
 
-| Categoría | Requerimiento |
-|-----------|---------------|
-| **Hardware** | Servidor con 16GB RAM, 4 cores CPU, 500GB SSD |
+| Categoría    | Requerimiento                                     |
+| ------------ | ------------------------------------------------- |
+| **Hardware** | Servidor con 16GB RAM, 4 cores CPU, 500GB SSD     |
 | **Software** | Ubuntu Server 22.04, Docker, PostgreSQL 15, Nginx |
-| **Red** | IP pública, dominio registrado, certificado SSL |
-| **Datos** | Migrar 50,000 productos desde Excel |
-| **Usuarios** | Capacidad para 1,000 usuarios simultáneos |
+| **Red**      | IP pública, dominio registrado, certificado SSL   |
+| **Datos**    | Migrar 50,000 productos desde Excel               |
+| **Usuarios** | Capacidad para 1,000 usuarios simultáneos         |
 
 ### Plan de Implantación
 
@@ -286,7 +296,8 @@ Código → Build → Test → Deploy → Monitor → Repeat
 
 **Consecuencia**: Vulnerabilidades explotables, datos expuestos.
 
-**Solución**: 
+**Solución**:
+
 - Usar HTTPS (certificado SSL)
 - Firewall configurado
 - Passwords seguros (nunca hardcodeados)
@@ -310,6 +321,7 @@ Código → Build → Test → Deploy → Monitor → Repeat
 ## ✅ Autoevaluación
 
 ### Pregunta 1
+
 ¿Cuáles son las 5 fases del proceso de implantación?
 
 <details>
@@ -326,6 +338,7 @@ Código → Build → Test → Deploy → Monitor → Repeat
 ---
 
 ### Pregunta 2
+
 ¿Qué diferencia hay entre el ambiente de Staging y Producción?
 
 <details>
@@ -338,6 +351,7 @@ Código → Build → Test → Deploy → Monitor → Repeat
 ---
 
 ### Pregunta 3
+
 ¿Por qué es crítico tener un backup antes de una migración de datos?
 
 <details>
@@ -350,6 +364,7 @@ Porque durante la migración pueden ocurrir errores que corrompan o pierdan dato
 ---
 
 ### Pregunta 4
+
 ¿Qué ventajas tiene usar Docker para implantación?
 
 <details>
@@ -367,6 +382,7 @@ Porque durante la migración pueden ocurrir errores que corrompan o pierdan dato
 ---
 
 ### Pregunta 5
+
 Menciona 3 artefactos que se generan en la fase de "Análisis y Planificación"
 
 <details>
