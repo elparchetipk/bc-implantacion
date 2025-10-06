@@ -118,6 +118,60 @@ Al generar contenido, asegúrate de que los participantes puedan:
 - Incluye fecha de entrega y formato esperado
 - Ofrece ejemplos de entregas satisfactorias
 
+## Política Anticopia y Asignación de Dominios
+
+**CRÍTICO**: Para evitar que los aprendices copien y peguen código sin entender:
+
+### Asignación de Dominios Personalizados
+
+1. **Cada aprendiz recibe un dominio único y aleatorio** sobre el cual debe desarrollar todas sus prácticas
+2. **No hay dominios repetidos** entre aprendices de la misma cohorte
+3. **El dominio es el contexto** para todos los ejemplos, nombres de bases de datos, tablas, variables, etc.
+
+### Ejemplos de Dominios (Solo para referencia del instructor)
+
+- Restaurante (menú, pedidos, mesas, empleados)
+- Biblioteca (libros, préstamos, usuarios, multas)
+- Clínica veterinaria (mascotas, dueños, citas, tratamientos)
+- Gimnasio (miembros, rutinas, equipos, instructores)
+- Inmobiliaria (propiedades, clientes, contratos, agentes)
+- Floristería (flores, arreglos, pedidos, eventos)
+- Taller mecánico (vehículos, reparaciones, repuestos, mecánicos)
+- Academia de música (instrumentos, estudiantes, clases, presentaciones)
+- Agencia de viajes (destinos, paquetes, reservas, clientes)
+- Tienda de mascotas (animales, productos, ventas, servicios)
+
+### Reglas Estrictas para Contenido del Bootcamp
+
+1. **NUNCA mencionar nombres específicos de aprendices** en ejemplos o documentación
+2. **NUNCA mencionar dominios asignados específicos** como ejemplos en material compartido
+3. **Usar ejemplos genéricos** en teoría (ej: "Sistema de gestión", "Aplicación empresarial")
+4. **En prácticas generales**, usar ejemplos neutrales que cualquiera pueda adaptar
+5. **Los aprendices adaptan** cada práctica a su dominio asignado
+
+### Estructura de Asignaciones
+
+Cada asignación debe:
+- Describir los **requisitos funcionales generales**
+- Especificar los **entregables técnicos** (capturas, código, documentación)
+- Incluir **criterios de adaptación** para que el aprendiz personalice según su dominio
+- Proporcionar **rúbrica clara** de evaluación
+
+### Carpeta de Asignaciones
+
+- `4-asignación_dominios_aprendiz/` contiene las asignaciones individuales
+- Esta carpeta está **ignorada en git** (`.gitignore`)
+- Pero es **visible en el proyecto** (no en `.git/info/exclude`)
+- Solo el instructor tiene acceso a esta carpeta con las asignaciones personalizadas
+
+### Evaluación
+
+El instructor verifica que:
+- ✅ El código refleja el dominio asignado (nombres de tablas, variables, etc.)
+- ✅ El aprendiz entiende lo que hace (no es copia-pega)
+- ✅ La implementación está correctamente comentada
+- ✅ Los entregables cumplen con los requisitos técnicos
+
 ## Saberes Esenciales
 
 ### Conceptos y Principios (Prioriza estos temas):

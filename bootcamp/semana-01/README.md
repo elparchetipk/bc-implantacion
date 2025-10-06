@@ -54,36 +54,43 @@ Al finalizar esta semana, los aprendices serán capaces de:
 
 ## ⏰ Distribución del Tiempo (6 horas)
 
-### Sesión Mañana (3 horas)
+### Bloque 1: Introducción y Fundamentos (2 horas)
 
-#### 🌅 09:00 - 10:30 | Bloque 1: Introducción (1.5h)
+- **Hora 1 (0:00 - 1:00)** | Bienvenida y Teoría: Proceso de implantación de software
+  - 0:00 - 0:15 | Bienvenida y presentación del bootcamp
+  - 0:15 - 1:00 | Proceso de implantación en 5 fases
 
-- **09:00 - 09:15** | Bienvenida y presentación del bootcamp
-- **09:15 - 10:00** | Teoría: Proceso de implantación de software (5 fases)
-- **10:00 - 10:30** | Teoría: Hardware de servidores y especificaciones
-
-#### ☕ 10:30 - 11:00 | **BREAK (30 min)**
-
-#### 📖 11:00 - 12:00 | Bloque 2: Fundamentos de Docker (1h)
-
-- **11:00 - 11:30** | Teoría: ¿Qué son los contenedores? Introducción a Docker
-- **11:30 - 12:00** | Demo: Instalación de Docker en diferentes sistemas
+- **Hora 2 (1:00 - 2:00)** | Teoría: Hardware de Servidores
+  - 1:00 - 1:30 | Tipos de servidores (RACK, BLADE, Tower)
+  - 1:30 - 2:00 | Arreglos de discos (RAID) y especificaciones
 
 ---
 
-### Sesión Tarde (3 horas)
+### ☕ BREAK (30 min)
 
-#### 💻 12:00 - 13:30 | Bloque 3: Práctica Guiada (1.5h)
+---
 
-- **12:00 - 12:30** | Práctica: Instalación de Docker en máquina personal
-- **12:30 - 13:00** | Práctica: Primer contenedor - Hello World
-- **13:00 - 13:30** | Práctica: Explorando Docker (images, containers, ps, logs)
+### Bloque 2: Contenedores y Docker (2 horas)
 
-#### 🎯 13:30 - 15:00 | Bloque 4: Práctica Aplicada (1.5h)
+- **Hora 3 (2:30 - 3:30)** | Teoría: Introducción a Docker
+  - 2:30 - 3:00 | ¿Qué son contenedores? Docker vs VMs
+  - 3:00 - 3:30 | Conceptos: imágenes, contenedores, volúmenes, redes
 
-- **13:30 - 14:15** | Práctica: Desplegar PostgreSQL en contenedor
-- **14:15 - 14:45** | Resolución de problemas comunes (troubleshooting)
-- **14:45 - 15:00** | Presentación de la asignación semanal y Q&A
+- **Hora 4 (3:30 - 4:30)** | Demo y Práctica: Instalación de Docker
+  - 3:30 - 4:00 | Demostración de instalación en diferentes sistemas
+  - 4:00 - 4:30 | Práctica guiada: Instalar Docker en máquina personal
+
+---
+
+### Bloque 3: Práctica Aplicada (1.5 horas)
+
+- **Hora 5 (4:30 - 5:30)** | Práctica: Primeros Contenedores
+  - 4:30 - 5:00 | Primer contenedor: Hello World
+  - 5:00 - 5:30 | Explorar Docker (images, containers, ps, logs)
+
+- **Hora 6 (5:30 - 6:00)** | Práctica: PostgreSQL y Cierre
+  - 5:30 - 5:45 | Desplegar PostgreSQL en contenedor
+  - 5:45 - 6:00 | Presentación de asignación semanal y Q&A
 
 ---
 

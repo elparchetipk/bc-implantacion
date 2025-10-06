@@ -194,6 +194,12 @@ config/database.yml
 **/submissions/*
 !**/submissions/.gitkeep
 
+# Asignaciones individuales por aprendiz (ignorar en git, visible en proyecto)
+**/4-asignación_dominios_aprendiz/
+
+# Archivo de listado de aprendices (ignorar en git, visible en proyecto)
+_docs/APRENDICES-3147234.md
+
 # ============================================
 # Archivos de Prueba Temporal
 # ============================================
