@@ -61,11 +61,11 @@ docker run -d --name db-nuevo \
 
 Docker ofrece 3 formas de montar datos:
 
-| Tipo | Gestión | Ubicación | Portabilidad | Uso Principal |
-|------|---------|-----------|--------------|---------------|
-| **Named Volumes** | Docker | `/var/lib/docker/volumes/` | ✅ Alta | Producción |
-| **Bind Mounts** | Usuario | Ruta del host | ⚠️ Media | Desarrollo |
-| **tmpfs Mounts** | Memoria | RAM | ❌ No persiste | Temporal |
+| Tipo              | Gestión | Ubicación                  | Portabilidad   | Uso Principal |
+| ----------------- | ------- | -------------------------- | -------------- | ------------- |
+| **Named Volumes** | Docker  | `/var/lib/docker/volumes/` | ✅ Alta        | Producción    |
+| **Bind Mounts**   | Usuario | Ruta del host              | ⚠️ Media       | Desarrollo    |
+| **tmpfs Mounts**  | Memoria | RAM                        | ❌ No persiste | Temporal      |
 
 ---
 
@@ -75,6 +75,7 @@ Docker ofrece 3 formas de montar datos:
 Volúmenes gestionados completamente por Docker.
 
 **Características**:
+
 - ✅ Docker gestiona la ubicación
 - ✅ Fácil de respaldar
 - ✅ Funcionan en todos los SOs
@@ -138,11 +139,11 @@ volumes:
 ```yaml
 volumes:
   postgres_data:
-    driver: local  # ¿Qué? Driver por defecto
+    driver: local # ¿Qué? Driver por defecto
     driver_opts:
       type: none
       o: bind
-      device: /mnt/external-disk/postgres  # ¿Para qué? Usar disco externo
+      device: /mnt/external-disk/postgres # ¿Para qué? Usar disco externo
 ```
 
 ---
@@ -153,6 +154,7 @@ volumes:
 Montan una carpeta del host directamente en el contenedor.
 
 **Características**:
+
 - ✅ Acceso directo a archivos del host
 - ✅ Cambios reflejados en tiempo real
 - ✅ Ideal para desarrollo (editar código)
@@ -180,8 +182,8 @@ services:
   web:
     image: nginx:alpine
     volumes:
-      - ./sitio-web:/usr/share/nginx/html  # ¿Qué? Ruta relativa al docker-compose.yml
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro  # :ro = read-only
+      - ./sitio-web:/usr/share/nginx/html # ¿Qué? Ruta relativa al docker-compose.yml
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro # :ro = read-only
 ```
 
 **⚠️ Importante**: Siempre usar rutas **absolutas** o **relativas a docker-compose.yml**.
@@ -194,15 +196,16 @@ services:
 volumes:
   # ¿Qué? Modo read-only
   - ./codigo:/app:ro
-  
+
   # ¿Qué? Modo read-write (default)
   - ./data:/data:rw
-  
+
   # ¿Qué? Consistencia (Mac/Windows)
   - ./node_modules:/app/node_modules:delegated
 ```
 
 **Modos de consistencia** (solo Mac/Windows):
+
 - `consistent`: Total sincronización (más lento)
 - `delegated`: Escrituras del contenedor se propagan con delay (más rápido)
 - `cached`: Lecturas del contenedor pueden estar desactualizadas (más rápido)
@@ -215,6 +218,7 @@ volumes:
 Almacenamiento temporal en la RAM del host.
 
 **Características**:
+
 - ⚡ Ultra rápido (memoria RAM)
 - ❌ No persiste al detener contenedor
 - 🔐 Datos sensibles que no deben guardarse en disco
@@ -240,8 +244,8 @@ services:
   app:
     image: mi-app:1.0
     tmpfs:
-      - /tmp  # ¿Para qué? Archivos temporales en RAM
-      - /run  # ¿Para qué? PIDs y sockets en RAM
+      - /tmp # ¿Para qué? Archivos temporales en RAM
+      - /run # ¿Para qué? PIDs y sockets en RAM
 ```
 
 ---
@@ -251,6 +255,7 @@ services:
 ### Named Volumes → Producción
 
 **Usar para**:
+
 - ✅ Bases de datos (PostgreSQL, MySQL, MongoDB)
 - ✅ Datos que deben persistir
 - ✅ Compartir datos entre contenedores
@@ -263,7 +268,7 @@ services:
   db:
     image: postgres:15
     volumes:
-      - db_data:/var/lib/postgresql/data  # ✅ Producción
+      - db_data:/var/lib/postgresql/data # ✅ Producción
 
 volumes:
   db_data:
@@ -274,6 +279,7 @@ volumes:
 ### Bind Mounts → Desarrollo
 
 **Usar para**:
+
 - ✅ Código fuente (hot reload)
 - ✅ Archivos de configuración
 - ✅ Logs accesibles desde el host
@@ -286,9 +292,9 @@ services:
   api:
     image: node:20
     volumes:
-      - ./src:/app/src  # ✅ Hot reload en desarrollo
+      - ./src:/app/src # ✅ Hot reload en desarrollo
       - ./package.json:/app/package.json
-    command: npm run dev  # ¿Para qué? Reinicio automático
+    command: npm run dev # ¿Para qué? Reinicio automático
 ```
 
 ---
@@ -296,6 +302,7 @@ services:
 ### tmpfs → Datos Temporales Sensibles
 
 **Usar para**:
+
 - ✅ Tokens de sesión
 - ✅ Caché temporal
 - ✅ Secretos que no deben persistir
@@ -308,7 +315,7 @@ services:
   auth:
     image: mi-auth:1.0
     tmpfs:
-      - /tmp/sessions  # ✅ Sesiones en RAM, no en disco
+      - /tmp/sessions # ✅ Sesiones en RAM, no en disco
 ```
 
 ---
@@ -392,18 +399,18 @@ services:
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data  # ✅ Named: datos persisten
+      - postgres_data:/var/lib/postgresql/data # ✅ Named: datos persisten
     restart: unless-stopped
 
   # ¿Qué? API con Bind Mount (desarrollo)
   api:
     build: ./api
     volumes:
-      - ./api/src:/app/src:delegated  # ✅ Bind: hot reload
-      - ./api/package.json:/app/package.json:ro  # :ro = no modificar desde contenedor
-      - api_node_modules:/app/node_modules  # ✅ Named: evitar sobreescribir
+      - ./api/src:/app/src:delegated # ✅ Bind: hot reload
+      - ./api/package.json:/app/package.json:ro # :ro = no modificar desde contenedor
+      - api_node_modules:/app/node_modules # ✅ Named: evitar sobreescribir
     tmpfs:
-      - /tmp  # ✅ tmpfs: archivos temporales en RAM
+      - /tmp # ✅ tmpfs: archivos temporales en RAM
     environment:
       NODE_ENV: development
     command: npm run dev
@@ -414,20 +421,21 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
+      - '80:80'
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro  # ✅ Bind: configuración
-      - ./nginx/logs:/var/log/nginx  # ✅ Bind: logs accesibles
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro # ✅ Bind: configuración
+      - ./nginx/logs:/var/log/nginx # ✅ Bind: logs accesibles
     depends_on:
       - api
 
 volumes:
   # ¿Qué? Volúmenes nombrados
-  postgres_data:  # Datos de PostgreSQL
-  api_node_modules:  # node_modules (no sobreescribir con bind mount)
+  postgres_data: # Datos de PostgreSQL
+  api_node_modules: # node_modules (no sobreescribir con bind mount)
 ```
 
 **Explicación**:
+
 - **DB**: Named volume (datos persisten, gestionado por Docker)
 - **API**: Bind mount para código (editar y ver cambios), tmpfs para temporales
 - **Nginx**: Bind mount para config y logs (acceso directo desde host)
@@ -442,15 +450,15 @@ volumes:
 
 ```yaml
 volumes:
-  - ./todo:/app  # Mezcla código con node_modules
+  - ./todo:/app # Mezcla código con node_modules
 ```
 
 **✅ Bien**:
 
 ```yaml
 volumes:
-  - ./src:/app/src  # Solo código fuente
-  - node_modules:/app/node_modules  # Named volume para dependencias
+  - ./src:/app/src # Solo código fuente
+  - node_modules:/app/node_modules # Named volume para dependencias
 ```
 
 ---
@@ -459,7 +467,7 @@ volumes:
 
 ```yaml
 volumes:
-  - ./config.json:/app/config.json:ro  # ¿Para qué? Evitar modificaciones accidentales
+  - ./config.json:/app/config.json:ro # ¿Para qué? Evitar modificaciones accidentales
 ```
 
 ---
@@ -510,14 +518,14 @@ echo "Backup creado: db-$DATE.tar.gz"
 
 ```yaml
 volumes:
-  - ./codigo:/app  # Depende de archivos del host
+  - ./codigo:/app # Depende de archivos del host
 ```
 
 **✅ En producción**:
 
 ```yaml
 volumes:
-  - app_data:/app/data  # Named volume, independiente del host
+  - app_data:/app/data # Named volume, independiente del host
 ```
 
 ---
@@ -595,12 +603,14 @@ docker system prune -a --volumes
 <summary>Ver respuesta</summary>
 
 **Named Volumes**:
+
 - ✅ Producción
 - ✅ Bases de datos
 - ✅ Datos que deben persistir
 - ✅ Portabilidad entre hosts
 
 **Bind Mounts**:
+
 - ✅ Desarrollo local
 - ✅ Hot reload de código
 - ✅ Acceso a logs desde host
@@ -622,6 +632,7 @@ docker system prune -a --volumes
 **Los datos PERSISTEN** ✅
 
 El volumen es independiente del ciclo de vida del contenedor. Puedes:
+
 1. Eliminar el contenedor
 2. Crear un nuevo contenedor
 3. Montar el mismo volumen
@@ -641,12 +652,14 @@ Para eliminar los datos, debes eliminar explícitamente el volumen con `docker v
 <summary>Ver respuesta</summary>
 
 **Seguridad** 🔐:
+
 - Los datos solo existen en RAM
 - Al detener el contenedor, se borran automáticamente
 - No quedan rastros en disco
 - Útil para: tokens, sesiones, secretos temporales
 
 **Performance** ⚡:
+
 - Acceso ultra rápido (RAM vs disco)
 - Ideal para caché y archivos temporales
 

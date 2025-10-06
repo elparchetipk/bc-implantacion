@@ -12,14 +12,14 @@ Aplicar las mejores prácticas de la industria para crear imágenes Docker optim
 
 **Diferencia entre desarrollo y producción**:
 
-| Aspecto | Desarrollo | Producción |
-|---------|------------|------------|
-| **Tamaño imagen** | No importa | Crítico (menos MB = más rápido) |
-| **Seguridad** | Relajada | Estricta (sin secretos, sin root) |
-| **Performance** | Aceptable | Optimizada (CPU, RAM) |
-| **Logs** | En contenedor | Externos (centralizados) |
-| **Health checks** | Opcional | Obligatorio |
-| **Secretos** | Hardcodeados | Variables de entorno |
+| Aspecto           | Desarrollo    | Producción                        |
+| ----------------- | ------------- | --------------------------------- |
+| **Tamaño imagen** | No importa    | Crítico (menos MB = más rápido)   |
+| **Seguridad**     | Relajada      | Estricta (sin secretos, sin root) |
+| **Performance**   | Aceptable     | Optimizada (CPU, RAM)             |
+| **Logs**          | En contenedor | Externos (centralizados)          |
+| **Health checks** | Opcional      | Obligatorio                       |
+| **Secretos**      | Hardcodeados  | Variables de entorno              |
 
 **Analogía**:  
 Desarrollo es como cocinar en casa (rápido, desordenado).  
@@ -34,6 +34,7 @@ Producción es como un restaurante (limpio, profesional, eficiente).
 **Archivo que lista** qué NO copiar al construir una imagen Docker.
 
 **¿Para qué?**
+
 - ⚡ Construir más rápido (menos archivos)
 - 💾 Imágenes más pequeñas
 - 🔐 Evitar copiar secretos accidentalmente
@@ -106,13 +107,13 @@ tmp/
 
 **Comparación de tamaños**:
 
-| Imagen Base | Tamaño | Uso |
-|-------------|--------|-----|
-| `ubuntu:22.04` | ~77 MB | Desarrollo, compatibilidad |
-| `debian:bullseye` | ~124 MB | Estabilidad |
-| `node:20` | ~1.1 GB | ❌ Desarrollo rápido |
-| `node:20-alpine` | ~170 MB | ✅ Producción |
-| `alpine:3.19` | ~7 MB | ✅ Mínimo absoluto |
+| Imagen Base       | Tamaño  | Uso                        |
+| ----------------- | ------- | -------------------------- |
+| `ubuntu:22.04`    | ~77 MB  | Desarrollo, compatibilidad |
+| `debian:bullseye` | ~124 MB | Estabilidad                |
+| `node:20`         | ~1.1 GB | ❌ Desarrollo rápido       |
+| `node:20-alpine`  | ~170 MB | ✅ Producción              |
+| `alpine:3.19`     | ~7 MB   | ✅ Mínimo absoluto         |
 
 ---
 
@@ -148,11 +149,13 @@ CMD ["node", "server.js"]
 ### Consideraciones con Alpine
 
 **Ventajas**:
+
 - ✅ Mucho más pequeña
 - ✅ Menos superficie de ataque (seguridad)
 - ✅ Descargas más rápidas
 
 **Desventajas**:
+
 - ⚠️ Usa `musl` en lugar de `glibc` (algunos paquetes pueden tener problemas)
 - ⚠️ Menos herramientas preinstaladas (necesitas instalar lo básico)
 
@@ -165,6 +168,7 @@ CMD ["node", "server.js"]
 **Usar múltiples imágenes** durante la construcción, pero solo la última se incluye en la imagen final.
 
 **¿Para qué?**
+
 - 🗑️ Eliminar herramientas de compilación de la imagen final
 - 📦 Separar dependencias de desarrollo y producción
 - 💾 Reducir tamaño drásticamente
@@ -259,6 +263,7 @@ CMD ["node", "dist/server.js"]
 **Por defecto, Docker ejecuta contenedores como root** (superusuario).
 
 **Riesgos**:
+
 - 🚨 Si un atacante compromete el contenedor, tiene acceso root
 - 🚨 Puede escapar del contenedor y atacar el host
 - 🚨 Puede modificar archivos críticos del sistema
@@ -335,9 +340,9 @@ services:
   api:
     image: mi-api:1.0
     environment:
-      DB_PASSWORD: ${DB_PASSWORD}  # ¿Qué? Lee desde .env
+      DB_PASSWORD: ${DB_PASSWORD} # ¿Qué? Lee desde .env
     env_file:
-      - .env  # ¿Qué? Archivo con secretos
+      - .env # ¿Qué? Archivo con secretos
 ```
 
 **.env** (NO subir a Git):
@@ -365,11 +370,11 @@ services:
   api:
     image: mi-api:1.0
     secrets:
-      - db_password  # ¿Qué? Referencia al secreto
+      - db_password # ¿Qué? Referencia al secreto
 
 secrets:
   db_password:
-    file: ./secrets/db_password.txt  # ¿Qué? Archivo con el secreto
+    file: ./secrets/db_password.txt # ¿Qué? Archivo con el secreto
 ```
 
 **En el contenedor**, el secreto está en: `/run/secrets/db_password`
@@ -389,6 +394,7 @@ const dbPassword = fs.readFileSync('/run/secrets/db_password', 'utf8').trim();
 **Comandos que Docker ejecuta** para verificar si el contenedor está funcionando correctamente.
 
 **¿Para qué?**
+
 - 🩺 Detectar contenedores "zombies" (corriendo pero no funcionando)
 - 🔄 Reiniciar automáticamente contenedores no saludables
 - ⚖️ Load balancers solo envían tráfico a contenedores saludables
@@ -418,6 +424,7 @@ CMD ["node", "server.js"]
 ```
 
 **Parámetros**:
+
 - `--interval=30s`: Verificar cada 30 segundos
 - `--timeout=10s`: Si no responde en 10s, falla
 - `--start-period=40s`: Esperar 40s antes de la primera verificación (para que la app inicie)
@@ -432,7 +439,7 @@ services:
   api:
     image: mi-api:1.0
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/health']
       # ¿Qué? Comando para verificar salud
       interval: 30s
       timeout: 10s
@@ -452,20 +459,20 @@ const app = express();
 // ¿Qué? Endpoint de salud
 app.get('/health', async (req, res) => {
   // ¿Para qué? Verificar que la app Y las dependencias funcionan
-  
+
   try {
     // Verificar conexión a base de datos
     await db.ping();
-    
+
     res.status(200).json({
       status: 'healthy',
       timestamp: new Date().toISOString(),
-      uptime: process.uptime()
+      uptime: process.uptime(),
     });
   } catch (error) {
     res.status(503).json({
       status: 'unhealthy',
-      error: error.message
+      error: error.message,
     });
   }
 });
@@ -501,6 +508,7 @@ docker inspect --format='{{json .State.Health}}' mi-contenedor | jq
 **Analogía**: Capas como capas de una cebolla, apiladas una sobre otra.
 
 **¿Por qué importa?**
+
 - 💾 Menos capas = imagen más pequeña
 - 🚀 Capas se cachean (construcciones más rápidas)
 
@@ -596,6 +604,7 @@ trivy image mi-imagen:1.0
 ```
 
 **Salida típica**:
+
 ```
 ✓ 0 CRITICAL
 ⚠ 3 HIGH
@@ -689,9 +698,9 @@ services:
     environment:
       NODE_ENV: production
       DB_HOST: db
-      DB_PASSWORD: ${DB_PASSWORD}  # Desde .env
+      DB_PASSWORD: ${DB_PASSWORD} # Desde .env
     ports:
-      - "3000:3000"
+      - '3000:3000'
     restart: unless-stopped
     deploy:
       resources:
@@ -702,7 +711,7 @@ services:
           cpus: '0.5'
           memory: 256M
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/health']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -719,7 +728,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -732,15 +741,15 @@ volumes:
 
 ## 🔍 Comparación: Antes vs Después
 
-| Métrica | ❌ Antes (Mal) | ✅ Después (Bien) |
-|---------|---------------|-------------------|
-| **Tamaño imagen** | 1.2 GB | 180 MB (6x más pequeña) |
-| **Tiempo construcción** | 5 minutos | 45 segundos (cacheo) |
-| **Usuario** | root | appuser (no-root) |
-| **Secretos** | Hardcodeados | Variables de entorno |
-| **Health check** | ❌ No | ✅ Sí |
-| **Vulnerabilidades** | 15 CRITICAL | 0 CRITICAL |
-| **Capas** | 25 capas | 8 capas |
+| Métrica                 | ❌ Antes (Mal) | ✅ Después (Bien)       |
+| ----------------------- | -------------- | ----------------------- |
+| **Tamaño imagen**       | 1.2 GB         | 180 MB (6x más pequeña) |
+| **Tiempo construcción** | 5 minutos      | 45 segundos (cacheo)    |
+| **Usuario**             | root           | appuser (no-root)       |
+| **Secretos**            | Hardcodeados   | Variables de entorno    |
+| **Health check**        | ❌ No          | ✅ Sí                   |
+| **Vulnerabilidades**    | 15 CRITICAL    | 0 CRITICAL              |
+| **Capas**               | 25 capas       | 8 capas                 |
 
 ---
 
@@ -754,6 +763,7 @@ volumes:
 <summary>Ver respuesta</summary>
 
 **Ventajas**:
+
 1. **Imágenes más pequeñas**: Solo incluyes lo necesario para ejecutar, no para construir
 2. **Separación de concerns**: Construcción vs producción
 3. **Seguridad**: No incluyes herramientas de desarrollo en producción
@@ -772,6 +782,7 @@ volumes:
 <summary>Ver respuesta</summary>
 
 **Riesgos**:
+
 1. **Escalada de privilegios**: Si un atacante compromete el contenedor, tiene acceso root
 2. **Escape del contenedor**: Puede atacar el sistema host
 3. **Modificación de archivos críticos**: Puede alterar configuraciones del sistema
@@ -793,6 +804,7 @@ volumes:
 Ejecuta un comando periódicamente para verificar que el contenedor funciona correctamente.
 
 **¿Por qué es importante?**
+
 1. Detecta contenedores "zombies" (corriendo pero no funcionando)
 2. Reinicia automáticamente contenedores no saludables
 3. Load balancers solo envían tráfico a contenedores saludables

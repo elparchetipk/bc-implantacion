@@ -55,12 +55,12 @@ docker run -d --name api --network mi-red mi-api:1.0
 
 Docker ofrece 4 tipos principales de redes:
 
-| Tipo | Uso Principal | Comunicación Externa | DNS Interno |
-|------|---------------|----------------------|-------------|
-| **bridge** | Desarrollo local | ✅ Sí (con `-p`) | ✅ Sí |
-| **host** | Performance crítico | ✅ Directo | ❌ No |
-| **overlay** | Swarm/multi-host | ✅ Sí | ✅ Sí |
-| **none** | Aislamiento total | ❌ No | ❌ No |
+| Tipo        | Uso Principal       | Comunicación Externa | DNS Interno |
+| ----------- | ------------------- | -------------------- | ----------- |
+| **bridge**  | Desarrollo local    | ✅ Sí (con `-p`)     | ✅ Sí       |
+| **host**    | Performance crítico | ✅ Directo           | ❌ No       |
+| **overlay** | Swarm/multi-host    | ✅ Sí                | ✅ Sí       |
+| **none**    | Aislamiento total   | ❌ No                | ❌ No       |
 
 ---
 
@@ -73,6 +73,7 @@ Una red privada interna en el host. Es la red por defecto cuando creas un conten
 Permitir que contenedores se comuniquen entre sí en el mismo host.
 
 **Características**:
+
 - ✅ Aislamiento del host
 - ✅ DNS interno automático
 - ✅ Comunicación entre contenedores
@@ -108,6 +109,7 @@ docker run -d --name api --network mi-red-app mi-api:1.0
 ```
 
 **Ventajas**:
+
 - ✅ DNS automático (usar nombres en lugar de IPs)
 - ✅ Mejor aislamiento (separar proyectos)
 - ✅ Fácil de gestionar
@@ -122,7 +124,7 @@ services:
   db:
     image: postgres:15
     # ¿Qué? Se une automáticamente a la red del proyecto
-  
+
   api:
     image: mi-api:1.0
     environment:
@@ -130,11 +132,11 @@ services:
       DATABASE_URL: postgresql://user:pass@db:5432/mydb
     depends_on:
       - db
-
 # No necesitas especificar "networks", Docker Compose lo hace automáticamente
 ```
 
 **¿Cómo funciona?**
+
 - Docker Compose crea una red llamada `<nombre_carpeta>_default`
 - Todos los servicios se unen a esa red
 - DNS interno: cada servicio es accesible por su nombre
@@ -159,16 +161,19 @@ docker run -d --network host nginx:alpine
 ```
 
 **Ventajas**:
+
 - ⚡ Mejor performance (sin NAT)
 - ⚡ Sin overhead de red
 
 **Desventajas**:
+
 - ❌ Sin aislamiento de red
 - ❌ Puede causar conflictos de puertos
 - ❌ Solo funciona en Linux
 - ❌ Sin DNS entre contenedores
 
 **¿Cuándo usarla?**
+
 - Aplicaciones de monitoreo (Prometheus, Grafana)
 - Herramientas de diagnóstico de red
 - Casos donde el performance es crítico
@@ -191,6 +196,7 @@ docker network create --driver overlay mi-red-distribuida
 ```
 
 **Características**:
+
 - 🌐 Multi-host (varios servidores)
 - 🔐 Encriptación opcional
 - 🎯 Service discovery automático
@@ -215,6 +221,7 @@ docker run -d --network none mi-app:1.0
 ```
 
 **¿Cuándo usarla?**
+
 - Procesamiento de datos locales
 - Contenedores de solo cómputo
 - Tests que no requieren red
@@ -232,7 +239,7 @@ services:
   db:
     image: postgres:15
     # ¿Qué? Este servicio es accesible como "db"
-  
+
   api:
     image: mi-api:1.0
     environment:
@@ -242,11 +249,13 @@ services:
 ```
 
 **Proceso**:
+
 1. La API intenta conectarse a `db:5432`
 2. Docker DNS resuelve `db` → `172.18.0.2` (IP interna del contenedor)
 3. La conexión se establece
 
 **Ventajas**:
+
 - ✅ No necesitas conocer IPs (cambian al reiniciar)
 - ✅ Código independiente del ambiente
 - ✅ Fácil mantenimiento
@@ -351,7 +360,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
-      - backend  # ¿Para qué? Solo backend puede acceder
+      - backend # ¿Para qué? Solo backend puede acceder
     restart: unless-stopped
 
   # ¿Qué? API REST (en ambas redes)
@@ -360,8 +369,8 @@ services:
     environment:
       DATABASE_URL: postgresql://postgres:${DB_PASSWORD}@db:5432/mydb
     networks:
-      - backend   # ¿Para qué? Conectarse a la base de datos
-      - frontend  # ¿Para qué? Recibir peticiones del frontend
+      - backend # ¿Para qué? Conectarse a la base de datos
+      - frontend # ¿Para qué? Recibir peticiones del frontend
     depends_on:
       - db
     restart: unless-stopped
@@ -370,19 +379,19 @@ services:
   web:
     image: mi-frontend:1.0
     networks:
-      - frontend  # ¿Para qué? Comunicarse con API, no con DB
+      - frontend # ¿Para qué? Comunicarse con API, no con DB
     restart: unless-stopped
 
   # ¿Qué? Nginx reverse proxy (frontend + expuesto al host)
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     networks:
-      - frontend  # ¿Para qué? Enrutar a web y api
+      - frontend # ¿Para qué? Enrutar a web y api
     depends_on:
       - web
       - api
@@ -392,7 +401,7 @@ networks:
   # ¿Qué? Red para frontend (web, api, nginx)
   frontend:
     driver: bridge
-  
+
   # ¿Qué? Red para backend (api, db)
   backend:
     driver: bridge
@@ -402,11 +411,13 @@ volumes:
 ```
 
 **Ventajas de esta arquitectura**:
+
 - 🔐 **Seguridad**: Frontend NO puede acceder directamente a la base de datos
 - 🎯 **Separación de responsabilidades**: Cada capa en su red
 - 🛡️ **Defensa en profundidad**: Si el frontend es comprometido, no puede acceder a DB
 
 **Flujo de comunicación**:
+
 ```
 Usuario
   ↓
@@ -449,8 +460,8 @@ docker run -d --name api --network mi-app-red mi-api:1.0
 ```yaml
 # ✅ Separar frontend y backend
 networks:
-  frontend:  # Web pública
-  backend:   # Servicios internos
+  frontend: # Web pública
+  backend: # Servicios internos
 ```
 
 **¿Para qué?** Limitar acceso y mejorar seguridad.
@@ -466,7 +477,7 @@ services:
   db:
     image: postgres:15
     ports:
-      - "5432:5432"  # ¿Para qué? ❌ Exponer DB al host
+      - '5432:5432' # ¿Para qué? ❌ Exponer DB al host
 ```
 
 **✅ Bien**:
@@ -508,11 +519,11 @@ networks:
   frontend:
     # ¿Para qué? Red pública para nginx, web, api
     driver: bridge
-  
+
   backend:
     # ¿Para qué? Red privada para api y base de datos
     driver: bridge
-    internal: true  # ¿Qué? Sin acceso a internet
+    internal: true # ¿Qué? Sin acceso a internet
 ```
 
 ---
@@ -593,13 +604,13 @@ sudo systemctl restart docker
 
 ## 📊 Comparación de Estrategias de Red
 
-| Escenario | Estrategia Recomendada |
-|-----------|------------------------|
-| Desarrollo local simple | Red bridge personalizada única |
-| App multi-capa (3-tier) | Múltiples redes (frontend/backend) |
+| Escenario                     | Estrategia Recomendada                 |
+| ----------------------------- | -------------------------------------- |
+| Desarrollo local simple       | Red bridge personalizada única         |
+| App multi-capa (3-tier)       | Múltiples redes (frontend/backend)     |
 | Microservicios (5+ servicios) | Redes por funcionalidad + service mesh |
-| Performance crítico | Red host (solo Linux) |
-| Máximo aislamiento | Red none o redes separadas |
+| Performance crítico           | Red host (solo Linux)                  |
+| Máximo aislamiento            | Red none o redes separadas             |
 
 ---
 
@@ -613,10 +624,12 @@ sudo systemctl restart docker
 <summary>Ver respuesta</summary>
 
 **Red bridge por defecto**:
+
 - ❌ Sin DNS automático (contenedores solo por IP)
 - ❌ Todos los contenedores comparten la misma red
 
 **Red bridge personalizada**:
+
 - ✅ DNS automático (contenedores accesibles por nombre)
 - ✅ Mejor aislamiento (separar proyectos)
 - ✅ Más control sobre configuración
@@ -635,11 +648,13 @@ sudo systemctl restart docker
 <summary>Ver respuesta</summary>
 
 **Seguridad en capas**:
+
 - 🔐 El frontend NO puede acceder directamente a la base de datos
 - 🛡️ Si el frontend es comprometido, el atacante no tiene acceso directo a la DB
 - 🎯 Principio de menor privilegio: cada capa solo accede a lo necesario
 
 **Arquitectura típica**:
+
 ```
 Frontend (React) → Red frontend
 API (REST) → Red frontend + backend (puente)
@@ -658,22 +673,25 @@ DB (PostgreSQL) → Red backend (solo interna)
 <summary>Ver respuesta</summary>
 
 **Exponer puerto (`ports`)** solo cuando:
+
 - ✅ Necesitas acceder desde el **host** (tu máquina)
 - ✅ Es un servicio **público** (nginx, adminer)
 - ✅ Necesitas **debugging** (puerto temporal)
 
 **NO exponer puerto** si:
+
 - ❌ Solo comunicación **entre contenedores** (usar DNS interno)
 - ❌ Servicio **privado** (base de datos, caché)
 - ❌ Por razones de **seguridad**
 
 **Ejemplo**:
+
 ```yaml
 services:
   nginx:
     ports:
-      - "80:80"  # ✅ Necesita acceso externo
-  
+      - '80:80' # ✅ Necesita acceso externo
+
   db:
     # ❌ Sin ports - solo interno
 ```
