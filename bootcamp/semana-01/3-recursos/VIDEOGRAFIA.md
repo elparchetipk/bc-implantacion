@@ -399,19 +399,23 @@
 ### Semana 1 - Fundamentos
 
 **Día 1-2: Introducción a Docker (Español)**
+
 1. "Docker en 100 Segundos" - Fireship (2 min)
 2. "Curso Docker desde CERO" - Pelado Nerd (3 horas)
 3. "Docker y Docker Compose: De 0 a 100" - HolaMundo (1.5 horas)
 
 **Día 3-4: Docker Práctico (Inglés + Práctica)**
+
 1. "Docker Tutorial for Beginners" - TechWorld with Nana (3 horas)
 2. "Docker Compose Tutorial" - NetworkChuck (22 min)
 
 **Día 5: PostgreSQL con Docker**
+
 1. "PostgreSQL con Docker" - Pelado Nerd (30 min)
 2. "PostgreSQL in 100 Seconds" - Fireship (2 min)
 
 **Día 6-7: Linux Básico**
+
 1. "Curso Linux desde CERO" - Pelado Nerd (2.5 horas)
 2. "Comandos de Linux" - HolaMundo (1 hora)
 
@@ -420,24 +424,28 @@
 ## 💡 Consejos para Aprovechar los Videos
 
 ### Velocidad de Reproducción
+
 - 🐢 **0.75x**: Para temas nuevos o complejos
 - ▶️ **1.0x**: Velocidad normal recomendada
 - 🐇 **1.25x**: Para repasar o temas conocidos
 - ⚡ **1.5x**: Solo para revisión rápida
 
 ### Toma de Notas
+
 - ✅ Pausa el video para anotar comandos
 - ✅ Captura pantalla de diagramas importantes
 - ✅ Anota timestamps de secciones clave
 - ✅ Escribe preguntas para investigar después
 
 ### Práctica Activa
+
 - ✅ Replica los ejemplos en tu máquina
 - ✅ Pausa el video antes de ver la solución
 - ✅ Modifica los ejemplos con tus propias ideas
 - ✅ Documenta errores y cómo los resolviste
 
 ### Subtítulos
+
 - 📝 **Español**: Activa subtítulos automáticos si es video en inglés
 - 📝 **Inglés**: Videos en inglés suelen tener buenos subtítulos manuales
 - 📝 **Traducción**: YouTube permite traducir subtítulos automáticos
