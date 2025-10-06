@@ -1,0 +1,154 @@
+# ============================================================================
+# TEMPLATE BÁSICO - Stack PostgreSQL + Adminer
+# ============================================================================
+# 
+# ¿QUÉ ES ESTO?
+# - Plantilla lista para copiar y pegar
+# - Stack mínimo para comenzar: Base de datos + Interfaz web
+# 
+# ¿PARA QUÉ SIRVE?
+# - Iniciar rápidamente un proyecto con persistencia de datos
+# - Gestionar la base de datos desde el navegador con Adminer
+# 
+# ¿CÓMO USARLO?
+# 1. Copiar este archivo a tu proyecto como docker-compose.yml
+# 2. Crear archivo .env en la misma carpeta
+# 3. Ajustar los valores según tu dominio
+# 4. Ejecutar: docker compose up -d
+# ============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # SERVICIO: Base de Datos PostgreSQL
+  # ---------------------------------------------------------------------------
+  # ¿Qué? - Servidor de base de datos PostgreSQL 15
+  # ¿Para qué? - Almacenar datos de forma persistente
+  # ¿Cómo? - Se conecta mediante nombre de servicio 'postgres'
+  db:
+    image: postgres:15-alpine
+    container_name: mi_base_datos
+    restart: unless-stopped
+    
+    # Variables de entorno - Configuración de PostgreSQL
+    # ¿Qué? - Credenciales y configuración inicial
+    # ¿Para qué? - Crear la base de datos automáticamente al primer inicio
+    environment:
+      POSTGRES_DB: ${DB_NAME}           # Nombre de la base de datos
+      POSTGRES_USER: ${DB_USER}         # Usuario administrador
+      POSTGRES_PASSWORD: ${DB_PASSWORD} # Contraseña (¡nunca en texto plano!)
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+    
+    # Volúmenes - Persistencia de datos
+    # ¿Qué? - Named volume para guardar los datos
+    # ¿Para qué? - Que los datos sobrevivan al reinicio del contenedor
+    # ¿Cómo? - Docker gestiona el volumen automáticamente
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Opcional: Script de inicialización
+      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    
+    # Puertos - Acceso desde el host (opcional)
+    # ¿Qué? - Exponer el puerto 5432 de PostgreSQL
+    # ¿Para qué? - Conectarse con herramientas externas (pgAdmin, DBeaver)
+    # ¿Cómo? - host:5432 -> contenedor:5432
+    ports:
+      - "5432:5432"
+    
+    # Healthcheck - Verificación de estado
+    # ¿Qué? - Comando para verificar si PostgreSQL está listo
+    # ¿Para qué? - Asegurar que la DB esté operativa antes de conectar otros servicios
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # SERVICIO: Adminer (Gestor Web de Base de Datos)
+  # ---------------------------------------------------------------------------
+  # ¿Qué? - Interfaz web para administrar PostgreSQL
+  # ¿Para qué? - Ejecutar consultas SQL desde el navegador
+  # ¿Cómo? - Acceder en http://localhost:8080
+  adminer:
+    image: adminer:latest
+    container_name: mi_adminer
+    restart: unless-stopped
+    
+    # Puertos - Interfaz web
+    # ¿Qué? - Exponer Adminer en el puerto 8080
+    # ¿Para qué? - Acceder desde el navegador
+    ports:
+      - "8080:8080"
+    
+    # Dependencias - Orden de inicio
+    # ¿Qué? - Este servicio depende del servicio 'db'
+    # ¿Para qué? - Esperar a que PostgreSQL esté listo antes de iniciar Adminer
+    depends_on:
+      db:
+        condition: service_healthy
+    
+    # Variables de entorno - Configuración de Adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: db  # Conectar automáticamente a 'db'
+
+# =============================================================================
+# VOLÚMENES - Almacenamiento Persistente
+# =============================================================================
+# ¿Qué? - Named volume gestionado por Docker
+# ¿Para qué? - Los datos persisten incluso si borramos el contenedor
+# ¿Cómo? - Docker crea y gestiona el volumen automáticamente
+volumes:
+  postgres_data:
+    driver: local  # Driver predeterminado (almacenamiento local)
+
+# =============================================================================
+# INSTRUCCIONES DE USO
+# =============================================================================
+#
+# 1. CREAR ARCHIVO .env EN LA MISMA CARPETA:
+#    -------------------------------------------------
+#    DB_NAME=mi_base_datos
+#    DB_USER=admin
+#    DB_PASSWORD=mi_contraseña_segura
+#    -------------------------------------------------
+#
+# 2. INICIAR LOS SERVICIOS:
+#    docker compose up -d
+#
+# 3. VERIFICAR ESTADO:
+#    docker compose ps
+#
+# 4. ACCEDER A ADMINER:
+#    http://localhost:8080
+#    - Sistema: PostgreSQL
+#    - Servidor: db
+#    - Usuario: (valor de DB_USER en .env)
+#    - Contraseña: (valor de DB_PASSWORD en .env)
+#    - Base de datos: (valor de DB_NAME en .env)
+#
+# 5. VER LOGS:
+#    docker compose logs -f
+#
+# 6. DETENER SERVICIOS:
+#    docker compose down
+#
+# 7. DETENER Y ELIMINAR DATOS:
+#    docker compose down -v
+#
+# =============================================================================
+# TROUBLESHOOTING
+# =============================================================================
+#
+# ❌ Error: "port is already allocated"
+#    Solución: Cambiar el puerto en la sección ports (ej: "5433:5432")
+#
+# ❌ Error: "connection refused" en Adminer
+#    Solución: Usar 'db' como servidor (no 'localhost')
+#
+# ❌ Adminer no se conecta
+#    Solución: Verificar que las variables .env sean correctas
+#
+# ❌ Los datos se pierden al reiniciar
+#    Solución: Verificar que el volumen esté declarado correctamente
+#
+# =============================================================================

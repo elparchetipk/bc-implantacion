@@ -1,0 +1,212 @@
+# ============================================================================
+# TEMPLATE CON FRONTEND - Stack completo con interfaz de usuario
+# ============================================================================
+# 
+# ¿QUÉ ES ESTO?
+# - Plantilla para aplicaciones web con Frontend + Base de datos
+# - Incluye Nginx para servir archivos estáticos (HTML/CSS/JS)
+# 
+# ¿PARA QUÉ SIRVE?
+# - Proyectos que requieren interfaz de usuario personalizada
+# - Separación clara entre presentación y datos
+# 
+# ¿CÓMO USARLO?
+# 1. Copiar este archivo a tu proyecto como docker-compose.yml
+# 2. Crear carpeta 'frontend/' con tus archivos HTML/CSS/JS
+# 3. Crear archivo .env con las credenciales
+# 4. Ejecutar: docker compose up -d
+# ============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # SERVICIO: Frontend (Nginx + HTML/CSS/JS)
+  # ---------------------------------------------------------------------------
+  # ¿Qué? - Servidor web Nginx para servir la interfaz de usuario
+  # ¿Para qué? - Mostrar páginas HTML, CSS, JavaScript al usuario
+  # ¿Cómo? - Acceder en http://localhost (puerto 80)
+  frontend:
+    image: nginx:alpine
+    container_name: mi_frontend
+    restart: unless-stopped
+    
+    # Volúmenes - Montar archivos estáticos
+    # ¿Qué? - Carpeta local 'frontend/' montada en el servidor Nginx
+    # ¿Para qué? - Servir tus archivos HTML/CSS/JS
+    # ¿Cómo? - Cualquier cambio en la carpeta se refleja inmediatamente
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro  # :ro = solo lectura
+    
+    # Puertos - Interfaz web
+    # ¿Qué? - Exponer puerto 80 (HTTP estándar)
+    # ¿Para qué? - Acceder desde http://localhost
+    ports:
+      - "80:80"
+    
+    # Dependencias - Orden de inicio
+    # ¿Qué? - El frontend depende de la base de datos
+    # ¿Para qué? - Asegurar que la DB esté lista antes de mostrar la interfaz
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ---------------------------------------------------------------------------
+  # SERVICIO: Base de Datos PostgreSQL
+  # ---------------------------------------------------------------------------
+  # ¿Qué? - Servidor de base de datos PostgreSQL 15
+  # ¿Para qué? - Almacenar y gestionar datos de la aplicación
+  db:
+    image: postgres:15-alpine
+    container_name: mi_base_datos
+    restart: unless-stopped
+    
+    # Variables de entorno
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+    
+    # Volúmenes - Persistencia y scripts
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Script de inicialización (crear tablas)
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    
+    # Puertos - Acceso desde el host (opcional)
+    # ¿Qué? - Exponer PostgreSQL para herramientas externas
+    # ¿Para qué? - Conectar con pgAdmin, DBeaver, etc.
+    ports:
+      - "5432:5432"
+    
+    # Healthcheck
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # SERVICIO: Adminer (Administrador de Base de Datos)
+  # ---------------------------------------------------------------------------
+  # ¿Qué? - Interfaz web para gestionar PostgreSQL
+  # ¿Para qué? - Ejecutar consultas SQL, ver datos, administrar tablas
+  # ¿Cómo? - Acceder en http://localhost:8080
+  adminer:
+    image: adminer:latest
+    container_name: mi_adminer
+    restart: unless-stopped
+    
+    ports:
+      - "8080:8080"
+    
+    depends_on:
+      db:
+        condition: service_healthy
+    
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+
+# =============================================================================
+# VOLÚMENES - Almacenamiento Persistente
+# =============================================================================
+volumes:
+  postgres_data:
+    driver: local
+
+# =============================================================================
+# ESTRUCTURA DE CARPETAS REQUERIDA
+# =============================================================================
+#
+# mi-proyecto/
+# ├── docker-compose.yml  (este archivo)
+# ├── .env                (credenciales)
+# ├── init.sql            (script de inicialización de BD)
+# └── frontend/           (carpeta con archivos web)
+#     ├── index.html      (página principal)
+#     ├── styles.css      (estilos opcionales)
+#     └── script.js       (JavaScript opcional)
+#
+# =============================================================================
+# EJEMPLO: frontend/index.html
+# =============================================================================
+#
+# <!DOCTYPE html>
+# <html lang="es">
+# <head>
+#     <meta charset="UTF-8">
+#     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+#     <title>Mi Aplicación</title>
+#     <link rel="stylesheet" href="styles.css">
+# </head>
+# <body>
+#     <h1>Bienvenido a Mi Aplicación</h1>
+#     <p>Sistema de gestión de [TU DOMINIO]</p>
+#     
+#     <!-- Aquí irían tus formularios, tablas, etc. -->
+#     
+#     <script src="script.js"></script>
+# </body>
+# </html>
+#
+# =============================================================================
+# EJEMPLO: init.sql
+# =============================================================================
+#
+# -- Crear tabla de ejemplo
+# CREATE TABLE IF NOT EXISTS usuarios (
+#     id SERIAL PRIMARY KEY,
+#     nombre VARCHAR(100) NOT NULL,
+#     email VARCHAR(100) UNIQUE NOT NULL,
+#     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+# );
+#
+# -- Insertar datos de prueba
+# INSERT INTO usuarios (nombre, email) VALUES 
+#     ('Juan Pérez', 'juan@ejemplo.com'),
+#     ('María García', 'maria@ejemplo.com');
+#
+# =============================================================================
+# INSTRUCCIONES DE USO
+# =============================================================================
+#
+# 1. CREAR ARCHIVO .env:
+#    -------------------------------------------------
+#    DB_NAME=mi_aplicacion
+#    DB_USER=admin
+#    DB_PASSWORD=contraseña_segura_123
+#    -------------------------------------------------
+#
+# 2. CREAR CARPETA frontend/ CON TUS ARCHIVOS HTML
+#
+# 3. CREAR init.sql CON TUS TABLAS
+#
+# 4. INICIAR STACK:
+#    docker compose up -d
+#
+# 5. ACCESOS:
+#    - Frontend: http://localhost
+#    - Adminer: http://localhost:8080
+#    - PostgreSQL: localhost:5432
+#
+# 6. DETENER:
+#    docker compose down
+#
+# =============================================================================
+# TROUBLESHOOTING
+# =============================================================================
+#
+# ❌ Error: "Permission denied" en frontend/
+#    Solución: chmod -R 755 frontend/
+#
+# ❌ Nginx muestra "403 Forbidden"
+#    Solución: Verificar que exista frontend/index.html
+#
+# ❌ Frontend no se conecta a la base de datos
+#    Solución: Usar 'db' como host, no 'localhost'
+#              (dentro del contenedor, usar el nombre del servicio)
+#
+# ❌ init.sql no se ejecuta
+#    Solución: Eliminar el volumen y recrear
+#              docker compose down -v && docker compose up -d
+#
+# =============================================================================

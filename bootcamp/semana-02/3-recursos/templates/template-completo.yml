@@ -1,0 +1,399 @@
+# ============================================================================
+# TEMPLATE COMPLETO - Stack de producción con múltiples servicios
+# ============================================================================
+# 
+# ¿QUÉ ES ESTO?
+# - Plantilla robusta para proyectos finales de implantación
+# - Incluye Frontend, Backend API, Base de datos y Administrador
+# 
+# ¿PARA QUÉ SIRVE?
+# - Proyectos de mayor envergadura con separación de capas
+# - Simular arquitectura de aplicaciones reales
+# - Preparación para ambientes de producción
+# 
+# ¿CÓMO USARLO?
+# 1. Copiar y adaptar según las necesidades del proyecto
+# 2. Ajustar puertos, volúmenes y variables de entorno
+# 3. Implementar el código del backend en la carpeta correspondiente
+# ============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # SERVICIO: Frontend (Nginx + HTML/CSS/JS)
+  # ---------------------------------------------------------------------------
+  # ¿Qué? - Servidor web para la interfaz de usuario
+  # ¿Para qué? - Presentar la aplicación al usuario final
+  # ¿Cómo? - Sirve archivos estáticos y puede hacer proxy al backend
+  frontend:
+    image: nginx:alpine
+    container_name: proyecto_frontend
+    restart: unless-stopped
+    
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+      # Opcional: Configuración personalizada de Nginx
+      # - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    
+    ports:
+      - "80:80"
+    
+    depends_on:
+      - backend
+    
+    # Red personalizada para aislamiento
+    networks:
+      - frontend_net
+      - backend_net
+
+  # ---------------------------------------------------------------------------
+  # SERVICIO: Backend API (Node.js, Python, etc.)
+  # ---------------------------------------------------------------------------
+  # ¿Qué? - Servidor de aplicación con lógica de negocio
+  # ¿Para qué? - Procesar peticiones, validar datos, comunicarse con la BD
+  # ¿Cómo? - Expone API REST en el puerto 3000
+  # 
+  # NOTA: Este es un ejemplo genérico. Debes adaptarlo según tu tecnología:
+  # - Node.js: image: node:18-alpine + volumes con tu código
+  # - Python: image: python:3.11-slim + requirements.txt
+  # - Java: image: openjdk:17-slim
+  backend:
+    # Opción 1: Usar imagen pre-construida
+    image: node:18-alpine
+    
+    # Opción 2: Construir desde Dockerfile local
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    
+    container_name: proyecto_backend
+    restart: unless-stopped
+    
+    # Working directory dentro del contenedor
+    working_dir: /app
+    
+    # Montar código fuente (para desarrollo)
+    # ¿Qué? - Carpeta backend/ montada en el contenedor
+    # ¿Para qué? - Hot reload durante desarrollo
+    volumes:
+      - ./backend:/app
+      - backend_node_modules:/app/node_modules  # Cache de dependencias
+    
+    # Puertos - API REST
+    ports:
+      - "3000:3000"
+    
+    # Variables de entorno - Configuración de la aplicación
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DB_HOST: db          # ¡IMPORTANTE! Usar nombre del servicio, no 'localhost'
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      # JWT Secret (para autenticación)
+      JWT_SECRET: ${JWT_SECRET}
+    
+    # Comando de inicio (ajustar según tu framework)
+    command: npm start
+    # Para Python: command: python app.py
+    # Para Java: command: java -jar app.jar
+    
+    depends_on:
+      db:
+        condition: service_healthy
+    
+    networks:
+      - backend_net
+
+  # ---------------------------------------------------------------------------
+  # SERVICIO: Base de Datos PostgreSQL
+  # ---------------------------------------------------------------------------
+  # ¿Qué? - Sistema de gestión de base de datos relacional
+  # ¿Para qué? - Almacenar datos de forma estructurada y persistente
+  db:
+    image: postgres:15-alpine
+    container_name: proyecto_db
+    restart: unless-stopped
+    
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+      # Configuración de conexiones
+      POSTGRES_MAX_CONNECTIONS: 100
+      # Configuración de memoria (ajustar según recursos disponibles)
+      POSTGRES_SHARED_BUFFERS: 256MB
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Scripts de inicialización
+      - ./database/init.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02-data.sql:ro
+    
+    # Puerto expuesto (comentar en producción por seguridad)
+    ports:
+      - "5432:5432"
+    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    
+    networks:
+      - backend_net
+
+  # ---------------------------------------------------------------------------
+  # SERVICIO: Adminer (Administrador de Base de Datos)
+  # ---------------------------------------------------------------------------
+  # ¿Qué? - Herramienta web para administrar PostgreSQL
+  # ¿Para qué? - Desarrollo y depuración de consultas SQL
+  adminer:
+    image: adminer:latest
+    container_name: proyecto_adminer
+    restart: unless-stopped
+    
+    ports:
+      - "8080:8080"
+    
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+      ADMINER_DESIGN: pepa-linha  # Tema visual (opcional)
+    
+    depends_on:
+      db:
+        condition: service_healthy
+    
+    networks:
+      - backend_net
+
+# =============================================================================
+# REDES - Segmentación de Servicios
+# =============================================================================
+# ¿Qué? - Redes virtuales para aislar servicios
+# ¿Para qué? - Seguridad: Frontend no accede directamente a la BD
+# ¿Cómo? - Frontend solo puede comunicarse con Backend
+#          Backend puede comunicarse con Frontend y DB
+networks:
+  frontend_net:
+    driver: bridge
+    name: frontend_network
+  
+  backend_net:
+    driver: bridge
+    name: backend_network
+
+# =============================================================================
+# VOLÚMENES - Almacenamiento Persistente
+# =============================================================================
+volumes:
+  postgres_data:
+    driver: local
+    # Opcional: Especificar ubicación en el host
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: /ruta/en/el/host/postgres_data
+  
+  backend_node_modules:
+    driver: local
+
+# =============================================================================
+# ESTRUCTURA DE CARPETAS REQUERIDA
+# =============================================================================
+#
+# mi-proyecto-completo/
+# ├── docker-compose.yml      (este archivo)
+# ├── .env                    (variables de entorno)
+# ├── frontend/               (interfaz de usuario)
+# │   ├── index.html
+# │   ├── styles.css
+# │   └── script.js
+# ├── backend/                (API y lógica de negocio)
+# │   ├── package.json        (dependencias Node.js)
+# │   ├── app.js              (punto de entrada)
+# │   ├── routes/             (endpoints de la API)
+# │   ├── controllers/        (lógica de negocio)
+# │   └── models/             (modelos de datos)
+# └── database/               (scripts SQL)
+#     ├── init.sql            (esquema: CREATE TABLE)
+#     └── seed.sql            (datos iniciales: INSERT)
+#
+# =============================================================================
+# EJEMPLO: .env
+# =============================================================================
+#
+# # Configuración de Base de Datos
+# DB_NAME=proyecto_produccion
+# DB_USER=admin_proyecto
+# DB_PASSWORD=P@ssw0rd_Segur0_2024!
+#
+# # Configuración de Backend
+# JWT_SECRET=clave_secreta_muy_larga_y_aleatoria_aqui
+# API_PORT=3000
+#
+# # Entorno
+# NODE_ENV=production
+#
+# =============================================================================
+# EJEMPLO: backend/package.json (Node.js)
+# =============================================================================
+#
+# {
+#   "name": "proyecto-backend",
+#   "version": "1.0.0",
+#   "main": "app.js",
+#   "scripts": {
+#     "start": "node app.js",
+#     "dev": "nodemon app.js"
+#   },
+#   "dependencies": {
+#     "express": "^4.18.0",
+#     "pg": "^8.11.0",
+#     "dotenv": "^16.0.0",
+#     "cors": "^2.8.5"
+#   }
+# }
+#
+# =============================================================================
+# EJEMPLO: backend/app.js (Node.js + Express)
+# =============================================================================
+#
+# const express = require('express');
+# const { Pool } = require('pg');
+# const cors = require('cors');
+#
+# const app = express();
+# const port = process.env.PORT || 3000;
+#
+# // Configuración de PostgreSQL
+# const pool = new Pool({
+#   host: process.env.DB_HOST,
+#   port: process.env.DB_PORT,
+#   database: process.env.DB_NAME,
+#   user: process.env.DB_USER,
+#   password: process.env.DB_PASSWORD,
+# });
+#
+# // Middlewares
+# app.use(cors());
+# app.use(express.json());
+#
+# // Endpoint de prueba
+# app.get('/api/health', (req, res) => {
+#   res.json({ status: 'OK', timestamp: new Date() });
+# });
+#
+# // Endpoint de ejemplo: Listar todos los registros
+# app.get('/api/items', async (req, res) => {
+#   try {
+#     const result = await pool.query('SELECT * FROM mi_tabla');
+#     res.json(result.rows);
+#   } catch (error) {
+#     res.status(500).json({ error: error.message });
+#   }
+# });
+#
+# app.listen(port, () => {
+#   console.log(`Backend corriendo en http://localhost:${port}`);
+# });
+#
+# =============================================================================
+# INSTRUCCIONES DE USO
+# =============================================================================
+#
+# 1. PREPARAR ESTRUCTURA DE CARPETAS (ver arriba)
+#
+# 2. CREAR ARCHIVO .env CON CREDENCIALES
+#
+# 3. CREAR SCRIPTS SQL EN database/
+#    - init.sql: Definir esquema (CREATE TABLE)
+#    - seed.sql: Insertar datos iniciales
+#
+# 4. IMPLEMENTAR BACKEND EN backend/
+#    - Instalar dependencias: npm install (fuera del contenedor)
+#    - Escribir lógica de negocio y endpoints
+#
+# 5. CREAR FRONTEND EN frontend/
+#    - HTML para la interfaz
+#    - JavaScript para consumir API del backend
+#
+# 6. INICIAR STACK COMPLETO:
+#    docker compose up -d
+#
+# 7. VERIFICAR SERVICIOS:
+#    docker compose ps
+#    docker compose logs -f backend
+#
+# 8. ACCESOS:
+#    - Frontend: http://localhost
+#    - Backend API: http://localhost:3000
+#    - Adminer: http://localhost:8080
+#    - PostgreSQL: localhost:5432
+#
+# 9. DESARROLLO: MODIFICAR CÓDIGO
+#    Los cambios en backend/ y frontend/ se reflejan automáticamente
+#    (gracias a los volúmenes montados)
+#
+# 10. DETENER TODO:
+#     docker compose down
+#
+# 11. ELIMINAR TODO (incluidos datos):
+#     docker compose down -v
+#
+# =============================================================================
+# TROUBLESHOOTING
+# =============================================================================
+#
+# ❌ Backend no puede conectar a la base de datos
+#    Solución: Usar 'db' como DB_HOST, no 'localhost'
+#
+# ❌ Frontend no puede hacer fetch al backend
+#    Solución: Usar 'http://localhost:3000' (desde el navegador)
+#              NO usar 'http://backend:3000'
+#
+# ❌ "Cannot find module" en backend
+#    Solución: Instalar dependencias primero
+#              cd backend && npm install
+#
+# ❌ Cambios en frontend no se reflejan
+#    Solución: Limpiar caché del navegador (Ctrl+Shift+R)
+#
+# ❌ Puerto ya está en uso
+#    Solución: Cambiar puertos en docker-compose.yml
+#              Ejemplo: "8000:80" en lugar de "80:80"
+#
+# ❌ Volumen de PostgreSQL corrupto
+#    Solución: Eliminar volumen y recrear
+#              docker compose down -v
+#              docker compose up -d
+#
+# =============================================================================
+# NOTAS DE PRODUCCIÓN
+# =============================================================================
+#
+# 🔒 SEGURIDAD:
+# - Comentar puertos expuestos innecesarios (5432, 8080)
+# - Usar contraseñas fuertes en .env
+# - Nunca subir .env al repositorio (agregar a .gitignore)
+# - Considerar usar Docker Secrets en lugar de .env
+#
+# ⚡ RENDIMIENTO:
+# - Ajustar POSTGRES_SHARED_BUFFERS según RAM disponible
+# - Configurar límites de recursos (memory, cpus)
+# - Usar imágenes alpine para reducir tamaño
+#
+# 📊 MONITOREO:
+# - Implementar logs estructurados en backend
+# - Usar docker compose logs para depuración
+# - Considerar agregar servicio de monitoreo (Prometheus, Grafana)
+#
+# 🔄 CI/CD:
+# - Automatizar builds con GitHub Actions
+# - Implementar tests antes del despliegue
+# - Usar tags de versión en imágenes
+#
+# =============================================================================
