@@ -5,7 +5,7 @@
 **Fecha:** 2025-01-XX  
 **Tema:** Linux Server para Implantación de Software  
 **Enfoque:** 80/20 - Esencial y práctico  
-**Total líneas:** **5,274 líneas** (10 archivos)
+**Total líneas:** **6,534 líneas** (11 archivos)
 
 ---
 
@@ -17,7 +17,8 @@ semana-03/
 ├── 1-teoria/
 │   └── linux-server-implantacion.md (846 líneas)
 ├── 2-practicas/
-│   └── 01-setup-servidor-cloud.md (664 líneas)
+│   ├── 01-setup-servidor-cloud.md (664 líneas)
+│   └── 02-deploy-proyecto-remoto.md (1,260 líneas)
 ├── 3-recursos/
 │   ├── README.md (214 líneas)
 │   ├── cheatsheet-linux-server.md (529 líneas)
@@ -28,7 +29,7 @@ semana-03/
 └── 4-asignación_dominios_aprendiz/
     └── README.md (207 líneas)
 
-Total: 10 archivos
+Total: 11 archivos
 ```
 
 ---
@@ -40,6 +41,7 @@ Total: 10 archivos
 **Propósito:** Plan general de sesión de 6 horas
 
 **Contenido:**
+
 - Objetivos de aprendizaje
 - Distribución de tiempo (3.5h efectivas)
 - Estructura de carpetas
@@ -48,6 +50,7 @@ Total: 10 archivos
 - Flujo de sesión (3 bloques)
 
 **Bloques de tiempo:**
+
 - Bloque 1 (90 min): Teoría + Q&A
 - Bloque 2 (60 min): Práctica 1 (Setup servidor)
 - Bloque 3 (90 min): Práctica 2 (Deploy proyecto)
@@ -61,6 +64,7 @@ Total: 10 archivos
 **Propósito:** Fundamentos de Linux Server para implantación
 
 **Secciones:**
+
 1. ¿Por Qué Linux en Servidores? (6 razones + tabla comparativa)
 2. Distribuciones Linux para Servidores (Ubuntu, Rocky, Debian)
 3. Requisitos de Hardware (RAM, CPU, disco, red)
@@ -73,6 +77,7 @@ Total: 10 archivos
 10. Autoevaluación (10 preguntas)
 
 **Características:**
+
 - Tablas de comparación
 - Ejemplos prácticos
 - Diagramas ASCII
@@ -81,15 +86,16 @@ Total: 10 archivos
 
 ---
 
-### 3. Prácticas (1 archivo, 664 líneas)
+### 3. Prácticas (2 archivos, 1,924 líneas)
 
-#### `2-practicas/01-setup-servidor-cloud.md`
+#### `2-practicas/01-setup-servidor-cloud.md` (664 líneas)
 
 **Propósito:** Configurar servidor Ubuntu en GCP desde cero
 
 **Tiempo:** 60 minutos
 
 **Pasos:**
+
 1. Crear cuenta GCP (si no tiene)
 2. Crear VM Ubuntu 22.04 LTS
 3. Conectar por SSH
@@ -100,6 +106,7 @@ Total: 10 archivos
 8. Verificación final
 
 **Características:**
+
 - Paso a paso con comandos completos
 - Explicaciones de cada comando
 - Troubleshooting integrado
@@ -107,10 +114,44 @@ Total: 10 archivos
 - Screenshots descritos
 
 **Entregables:**
+
 - Screenshot de VM corriendo
 - Output de `docker --version`
 - Output de `ufw status`
 - Archivo con datos de acceso
+
+#### `2-practicas/02-deploy-proyecto-remoto.md` (1,260 líneas)
+
+**Propósito:** Desplegar proyecto de Semana 2 en servidor remoto
+
+**Tiempo:** 90 minutos
+
+**Pasos:**
+
+1. Preparar proyecto localmente
+2. Transferir archivos (scp/rsync/git)
+3. Configurar .env para producción
+4. Desplegar con Docker Compose
+5. Configurar firewall para acceso público
+6. Verificar funcionamiento (5 niveles)
+7. Documentar proceso
+
+**Características:**
+
+- 3 métodos de transferencia (scp, rsync, git)
+- Configuración de variables para producción
+- Verificación exhaustiva (local, remoto, BD, persistencia, logs)
+- Troubleshooting de 4 problemas comunes
+- Template de DEPLOY.md
+- Comandos de mantenimiento
+
+**Entregables:**
+
+- Aplicación desplegada y accesible públicamente
+- DEPLOY.md con información completa
+- README-SERVIDOR.md con comandos útiles
+- 4 screenshots (docker ps, frontend, adminer, ufw)
+- Archivo local con datos de acceso
 
 ---
 
@@ -121,6 +162,7 @@ Total: 10 archivos
 **Propósito:** Índice y guía de uso de recursos
 
 **Contenido:**
+
 - Cuándo usar cada recurso
 - Tabla comparativa de recursos
 - Guía de búsqueda rápida
@@ -131,6 +173,7 @@ Total: 10 archivos
 **Propósito:** Referencia rápida de 15 comandos esenciales
 
 **Secciones:**
+
 1. SSH (conectar, copiar keys, config)
 2. Navegación (cd, ls, pwd)
 3. Manipulación de archivos (cp, mv, rm, mkdir)
@@ -144,6 +187,7 @@ Total: 10 archivos
 11. Flujos de trabajo típicos
 
 **Formato:**
+
 - Comando → Qué hace → Para qué → Ejemplo
 - Banderas importantes
 - Casos de uso comunes
@@ -154,6 +198,7 @@ Total: 10 archivos
 **Propósito:** Solución paso a paso de 10 problemas comunes
 
 **Problemas cubiertos:**
+
 1. No puedo conectar por SSH
 2. Permission denied al ejecutar comandos
 3. Connection refused en puerto de aplicación
@@ -166,6 +211,7 @@ Total: 10 archivos
 10. Command not found
 
 **Formato por problema:**
+
 - 🚨 Síntomas
 - 🔍 Causas posibles
 - ✅ Soluciones (paso a paso)
@@ -176,6 +222,7 @@ Total: 10 archivos
 **Propósito:** Tutorial completo para crear VM gratuita en GCP
 
 **Secciones:**
+
 1. Antes de empezar (requisitos, ventajas GCP)
 2. Crear cuenta GCP (registro, verificación)
 3. Crear máquina virtual (paso a paso)
@@ -187,6 +234,7 @@ Total: 10 archivos
 9. Comandos gcloud CLI
 
 **Características:**
+
 - Screenshots descritos
 - ⚠️ Importantes sobre costos
 - Comparación f1-micro vs e2-micro
@@ -197,6 +245,7 @@ Total: 10 archivos
 **Propósito:** Script bash para automatizar setup de servidor
 
 **Funcionalidad:**
+
 1. Actualizar sistema operativo
 2. Instalar herramientas básicas (curl, git, nano, htop)
 3. Instalar Docker + Docker Compose
@@ -206,6 +255,7 @@ Total: 10 archivos
 7. Resumen de configuración
 
 **Características:**
+
 - **Completamente comentado** (educativo)
 - Colores en output (logs claros)
 - Funciones de utilidad (log_info, log_success, log_error)
@@ -214,6 +264,7 @@ Total: 10 archivos
 - Banner informativo
 
 **Uso:**
+
 ```bash
 wget URL/script-setup-server.sh
 sudo bash script-setup-server.sh
@@ -224,6 +275,7 @@ sudo bash script-setup-server.sh
 **Propósito:** Checklist y comandos para desplegar aplicaciones
 
 **Secciones:**
+
 1. Pre-Despliegue (verificaciones locales)
 2. Despliegue (6 pasos)
    - Preparar servidor
@@ -245,6 +297,7 @@ sudo bash script-setup-server.sh
 9. Métricas de éxito
 
 **Formato:**
+
 - [ ] Checklist marcables
 - Comandos copy-paste
 - Notas de cada paso
@@ -259,6 +312,7 @@ sudo bash script-setup-server.sh
 **Propósito:** Documentación de política anticopia y sistema de dominios
 
 **Contenido:**
+
 - Propósito de asignaciones personalizadas
 - Política anticopia (estrategia y beneficios)
 - Proceso de asignación
@@ -269,6 +323,7 @@ sudo bash script-setup-server.sh
 - Rúbrica detallada
 
 **Categorías de dominios:**
+
 - Negocios (8 opciones)
 - Servicios (8 opciones)
 - Entretenimiento (8 opciones)
@@ -291,6 +346,7 @@ sudo bash script-setup-server.sh
 ### Criterios de Evaluación Cubiertos
 
 1. ✅ **Preparar la plataforma tecnológica**
+
    - Instalación de Ubuntu Server
    - Configuración de Docker
    - Setup de firewall
@@ -303,12 +359,14 @@ sudo bash script-setup-server.sh
 ### Saberes Esenciales Abordados
 
 **Conceptos:**
+
 - ✅ Sistemas operativos de servidores (Linux)
 - ✅ Características de Linux Server
 - ✅ Requisitos mínimos de hardware
 - ✅ Hosting en la nube (GCP)
 
 **Procedimientos:**
+
 - ✅ Preparar plataforma tecnológica
 - ✅ Verificar requisitos de hardware
 - ✅ Configurar servicios (Docker, firewall)
@@ -322,25 +380,26 @@ sudo bash script-setup-server.sh
 
 | Tipo | Archivos | Líneas | % |
 |------|----------|--------|---|
-| Teoría | 1 | 846 | 16% |
-| Prácticas | 1 | 664 | 13% |
-| Recursos | 6 | 2,569 | 49% |
-| Asignaciones | 1 | 207 | 4% |
-| READMEs | 1 | 188 | 4% |
-| **TOTAL** | **10** | **5,274** | **100%** |
+| Teoría | 1 | 846 | 13% |
+| Prácticas | 2 | 1,924 | 29% |
+| Recursos | 6 | 2,569 | 39% |
+| Asignaciones | 1 | 207 | 3% |
+| READMEs | 2 | 988 | 15% |
+| **TOTAL** | **12** | **6,534** | **100%** |
 
 ### Comparación con Semana 2
 
 | Métrica | Semana 2 | Semana 3 | Diferencia |
 |---------|----------|----------|------------|
-| Archivos | 14 | 10 | -4 (-29%) |
-| Líneas totales | 7,136 | 5,274 | -1,862 (-26%) |
+| Archivos | 14 | 12 | -2 (-14%) |
+| Líneas totales | 7,136 | 6,534 | -602 (-8%) |
 | Teoría | 916 | 846 | -70 (-8%) |
-| Prácticas | 1,260 (2) | 664 (1) | -596 (-47%) |
+| Prácticas | 1,260 (2) | 1,924 (2) | +664 (+53%) |
 | Recursos | 3,380 | 2,569 | -811 (-24%) |
 | SVG diagramas | 5 | 0 | -5 |
 
 **Razón de reducción:**
+
 - Semana 3 es más **práctica** que teórica
 - Solo 1 práctica principal (vs 2 en Semana 2)
 - No incluye diagramas SVG (pueden añadirse si se desea)
@@ -348,13 +407,13 @@ sudo bash script-setup-server.sh
 
 ### Tiempo de Contenido
 
-| Sección | Tiempo lectura/ejecución |
-|---------|--------------------------|
-| README | 5 min |
-| Teoría | 60 min |
-| Práctica 1 | 60 min |
-| Recursos (consulta) | Variable |
-| **Total sesión** | **~3.5 horas** (de 6h sesión) |
+| Sección             | Tiempo lectura/ejecución      |
+| ------------------- | ----------------------------- |
+| README              | 5 min                         |
+| Teoría              | 60 min                        |
+| Práctica 1          | 60 min                        |
+| Recursos (consulta) | Variable                      |
+| **Total sesión**    | **~3.5 horas** (de 6h sesión) |
 
 ---
 
@@ -410,13 +469,13 @@ sudo bash script-setup-server.sh
 1. Teoría (60 min)
    ├─ Leer: 1-teoria/linux-server-implantacion.md
    └─ Autoevaluación (10 preguntas)
-   
+
 2. Práctica (60 min)
    ├─ Seguir: 2-practicas/01-setup-servidor-cloud.md
    ├─ Crear VM en GCP
    ├─ Instalar Docker
    └─ Configurar firewall
-   
+
 3. Despliegue (90 min)
    ├─ Usar: 3-recursos/template-deploy.md
    ├─ Transferir proyecto Semana 2
@@ -436,6 +495,7 @@ sudo bash script-setup-server.sh
 Al final de la semana, el aprendiz entrega:
 
 1. **Screenshots:**
+
    - [ ] VM corriendo en GCP
    - [ ] Output de `docker --version`
    - [ ] Output de `ufw status`
@@ -443,6 +503,7 @@ Al final de la semana, el aprendiz entrega:
    - [ ] Adminer conectado a PostgreSQL
 
 2. **Documentación:**
+
    - [ ] DEPLOY.md (basado en template)
    - [ ] Archivo con datos de acceso (IP, usuario, puertos)
    - [ ] Problemas encontrados y soluciones
@@ -466,6 +527,7 @@ Al final de la semana, el aprendiz entrega:
 ### Para Semana 4
 
 **Temas sugeridos:**
+
 - Windows Server (contrastar con Linux)
 - Certificados SSL/TLS (HTTPS)
 - Nginx reverse proxy (avanzado)
@@ -479,11 +541,13 @@ Al final de la semana, el aprendiz entrega:
 ### Contenido Adicional
 
 1. **Diagramas SVG:**
+
    - Arquitectura servidor
    - Flujo de despliegue
    - Estructura de red/firewall
 
 2. **Práctica adicional:**
+
    - Migración de datos (dump/restore)
    - Backup automatizado
    - Múltiples ambientes (staging/production)
@@ -496,6 +560,7 @@ Al final de la semana, el aprendiz entrega:
 ### Herramientas
 
 1. **Script generador de asignaciones:**
+
    ```python
    # generar-asignaciones.py
    # Lee lista de aprendices
@@ -513,6 +578,7 @@ Al final de la semana, el aprendiz entrega:
 ## ✅ Checklist de Completitud
 
 ### Estructura
+
 - [x] README principal
 - [x] 1-teoria/ (1 archivo)
 - [x] 2-practicas/ (1 archivo)
@@ -520,6 +586,7 @@ Al final de la semana, el aprendiz entrega:
 - [x] 4-asignación_dominios_aprendiz/ (1 README)
 
 ### Calidad
+
 - [x] Código comentado (educativo)
 - [x] Comandos copy-paste
 - [x] Troubleshooting integrado
@@ -527,12 +594,14 @@ Al final de la semana, el aprendiz entrega:
 - [x] Seguridad incluida
 
 ### Alineación
+
 - [x] Resultado de aprendizaje cubierto
 - [x] Criterios de evaluación aplicables
 - [x] Saberes esenciales abordados
 - [x] Política anticopia implementada
 
 ### Usabilidad
+
 - [x] Tiempos estimados claros
 - [x] Requisitos previos definidos
 - [x] Entregables especificados
@@ -557,7 +626,7 @@ Al final de la semana, el aprendiz entrega:
 ✅ **Política anticopia** bien definida  
 ✅ Tiempos **realistas** (6h sesión)  
 ✅ **Seguridad** en todos los pasos  
-✅ Enfoque **cloud-first** (GCP Free Tier)  
+✅ Enfoque **cloud-first** (GCP Free Tier)
 
 ### Palabras Clave
 
