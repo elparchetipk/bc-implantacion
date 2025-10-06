@@ -152,6 +152,7 @@ Al generar contenido, asegúrate de que los participantes puedan:
 ### Estructura de Asignaciones
 
 Cada asignación debe:
+
 - Describir los **requisitos funcionales generales**
 - Especificar los **entregables técnicos** (capturas, código, documentación)
 - Incluir **criterios de adaptación** para que el aprendiz personalice según su dominio
@@ -167,6 +168,7 @@ Cada asignación debe:
 ### Evaluación
 
 El instructor verifica que:
+
 - ✅ El código refleja el dominio asignado (nombres de tablas, variables, etc.)
 - ✅ El aprendiz entiende lo que hace (no es copia-pega)
 - ✅ La implementación está correctamente comentada

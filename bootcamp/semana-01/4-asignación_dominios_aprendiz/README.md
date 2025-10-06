@@ -29,6 +29,7 @@ Cada aprendiz recibe:
 ## 🔒 Confidencialidad
 
 ### Esta carpeta está:
+
 - ❌ **Ignorada en git** (`.gitignore`)
 - ✅ **Visible en el proyecto** (no en `.git/info/exclude`)
 - 🔐 **Accesible solo por el instructor**
@@ -54,15 +55,18 @@ Cada aprendiz recibe:
 ## 📝 Ejemplo de Dominio
 
 ### Aprendiz: [Nombre Aleatorio 001]
+
 **Dominio Asignado**: **Restaurante**
 
 **Contexto**:
+
 - Restaurante de comida italiana con 15 mesas
 - Menú con 40 platos (entradas, platos fuertes, postres)
 - 8 empleados (meseros, cocineros, cajero)
 - Sistema de reservas y pedidos
 
 **Entidades principales**:
+
 - `mesas` (id, numero, capacidad, ubicacion)
 - `menu` (id, nombre, categoria, precio, ingredientes)
 - `empleados` (id, nombre, puesto, turno, salario)
@@ -70,6 +74,7 @@ Cada aprendiz recibe:
 - `reservas` (id, cliente_nombre, mesa_id, fecha_hora, personas)
 
 **Asignación Semana 1**:
+
 1. Documentar especificaciones de hardware para este restaurante
 2. Instalar Docker y crear contenedor PostgreSQL
 3. Crear las tablas del dominio "Restaurante"
@@ -82,16 +87,19 @@ Cada aprendiz recibe:
 ### El instructor verifica:
 
 1. **Código refleja el dominio**
+
    - Nombres de tablas coherentes con dominio asignado
    - Variables con nomenclatura del contexto
    - Datos de ejemplo realistas
 
 2. **Comprensión demostrada**
+
    - Comentarios explicativos (¿Qué? ¿Para qué? ¿Cómo?)
    - Adaptación inteligente de ejemplos generales
    - Resolución de problemas contextualizados
 
 3. **Requisitos técnicos cumplidos**
+
    - Docker instalado y funcionando
    - PostgreSQL corriendo en contenedor
    - Persistencia con volúmenes
@@ -160,18 +168,21 @@ CREATE TABLE libros (
 ## 🎓 Beneficios de esta Metodología
 
 ### Para el Aprendiz:
+
 - ✅ Aprendizaje profundo (no superficial)
 - ✅ Comprensión real de conceptos
 - ✅ Capacidad de adaptación a contextos diferentes
 - ✅ Portfolio personalizado
 
 ### Para el Instructor:
+
 - ✅ Detección fácil de copias
 - ✅ Evaluación justa e individual
 - ✅ Evidencia de comprensión real
 - ✅ Retroalimentación específica
 
 ### Para el Bootcamp:
+
 - ✅ Integridad académica
 - ✅ Calidad del aprendizaje
 - ✅ Preparación para el mundo real
@@ -214,7 +225,7 @@ Pool de 50+ dominios únicos:
 29. Mueblería
 30. Agencia de Empleos
 
-*(Continuar hasta 50+ dominios únicos)*
+_(Continuar hasta 50+ dominios únicos)_
 
 ---
 
@@ -239,6 +250,7 @@ Cada semana, el aprendiz recibe:
 - Recibe retroalimentación contextualizada
 
 **Ejemplo**:
+
 - Semana 1: Especificaciones de hardware + PostgreSQL con datos del dominio
 - Semana 2: Docker Compose con servicios del dominio
 - Semana 3: Migración de datos del sistema antiguo del dominio
@@ -254,7 +266,7 @@ Al finalizar el bootcamp, cada aprendiz tiene:
 ✅ **Contextualizado** en un dominio de negocio real  
 ✅ **Documentación** técnica profesional  
 ✅ **Portfolio** único y demostrable  
-✅ **Comprensión profunda** de todos los conceptos  
+✅ **Comprensión profunda** de todos los conceptos
 
 ---
 

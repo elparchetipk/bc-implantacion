@@ -18,6 +18,7 @@ Esta política establece un sistema de asignación de **dominios únicos y aleat
 **Problema**: Aprendiz A completa la práctica, comparte el código con Aprendices B, C, D...
 
 **Resultado**:
+
 - ❌ Código idéntico entre múltiples aprendices
 - ❌ No hay evidencia de comprensión real
 - ❌ Aprendices aprueban sin aprender
@@ -25,6 +26,7 @@ Esta política establece un sistema de asignación de **dominios únicos y aleat
 - ❌ Injusticia para quien sí estudia
 
 **Ejemplo real**:
+
 ```sql
 -- Todos entregan exactamente esto:
 CREATE TABLE usuarios (
@@ -41,6 +43,7 @@ CREATE TABLE usuarios (
 **Solución**: Cada aprendiz trabaja sobre un dominio de negocio diferente.
 
 **Resultado**:
+
 - ✅ Código único por aprendiz (diferente contexto)
 - ✅ Evidencia clara de comprensión
 - ✅ Imposible copiar sin adaptar (requiere entender)
@@ -50,6 +53,7 @@ CREATE TABLE usuarios (
 **Ejemplo con dominios**:
 
 **Aprendiz A (Restaurante)**:
+
 ```sql
 -- ¿Qué? Tabla para platos del menú
 -- ¿Para qué? Gestionar catálogo de comidas
@@ -61,6 +65,7 @@ CREATE TABLE menu (
 ```
 
 **Aprendiz B (Biblioteca)**:
+
 ```sql
 -- ¿Qué? Tabla para libros del catálogo
 -- ¿Para qué? Gestionar inventario de libros
@@ -72,6 +77,7 @@ CREATE TABLE libros (
 ```
 
 **Aprendiz C (Gimnasio)**:
+
 ```sql
 -- ¿Qué? Tabla para miembros del gimnasio
 -- ¿Para qué? Gestionar inscripciones
@@ -93,28 +99,34 @@ CREATE TABLE miembros (
 Categorías de dominios:
 
 #### A. Comercio y Retail
+
 - Restaurante, Cafetería, Panadería
 - Tienda de Ropa, Zapatería, Joyería
 - Supermercado, Farmacia, Ferretería
 
 #### B. Servicios Profesionales
+
 - Clínica Veterinaria, Consultorio Médico, Clínica Dental
 - Bufete de Abogados, Notaría, Agencia de Seguros
 - Salón de Belleza, Spa, Barbería
 
 #### C. Educación y Cultura
+
 - Biblioteca, Academia de Música, Centro Educativo
 - Museo, Galería de Arte, Teatro
 
 #### D. Entretenimiento y Deporte
+
 - Gimnasio, Club Deportivo, Escuela de Natación
 - Cine, Bolera, Arcade
 
 #### E. Inmobiliario y Automotriz
+
 - Inmobiliaria, Constructora, Arquitectos
 - Taller Mecánico, Concesionario, Parqueadero
 
 #### F. Logística y Turismo
+
 - Agencia de Viajes, Hotel, Hostal
 - Agencia de Mudanzas, Courier, Almacén
 
@@ -141,6 +153,7 @@ Categorías de dominios:
 ```
 
 **Garantías**:
+
 - ✅ Un dominio = Un aprendiz
 - ✅ Aleatorio (no hay favoritismos)
 - ✅ Registrado y auditable
@@ -177,42 +190,49 @@ Categorías de dominios:
 **Tipo**: Restaurante de comida italiana  
 **Ubicación**: Bogotá, Zona T  
 **Tamaño**: 15 mesas (60 personas capacidad)  
-**Horario**: Martes a Domingo, 12:00 - 22:00  
+**Horario**: Martes a Domingo, 12:00 - 22:00
 
 ## Descripción
 
-La Trattoria es un restaurante familiar que ofrece comida italiana 
-auténtica. Cuenta con un menú de 40 platos entre entradas, pastas, 
-pizzas, carnes y postres. El restaurante tiene 8 empleados y atiende 
+La Trattoria es un restaurante familiar que ofrece comida italiana
+auténtica. Cuenta con un menú de 40 platos entre entradas, pastas,
+pizzas, carnes y postres. El restaurante tiene 8 empleados y atiende
 aproximadamente 100 clientes al día.
 
 ## Entidades Principales
 
 ### 1. Mesas
+
 - Atributos: numero, capacidad, ubicacion, estado
 - Relaciones: pedidos, reservas
 
 ### 2. Menu
+
 - Atributos: nombre, categoria, precio, ingredientes, disponible
 - Categorías: entradas, pastas, pizzas, carnes, postres, bebidas
 
 ### 3. Empleados
+
 - Atributos: nombre, puesto, turno, salario, fecha_ingreso
 - Puestos: chef, sous_chef, mesero, cajero, hostess
 
 ### 4. Pedidos
+
 - Atributos: mesa_id, empleado_id, items, total, estado, fecha
 - Estados: pendiente, en_preparacion, servido, pagado
 
 ### 5. Reservas
+
 - Atributos: cliente_nombre, telefono, mesa_id, fecha_hora, personas
 
 ### 6. Inventario
+
 - Atributos: ingrediente, cantidad, unidad, minimo_stock, proveedor
 
 ## Datos de Ejemplo
 
 ### Menu (10 platos)
+
 1. Bruschetta al Pomodoro - Entrada - $18,000
 2. Carpaccio di Manzo - Entrada - $25,000
 3. Spaghetti Carbonara - Pasta - $32,000
@@ -225,6 +245,7 @@ aproximadamente 100 clientes al día.
 10. Panna Cotta - Postre - $14,000
 
 ### Empleados (8 personas)
+
 1. Giovanni Rossi - Chef - Tiempo Completo
 2. Marco Bianchi - Sous Chef - Tiempo Completo
 3. Laura Conti - Mesera - Medio Tiempo (Cena)
@@ -245,19 +266,23 @@ aproximadamente 100 clientes al día.
 ## Adaptación Semanal
 
 ### Semana 1: Hardware e Instalación
+
 - Documentar hardware necesario para "La Trattoria"
 - Instalar Docker
 - Crear BD con tablas del restaurante
 
 ### Semana 2: Docker Compose
+
 - Stack completo (DB + API + Web)
 - Datos de ejemplo del restaurante
 
 ### Semana 3: Migración
+
 - Plan de migración desde sistema antiguo
 - Scripts de transformación de datos
 
 ### Semana 4: Respaldo
+
 - Estrategia de backup del restaurante
 - Restauración de datos
 
@@ -270,16 +295,17 @@ aproximadamente 100 clientes al día.
 
 ### Rúbrica Adaptada
 
-| Criterio | Peso | Evaluación |
-|----------|------|------------|
-| **Requisitos Técnicos** | 40% | Funciona Docker, PostgreSQL, volúmenes |
-| **Adaptación al Dominio** | 30% | Nombres coherentes, datos realistas |
-| **Comprensión Demostrada** | 20% | Comentarios apropiados, explicación |
-| **Originalidad** | 10% | No es copia de otro aprendiz |
+| Criterio                   | Peso | Evaluación                             |
+| -------------------------- | ---- | -------------------------------------- |
+| **Requisitos Técnicos**    | 40%  | Funciona Docker, PostgreSQL, volúmenes |
+| **Adaptación al Dominio**  | 30%  | Nombres coherentes, datos realistas    |
+| **Comprensión Demostrada** | 20%  | Comentarios apropiados, explicación    |
+| **Originalidad**           | 10%  | No es copia de otro aprendiz           |
 
 ### Detección de Copia
 
 **Señales de alerta**:
+
 - ❌ Nombres de tablas/variables idénticos entre aprendices de diferentes dominios
 - ❌ Comentarios palabra por palabra iguales
 - ❌ Estructura de código idéntica (incluso con nombres cambiados)
@@ -296,20 +322,22 @@ aproximadamente 100 clientes al día.
 **Ubicación**: `_docs/APRENDICES-3147234.md`
 
 **Contenido**:
+
 ```markdown
 # Aprendices Ficha 3147234
 
 ## Cohorte 2025-2
 
-| ID | Nombre Completo | Dominio Asignado | Email |
-|----|----------------|------------------|-------|
-| 001 | [Nombre] | Restaurante | email@sena.edu.co |
-| 002 | [Nombre] | Biblioteca | email@sena.edu.co |
-| 003 | [Nombre] | Gimnasio | email@sena.edu.co |
-| ... | ... | ... | ... |
+| ID  | Nombre Completo | Dominio Asignado | Email             |
+| --- | --------------- | ---------------- | ----------------- |
+| 001 | [Nombre]        | Restaurante      | email@sena.edu.co |
+| 002 | [Nombre]        | Biblioteca       | email@sena.edu.co |
+| 003 | [Nombre]        | Gimnasio         | email@sena.edu.co |
+| ... | ...             | ...              | ...               |
 ```
 
 **Seguridad**:
+
 - ❌ Ignorado en git (`.gitignore`)
 - ✅ Visible en proyecto (acceso local)
 - 🔐 Solo instructor tiene acceso
@@ -322,11 +350,13 @@ aproximadamente 100 clientes al día.
 ### Material Compartido (Teoría y Prácticas)
 
 #### ✅ PERMITIDO:
+
 - Ejemplos genéricos: "Sistema de gestión", "Aplicación empresarial"
 - Tablas abstractas: `entidades`, `items`, `registros`
 - Conceptos universales: usuario, producto, transacción
 
 #### ❌ PROHIBIDO:
+
 - Mencionar nombres de aprendices: "Como hizo Juan..."
 - Mencionar dominios específicos: "Para el restaurante..."
 - Dar ejemplos de dominios asignados
@@ -335,13 +365,15 @@ aproximadamente 100 clientes al día.
 ### Comunicación con Aprendices
 
 **Correcto**:
-> "Adapta este ejemplo a tu dominio de negocio. Donde dice 'entidades', 
-> usa el nombre correspondiente de tu contexto (ej: si tu dominio es 
+
+> "Adapta este ejemplo a tu dominio de negocio. Donde dice 'entidades',
+> usa el nombre correspondiente de tu contexto (ej: si tu dominio es
 > una tienda, podría ser 'productos')."
 
 **Incorrecto**:
+
 > "Pedro, en tu restaurante debes crear la tabla 'menu'..."  
-> *(Expone el dominio de Pedro a otros aprendices)*
+> _(Expone el dominio de Pedro a otros aprendices)_
 
 ---
 
@@ -488,6 +520,7 @@ umbral = 0.85  # 85% de similitud = sospechoso
 **Situación**: Aprendiz A (Restaurante) copia código de Aprendiz B (Biblioteca).
 
 **Resultado**:
+
 ```sql
 -- Aprendiz A entrega (supuestamente Restaurante):
 CREATE TABLE libros (  -- ❌ No tiene sentido en un restaurante
@@ -499,7 +532,8 @@ CREATE TABLE libros (  -- ❌ No tiene sentido en un restaurante
 
 **Detección**: Inmediata (tabla "libros" en contexto de restaurante).
 
-**Acción**: 
+**Acción**:
+
 1. Conversación individual
 2. Oportunidad de rehacer
 3. Si persiste, sanción académica
@@ -515,6 +549,7 @@ CREATE TABLE libros (  -- ❌ No tiene sentido en un restaurante
 **Ejemplo**:
 
 **Código de C (Gimnasio)**:
+
 ```sql
 CREATE TABLE miembros (
     id SERIAL PRIMARY KEY,
@@ -523,6 +558,7 @@ CREATE TABLE miembros (
 ```
 
 **Código de D (Farmacia)** - Adaptado correctamente:
+
 ```sql
 CREATE TABLE clientes (
     id SERIAL PRIMARY KEY,
@@ -539,6 +575,7 @@ CREATE TABLE clientes (
 **Situación**: Instructor muestra ejemplo en clase.
 
 **Correcto** (genérico):
+
 ```sql
 -- Ejemplo genérico en clase
 CREATE TABLE entidades (
@@ -548,6 +585,7 @@ CREATE TABLE entidades (
 ```
 
 **Aprendiz E (Hotel)** adapta:
+
 ```sql
 -- ¿Qué? Tabla para habitaciones del hotel
 -- ¿Para qué? Gestionar inventario de cuartos

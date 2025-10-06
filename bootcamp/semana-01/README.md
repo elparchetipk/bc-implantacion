@@ -57,6 +57,7 @@ Al finalizar esta semana, los aprendices serán capaces de:
 ### Bloque 1: Introducción y Fundamentos (2 horas)
 
 - **Hora 1 (0:00 - 1:00)** | Bienvenida y Teoría: Proceso de implantación de software
+
   - 0:00 - 0:15 | Bienvenida y presentación del bootcamp
   - 0:15 - 1:00 | Proceso de implantación en 5 fases
 
@@ -73,6 +74,7 @@ Al finalizar esta semana, los aprendices serán capaces de:
 ### Bloque 2: Contenedores y Docker (2 horas)
 
 - **Hora 3 (2:30 - 3:30)** | Teoría: Introducción a Docker
+
   - 2:30 - 3:00 | ¿Qué son contenedores? Docker vs VMs
   - 3:00 - 3:30 | Conceptos: imágenes, contenedores, volúmenes, redes
 
@@ -85,6 +87,7 @@ Al finalizar esta semana, los aprendices serán capaces de:
 ### Bloque 3: Práctica Aplicada (1.5 horas)
 
 - **Hora 5 (4:30 - 5:30)** | Práctica: Primeros Contenedores
+
   - 4:30 - 5:00 | Primer contenedor: Hello World
   - 5:00 - 5:30 | Explorar Docker (images, containers, ps, logs)
 
