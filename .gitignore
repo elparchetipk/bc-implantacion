@@ -296,3 +296,9 @@ kubeconfig
 !assets/*.png
 !assets/*.jpg
 !docs/**/*.md
+
+# ============================================
+# Privacidad - Reportes de Asignaciones
+# ============================================
+# Reporte confidencial de asignaciones de dominios (solo instructor)
+**/REPORTE-ASIGNACIONES.md
