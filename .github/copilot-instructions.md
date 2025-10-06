@@ -4,6 +4,10 @@
 
 Este bootcamp de 9 semanas está diseñado para desarrollar la competencia de **Implantación de Software**, con sesiones semanales de 6 horas. El enfoque principal es capacitar a los participantes para planear y ejecutar actividades de implantación de software de acuerdo con las condiciones del sistema.
 
+### Público Objetivo
+
+**Aprendices de Análisis y Desarrollo de Software (ADSO)** del Centro de Gestión de Mercados, Logística y Tecnologías de la Información (CGMLTI) - Regional Distrito Capital, SENA Colombia.
+
 ## Resultado de Aprendizaje
 
 **PLANEAR ACTIVIDADES DE IMPLANTACIÓN DEL SOFTWARE DE ACUERDO CON LAS CONDICIONES DEL SISTEMA**
@@ -167,14 +171,20 @@ Estructura sugerida:
 ### Herramientas Complementarias
 
 - **Transferencia de Archivos**: SFTP, SCP, rsync
-- **Hosting/Cloud**: AWS, Azure, DigitalOcean (tier gratuito para prácticas)
+- **Hosting/Cloud**:
+  - Google Cloud Platform (GCP) - Free tier y Always Free products (recomendado)
+  - AWS Free Tier
+  - Azure for Students
+  - DigitalOcean
 - **Backup**: rsync, pg_dump/pg_restore, Docker volumes backup
 - **Documentación**: Markdown, SVG para diagramas
 - **Orquestación**: Docker Compose, introducción a Kubernetes (opcional)
 
 ## Consideraciones Especiales
 
+- **Público Objetivo**: Aprendices de Análisis y Desarrollo de Software (ADSO) del Centro de Gestión de Mercados, Logística y Tecnologías de la Información (CGMLTI) - Regional Distrito Capital, SENA Colombia
 - **Ambientes de práctica**: Prioriza uso de contenedores Docker para entornos reproducibles y seguros
+- **Cloud para prácticas**: Google Cloud Platform (GCP) es la opción recomendada por su generosa capa gratuita y productos Always Free (incluye Compute Engine f1-micro, Cloud Storage, Cloud Functions)
 - **Licenciamiento**: Usa tecnologías open source (Docker, PostgreSQL, Nginx) para evitar costos
 - **Escalabilidad**: Los ejemplos deben ser escalables de pequeñas a grandes implementaciones usando contenedores
 - **Portabilidad**: Enfatiza la portabilidad entre ambientes (dev, staging, production) con Docker

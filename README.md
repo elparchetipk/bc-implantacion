@@ -6,6 +6,10 @@
 
 Bootcamp intensivo de 9 semanas enfocado en la competencia de **Implantación de Software**, diseñado para capacitar a los participantes en la planificación y ejecución de actividades de implantación de software de acuerdo con las condiciones del sistema.
 
+### Público Objetivo
+
+**Aprendices de Análisis y Desarrollo de Software (ADSO)** del Centro de Gestión de Mercados, Logística y Tecnologías de la Información (CGMLTI) - Regional Distrito Capital, SENA Colombia.
+
 ### Resultado de Aprendizaje
 
 **Planear actividades de implantación del software de acuerdo con las condiciones del sistema**
@@ -73,6 +77,7 @@ Bootcamp intensivo de 9 semanas enfocado en la competencia de **Implantación de
 ## 📚 Documentación
 
 - **[Guía de Inicio Rápido](./_docs/QUICK-START.md)** - Instalación y configuración
+- **[Google Cloud Platform Setup](./_docs/GCP-SETUP.md)** - Configuración de GCP para prácticas (recomendado)
 - **[Convención de Nomenclatura SVG](./_docs/CAMBIOS-NOMENCLATURA-SVG.md)** - Lineamientos de recursos gráficos
 - **[Ejemplo de Código](./_docs/ejemplo-codigo-comentado.yml)** - Plantilla de código educativo
 - **[Documentación de Scripts](./scripts/README.md)** - Scripts de automatización

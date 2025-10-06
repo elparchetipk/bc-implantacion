@@ -2,6 +2,10 @@
 
 ¡Gracias por tu interés en contribuir al Bootcamp de Implantación de Software! 🎉
 
+## 🎯 Sobre el Proyecto
+
+Este bootcamp está diseñado para **Aprendices de Análisis y Desarrollo de Software (ADSO)** del Centro de Gestión de Mercados, Logística y Tecnologías de la Información (CGMLTI) - Regional Distrito Capital, SENA Colombia.
+
 ## 📋 Tabla de Contenidos
 
 - [Código de Conducta](#código-de-conducta)
