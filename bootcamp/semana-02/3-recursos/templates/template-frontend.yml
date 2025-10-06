@@ -1,15 +1,15 @@
 # ============================================================================
 # TEMPLATE CON FRONTEND - Stack completo con interfaz de usuario
 # ============================================================================
-# 
+#
 # ¿QUÉ ES ESTO?
 # - Plantilla para aplicaciones web con Frontend + Base de datos
 # - Incluye Nginx para servir archivos estáticos (HTML/CSS/JS)
-# 
+#
 # ¿PARA QUÉ SIRVE?
 # - Proyectos que requieren interfaz de usuario personalizada
 # - Separación clara entre presentación y datos
-# 
+#
 # ¿CÓMO USARLO?
 # 1. Copiar este archivo a tu proyecto como docker-compose.yml
 # 2. Crear carpeta 'frontend/' con tus archivos HTML/CSS/JS
@@ -28,20 +28,20 @@ services:
     image: nginx:alpine
     container_name: mi_frontend
     restart: unless-stopped
-    
+
     # Volúmenes - Montar archivos estáticos
     # ¿Qué? - Carpeta local 'frontend/' montada en el servidor Nginx
     # ¿Para qué? - Servir tus archivos HTML/CSS/JS
     # ¿Cómo? - Cualquier cambio en la carpeta se refleja inmediatamente
     volumes:
-      - ./frontend:/usr/share/nginx/html:ro  # :ro = solo lectura
-    
+      - ./frontend:/usr/share/nginx/html:ro # :ro = solo lectura
+
     # Puertos - Interfaz web
     # ¿Qué? - Exponer puerto 80 (HTTP estándar)
     # ¿Para qué? - Acceder desde http://localhost
     ports:
-      - "80:80"
-    
+      - '80:80'
+
     # Dependencias - Orden de inicio
     # ¿Qué? - El frontend depende de la base de datos
     # ¿Para qué? - Asegurar que la DB esté lista antes de mostrar la interfaz
@@ -58,29 +58,29 @@ services:
     image: postgres:15-alpine
     container_name: mi_base_datos
     restart: unless-stopped
-    
+
     # Variables de entorno
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_HOST_AUTH_METHOD: scram-sha-256
-    
+
     # Volúmenes - Persistencia y scripts
     volumes:
       - postgres_data:/var/lib/postgresql/data
       # Script de inicialización (crear tablas)
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-    
+
     # Puertos - Acceso desde el host (opcional)
     # ¿Qué? - Exponer PostgreSQL para herramientas externas
     # ¿Para qué? - Conectar con pgAdmin, DBeaver, etc.
     ports:
-      - "5432:5432"
-    
+      - '5432:5432'
+
     # Healthcheck
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER} -d ${DB_NAME}']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -95,14 +95,14 @@ services:
     image: adminer:latest
     container_name: mi_adminer
     restart: unless-stopped
-    
+
     ports:
-      - "8080:8080"
-    
+      - '8080:8080'
+
     depends_on:
       db:
         condition: service_healthy
-    
+
     environment:
       ADMINER_DEFAULT_SERVER: db
 
@@ -112,7 +112,6 @@ services:
 volumes:
   postgres_data:
     driver: local
-
 # =============================================================================
 # ESTRUCTURA DE CARPETAS REQUERIDA
 # =============================================================================
@@ -141,9 +140,9 @@ volumes:
 # <body>
 #     <h1>Bienvenido a Mi Aplicación</h1>
 #     <p>Sistema de gestión de [TU DOMINIO]</p>
-#     
+#
 #     <!-- Aquí irían tus formularios, tablas, etc. -->
-#     
+#
 #     <script src="script.js"></script>
 # </body>
 # </html>
@@ -161,7 +160,7 @@ volumes:
 # );
 #
 # -- Insertar datos de prueba
-# INSERT INTO usuarios (nombre, email) VALUES 
+# INSERT INTO usuarios (nombre, email) VALUES
 #     ('Juan Pérez', 'juan@ejemplo.com'),
 #     ('María García', 'maria@ejemplo.com');
 #

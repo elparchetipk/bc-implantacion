@@ -1,15 +1,15 @@
 # ============================================================================
 # TEMPLATE BÁSICO - Stack PostgreSQL + Adminer
 # ============================================================================
-# 
+#
 # ¿QUÉ ES ESTO?
 # - Plantilla lista para copiar y pegar
 # - Stack mínimo para comenzar: Base de datos + Interfaz web
-# 
+#
 # ¿PARA QUÉ SIRVE?
 # - Iniciar rápidamente un proyecto con persistencia de datos
 # - Gestionar la base de datos desde el navegador con Adminer
-# 
+#
 # ¿CÓMO USARLO?
 # 1. Copiar este archivo a tu proyecto como docker-compose.yml
 # 2. Crear archivo .env en la misma carpeta
@@ -28,16 +28,16 @@ services:
     image: postgres:15-alpine
     container_name: mi_base_datos
     restart: unless-stopped
-    
+
     # Variables de entorno - Configuración de PostgreSQL
     # ¿Qué? - Credenciales y configuración inicial
     # ¿Para qué? - Crear la base de datos automáticamente al primer inicio
     environment:
-      POSTGRES_DB: ${DB_NAME}           # Nombre de la base de datos
-      POSTGRES_USER: ${DB_USER}         # Usuario administrador
+      POSTGRES_DB: ${DB_NAME} # Nombre de la base de datos
+      POSTGRES_USER: ${DB_USER} # Usuario administrador
       POSTGRES_PASSWORD: ${DB_PASSWORD} # Contraseña (¡nunca en texto plano!)
       POSTGRES_HOST_AUTH_METHOD: scram-sha-256
-    
+
     # Volúmenes - Persistencia de datos
     # ¿Qué? - Named volume para guardar los datos
     # ¿Para qué? - Que los datos sobrevivan al reinicio del contenedor
@@ -46,19 +46,19 @@ services:
       - postgres_data:/var/lib/postgresql/data
       # Opcional: Script de inicialización
       # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    
+
     # Puertos - Acceso desde el host (opcional)
     # ¿Qué? - Exponer el puerto 5432 de PostgreSQL
     # ¿Para qué? - Conectarse con herramientas externas (pgAdmin, DBeaver)
     # ¿Cómo? - host:5432 -> contenedor:5432
     ports:
-      - "5432:5432"
-    
+      - '5432:5432'
+
     # Healthcheck - Verificación de estado
     # ¿Qué? - Comando para verificar si PostgreSQL está listo
     # ¿Para qué? - Asegurar que la DB esté operativa antes de conectar otros servicios
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER} -d ${DB_NAME}']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -73,23 +73,23 @@ services:
     image: adminer:latest
     container_name: mi_adminer
     restart: unless-stopped
-    
+
     # Puertos - Interfaz web
     # ¿Qué? - Exponer Adminer en el puerto 8080
     # ¿Para qué? - Acceder desde el navegador
     ports:
-      - "8080:8080"
-    
+      - '8080:8080'
+
     # Dependencias - Orden de inicio
     # ¿Qué? - Este servicio depende del servicio 'db'
     # ¿Para qué? - Esperar a que PostgreSQL esté listo antes de iniciar Adminer
     depends_on:
       db:
         condition: service_healthy
-    
+
     # Variables de entorno - Configuración de Adminer
     environment:
-      ADMINER_DEFAULT_SERVER: db  # Conectar automáticamente a 'db'
+      ADMINER_DEFAULT_SERVER: db # Conectar automáticamente a 'db'
 
 # =============================================================================
 # VOLÚMENES - Almacenamiento Persistente
@@ -99,7 +99,7 @@ services:
 # ¿Cómo? - Docker crea y gestiona el volumen automáticamente
 volumes:
   postgres_data:
-    driver: local  # Driver predeterminado (almacenamiento local)
+    driver: local # Driver predeterminado (almacenamiento local)
 
 # =============================================================================
 # INSTRUCCIONES DE USO

@@ -8,20 +8,20 @@
 
 ## 📋 Índice Rápido
 
-| # | Problema | Página |
-|---|----------|--------|
-| 1 | [Puerto ya está en uso](#1-puerto-ya-está-en-uso) | ↓ |
-| 2 | [Conexión rechazada (Connection refused)](#2-conexión-rechazada-connection-refused) | ↓ |
-| 3 | [Adminer no puede conectar a PostgreSQL](#3-adminer-no-puede-conectar-a-postgresql) | ↓ |
-| 4 | [Cambios en .env no se aplican](#4-cambios-en-env-no-se-aplican) | ↓ |
-| 5 | [Contenedor se reinicia constantemente](#5-contenedor-se-reinicia-constantemente) | ↓ |
-| 6 | [Volumen con permisos denegados](#6-volumen-con-permisos-denegados) | ↓ |
-| 7 | [Init.sql no se ejecuta](#7-initsql-no-se-ejecuta) | ↓ |
-| 8 | [Frontend muestra 403 Forbidden](#8-frontend-muestra-403-forbidden) | ↓ |
-| 9 | [Servicio marcado como "unhealthy"](#9-servicio-marcado-como-unhealthy) | ↓ |
-| 10 | [Los datos se pierden al reiniciar](#10-los-datos-se-pierden-al-reiniciar) | ↓ |
-| 11 | [Error de sintaxis en docker-compose.yml](#11-error-de-sintaxis-en-docker-composeyml) | ↓ |
-| 12 | [No se puede descargar la imagen](#12-no-se-puede-descargar-la-imagen) | ↓ |
+| #   | Problema                                                                              | Página |
+| --- | ------------------------------------------------------------------------------------- | ------ |
+| 1   | [Puerto ya está en uso](#1-puerto-ya-está-en-uso)                                     | ↓      |
+| 2   | [Conexión rechazada (Connection refused)](#2-conexión-rechazada-connection-refused)   | ↓      |
+| 3   | [Adminer no puede conectar a PostgreSQL](#3-adminer-no-puede-conectar-a-postgresql)   | ↓      |
+| 4   | [Cambios en .env no se aplican](#4-cambios-en-env-no-se-aplican)                      | ↓      |
+| 5   | [Contenedor se reinicia constantemente](#5-contenedor-se-reinicia-constantemente)     | ↓      |
+| 6   | [Volumen con permisos denegados](#6-volumen-con-permisos-denegados)                   | ↓      |
+| 7   | [Init.sql no se ejecuta](#7-initsql-no-se-ejecuta)                                    | ↓      |
+| 8   | [Frontend muestra 403 Forbidden](#8-frontend-muestra-403-forbidden)                   | ↓      |
+| 9   | [Servicio marcado como "unhealthy"](#9-servicio-marcado-como-unhealthy)               | ↓      |
+| 10  | [Los datos se pierden al reiniciar](#10-los-datos-se-pierden-al-reiniciar)            | ↓      |
+| 11  | [Error de sintaxis en docker-compose.yml](#11-error-de-sintaxis-en-docker-composeyml) | ↓      |
+| 12  | [No se puede descargar la imagen](#12-no-se-puede-descargar-la-imagen)                | ↓      |
 
 ---
 
@@ -38,6 +38,7 @@ Al ejecutar `docker compose up -d`, aparece este error y el servicio no inicia.
 ### 🧠 Causa
 
 El puerto especificado (ej: 5432 para PostgreSQL, 8080 para Adminer) ya está siendo usado por:
+
 - Otro contenedor Docker
 - Una aplicación en el sistema host (PostgreSQL instalado localmente)
 - Otro proyecto de Docker Compose
@@ -51,10 +52,11 @@ services:
   db:
     image: postgres:15-alpine
     ports:
-      - "5433:5432"  # ✅ Usar 5433 en el host en lugar de 5432
+      - '5433:5432' # ✅ Usar 5433 en el host en lugar de 5432
 ```
 
 **Cambios**:
+
 - `5433:5432` significa: host:5433 → contenedor:5432
 - Desde el host, conectar a `localhost:5433`
 - Desde otros contenedores, seguir usando el nombre del servicio `db` (no cambia)
@@ -83,6 +85,7 @@ services:
 ```
 
 **¿Cuándo usar cada opción?**
+
 - **Opción 1**: Si necesitas acceder desde el host (pgAdmin, DBeaver)
 - **Opción 2**: Si estás en desarrollo y no necesitas el servicio local
 - **Opción 3**: Si solo necesitas acceso desde otros contenedores (más seguro)
@@ -137,12 +140,12 @@ services:
   backend:
     image: node:18-alpine
     environment:
-      DB_HOST: db          # ✅ Nombre del servicio
-      DB_PORT: 5432        # ✅ Puerto interno del contenedor
+      DB_HOST: db # ✅ Nombre del servicio
+      DB_PORT: 5432 # ✅ Puerto interno del contenedor
       DB_NAME: mi_base
       DB_USER: admin
       DB_PASSWORD: password
-  
+
   db:
     image: postgres:15-alpine
     # ...
@@ -152,10 +155,10 @@ services:
 
 ```javascript
 // ✅ En frontend (navegador), conectar al backend:
-fetch('http://localhost:3000/api/users')
+fetch('http://localhost:3000/api/users');
 
 // ❌ Esto NO funciona desde el navegador:
-fetch('http://backend:3000/api/users')
+fetch('http://backend:3000/api/users');
 ```
 
 ---
@@ -165,6 +168,7 @@ fetch('http://backend:3000/api/users')
 ### 🔴 Síntoma
 
 En Adminer (`http://localhost:8080`), al intentar conectar aparece:
+
 ```
 Connection to database has been refused
 SQLSTATE[08006] Unable to connect to PostgreSQL server
@@ -195,13 +199,13 @@ docker compose exec db env | grep POSTGRES
 
 Al conectar en `http://localhost:8080`, llenar el formulario así:
 
-| Campo | Valor |
-|-------|-------|
-| **Sistema** | PostgreSQL |
-| **Servidor** | `db` ✅ (nombre del servicio, NO `localhost`) |
-| **Usuario** | (valor de `DB_USER` en `.env`) |
-| **Contraseña** | (valor de `DB_PASSWORD` en `.env`) |
-| **Base de datos** | (valor de `DB_NAME` en `.env`) |
+| Campo             | Valor                                         |
+| ----------------- | --------------------------------------------- |
+| **Sistema**       | PostgreSQL                                    |
+| **Servidor**      | `db` ✅ (nombre del servicio, NO `localhost`) |
+| **Usuario**       | (valor de `DB_USER` en `.env`)                |
+| **Contraseña**    | (valor de `DB_PASSWORD` en `.env`)            |
+| **Base de datos** | (valor de `DB_NAME` en `.env`)                |
 
 **Paso 3: Verificar que PostgreSQL esté listo**
 
@@ -221,12 +225,12 @@ services:
     image: adminer:latest
     depends_on:
       db:
-        condition: service_healthy  # ✅ Esperar a que DB esté saludable
-  
+        condition: service_healthy # ✅ Esperar a que DB esté saludable
+
   db:
     image: postgres:15-alpine
-    healthcheck:  # ✅ Definir cómo verificar salud
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+    healthcheck: # ✅ Definir cómo verificar salud
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER} -d ${DB_NAME}']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -299,7 +303,7 @@ docker compose exec db env
 
 ```yaml
 volumes:
-  - ./backend:/app  # Los cambios en código se reflejan automáticamente
+  - ./backend:/app # Los cambios en código se reflejan automáticamente
 ```
 
 ---
@@ -348,7 +352,7 @@ docker compose events backend
 services:
   backend:
     image: node:18-alpine
-    restart: "no"  # ✅ Deshabilitar restart para depurar
+    restart: 'no' # ✅ Deshabilitar restart para depurar
     # restart: unless-stopped  # ❌ Comentar temporalmente
 ```
 
@@ -378,7 +382,7 @@ docker compose restart backend
 services:
   backend:
     ports:
-      - "3001:3000"  # Usar 3001 en lugar de 3000
+      - '3001:3000' # Usar 3001 en lugar de 3000
 ```
 
 **Error común 3: "Cannot connect to database"**
@@ -389,7 +393,7 @@ services:
   backend:
     depends_on:
       db:
-        condition: service_healthy  # ✅ Esperar a healthcheck
+        condition: service_healthy # ✅ Esperar a healthcheck
 ```
 
 **Paso 5: Volver a habilitar restart**
@@ -399,7 +403,7 @@ Una vez solucionado el problema:
 ```yaml
 services:
   backend:
-    restart: unless-stopped  # ✅ Restaurar restart policy
+    restart: unless-stopped # ✅ Restaurar restart policy
 ```
 
 ---
@@ -447,8 +451,8 @@ sudo chown -R 1000:1000 ./backend
 
 ```yaml
 volumes:
-  - ./backend:/app:z  # :z para compartido entre contenedores
-  - ./backend:/app:Z  # :Z para privado de este contenedor
+  - ./backend:/app:z # :z para compartido entre contenedores
+  - ./backend:/app:Z # :Z para privado de este contenedor
 ```
 
 **Opción 4: Ejecutar contenedor como root (NO recomendado en producción)**
@@ -456,7 +460,7 @@ volumes:
 ```yaml
 services:
   backend:
-    user: "0:0"  # UID:GID (0 = root)
+    user: '0:0' # UID:GID (0 = root)
     volumes:
       - ./backend:/app
 ```
@@ -628,7 +632,7 @@ services:
     volumes:
       # ✅ CORRECTO:
       - ./frontend:/usr/share/nginx/html:ro
-      
+
       # ❌ INCORRECTO:
       # - ./frontend:/app  # Nginx no busca ahí
 ```
@@ -679,12 +683,12 @@ services:
   db:
     image: postgres:15-alpine
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER} -d ${DB_NAME}']
       #                                 ↑ Asegurar que coincida con POSTGRES_USER
-      interval: 10s   # Cada cuánto se ejecuta
-      timeout: 5s     # Tiempo máximo de espera
-      retries: 5      # Intentos antes de marcar unhealthy
-      start_period: 30s  # Tiempo de gracia al iniciar
+      interval: 10s # Cada cuánto se ejecuta
+      timeout: 5s # Tiempo máximo de espera
+      retries: 5 # Intentos antes de marcar unhealthy
+      start_period: 30s # Tiempo de gracia al iniciar
 ```
 
 **Paso 2: Ejecutar el healthcheck manualmente**
@@ -715,11 +719,11 @@ Si la DB tarda en inicializar:
 
 ```yaml
 healthcheck:
-  test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
-  interval: 15s           # ✅ Aumentar intervalo
-  timeout: 10s            # ✅ Aumentar timeout
-  retries: 10             # ✅ Más intentos
-  start_period: 60s       # ✅ Más tiempo de gracia
+  test: ['CMD-SHELL', 'pg_isready -U ${DB_USER} -d ${DB_NAME}']
+  interval: 15s # ✅ Aumentar intervalo
+  timeout: 10s # ✅ Aumentar timeout
+  retries: 10 # ✅ Más intentos
+  start_period: 60s # ✅ Más tiempo de gracia
 ```
 
 **Paso 5: Verificar credenciales**
@@ -736,7 +740,7 @@ docker compose exec db env | grep POSTGRES
 
 ```yaml
 healthcheck:
-  test: ["CMD-SHELL", "pg_isready"]  # ✅ Sin especificar usuario/DB
+  test: ['CMD-SHELL', 'pg_isready'] # ✅ Sin especificar usuario/DB
   interval: 10s
   timeout: 5s
   retries: 5
@@ -990,7 +994,7 @@ docker pull postgres:15-alpine
 # Si postgres:16 no existe, usar una versión disponible
 services:
   db:
-    image: postgres:15-alpine  # ✅ Versión conocida que funciona
+    image: postgres:15-alpine # ✅ Versión conocida que funciona
 ```
 
 **Paso 5: Verificar conectividad**
@@ -1024,32 +1028,38 @@ docker compose up -d
 **Cuando algo falle, seguir este orden**:
 
 1. **Ver el estado de servicios**
+
    ```bash
    docker compose ps
    ```
 
 2. **Revisar los logs**
+
    ```bash
    docker compose logs -f <servicio>
    ```
 
 3. **Validar la configuración**
+
    ```bash
    docker compose config
    ```
 
 4. **Verificar redes y volúmenes**
+
    ```bash
    docker network ls
    docker volume ls
    ```
 
 5. **Entrar al contenedor para investigar**
+
    ```bash
    docker compose exec <servicio> bash
    ```
 
 6. **Reiniciar servicios**
+
    ```bash
    docker compose restart
    ```

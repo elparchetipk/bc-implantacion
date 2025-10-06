@@ -16,9 +16,10 @@ docker compose up -d
 
 **¿Qué hace?** - Crea e inicia todos los servicios definidos en `docker-compose.yml`  
 **¿Para qué?** - Levantar la aplicación completa con un solo comando  
-**¿Cómo funciona?** - Lee el archivo YAML, descarga imágenes si no existen, crea volúmenes, redes y contenedores  
+**¿Cómo funciona?** - Lee el archivo YAML, descarga imágenes si no existen, crea volúmenes, redes y contenedores
 
 **Opciones útiles**:
+
 - `docker compose up` → Inicia en primer plano (ver logs en tiempo real)
 - `docker compose up -d` → Inicia en segundo plano (detached mode) ✅ **Recomendado**
 - `docker compose up --build` → Reconstruye imágenes antes de iniciar
@@ -33,7 +34,7 @@ docker compose stop
 
 **¿Qué hace?** - Detiene los contenedores pero NO los elimina  
 **¿Para qué?** - Pausar temporalmente la aplicación manteniendo la configuración  
-**¿Cómo funciona?** - Los datos persisten en volúmenes, puedes reiniciar con `up`  
+**¿Cómo funciona?** - Los datos persisten en volúmenes, puedes reiniciar con `up`
 
 ---
 
@@ -45,9 +46,10 @@ docker compose down
 
 **¿Qué hace?** - Detiene y elimina contenedores, redes creadas  
 **¿Para qué?** - Limpiar el entorno, empezar desde cero (sin perder datos en volúmenes)  
-**¿Cómo funciona?** - Los volúmenes con datos persisten por defecto  
+**¿Cómo funciona?** - Los volúmenes con datos persisten por defecto
 
 **Opciones útiles**:
+
 - `docker compose down -v` → Elimina también los volúmenes (⚠️ **BORRA DATOS**)
 - `docker compose down --remove-orphans` → Elimina contenedores huérfanos
 
@@ -61,9 +63,10 @@ docker compose ps
 
 **¿Qué hace?** - Lista el estado de todos los servicios del proyecto  
 **¿Para qué?** - Verificar qué contenedores están activos, detenidos o con errores  
-**¿Cómo funciona?** - Muestra nombre, estado, puertos expuestos  
+**¿Cómo funciona?** - Muestra nombre, estado, puertos expuestos
 
 **Salida típica**:
+
 ```
 NAME                IMAGE               STATUS          PORTS
 proyecto_db         postgres:15-alpine  Up 2 minutes    0.0.0.0:5432->5432/tcp
@@ -80,9 +83,10 @@ docker compose logs -f
 
 **¿Qué hace?** - Muestra los logs de todos los servicios  
 **¿Para qué?** - Depurar errores, ver qué está pasando dentro de los contenedores  
-**¿Cómo funciona?** - `-f` hace seguimiento en tiempo real (como `tail -f`)  
+**¿Cómo funciona?** - `-f` hace seguimiento en tiempo real (como `tail -f`)
 
 **Opciones útiles**:
+
 - `docker compose logs` → Ver todos los logs (histórico)
 - `docker compose logs -f` → Seguimiento en tiempo real ✅ **Recomendado**
 - `docker compose logs -f db` → Ver logs solo del servicio `db`
@@ -99,6 +103,7 @@ docker compose exec <servicio> <comando>
 ```
 
 **Ejemplos**:
+
 ```bash
 # Abrir shell en PostgreSQL
 docker compose exec db psql -U admin -d mi_base_datos
@@ -111,7 +116,7 @@ docker compose exec db env
 ```
 
 **¿Qué hace?** - Ejecuta comandos dentro de un contenedor en ejecución  
-**¿Para qué?** - Acceder a la base de datos, depurar, ejecutar scripts  
+**¿Para qué?** - Acceder a la base de datos, depurar, ejecutar scripts
 
 ---
 
@@ -122,6 +127,7 @@ docker compose restart
 ```
 
 **Ejemplos**:
+
 ```bash
 # Reiniciar todos los servicios
 docker compose restart
@@ -131,7 +137,7 @@ docker compose restart db
 ```
 
 **¿Qué hace?** - Reinicia contenedores sin recrearlos  
-**¿Para qué?** - Aplicar cambios en variables de entorno (`.env`)  
+**¿Para qué?** - Aplicar cambios en variables de entorno (`.env`)
 
 ---
 
@@ -142,7 +148,7 @@ docker compose config
 ```
 
 **¿Qué hace?** - Valida y muestra la configuración final (con variables .env resueltas)  
-**¿Para qué?** - Verificar errores de sintaxis antes de iniciar servicios  
+**¿Para qué?** - Verificar errores de sintaxis antes de iniciar servicios
 
 ---
 
@@ -153,12 +159,13 @@ docker compose stop <servicio>
 ```
 
 **Ejemplo**:
+
 ```bash
 docker compose stop adminer
 ```
 
 **¿Qué hace?** - Detiene solo un servicio sin afectar los demás  
-**¿Para qué?** - Pausar temporalmente un servicio (ej: Adminer en producción)  
+**¿Para qué?** - Pausar temporalmente un servicio (ej: Adminer en producción)
 
 ---
 
@@ -169,7 +176,7 @@ docker compose pull
 ```
 
 **¿Qué hace?** - Descarga todas las imágenes especificadas en el YAML  
-**¿Para qué?** - Pre-descargar imágenes antes de iniciar (útil con conexión lenta)  
+**¿Para qué?** - Pre-descargar imágenes antes de iniciar (útil con conexión lenta)
 
 ---
 
@@ -181,9 +188,10 @@ docker compose pull
 docker compose down -v --rmi all
 ```
 
-**⚠️ CUIDADO**: Esto **BORRA TODO** del proyecto, incluidos los datos  
+**⚠️ CUIDADO**: Esto **BORRA TODO** del proyecto, incluidos los datos
 
 **Opciones**:
+
 - `docker compose down -v` → Elimina volúmenes (borra datos)
 - `docker compose down --rmi local` → Elimina solo imágenes construidas localmente
 - `docker compose down --rmi all` → Elimina todas las imágenes descargadas
@@ -197,6 +205,7 @@ docker volume ls
 ```
 
 **Ver detalles de un volumen**:
+
 ```bash
 docker volume inspect <nombre_volumen>
 ```
@@ -210,7 +219,7 @@ docker stats
 ```
 
 **¿Qué hace?** - Muestra estadísticas en tiempo real de todos los contenedores  
-**¿Para qué?** - Monitorear rendimiento, detectar fugas de memoria  
+**¿Para qué?** - Monitorear rendimiento, detectar fugas de memoria
 
 ---
 
@@ -319,83 +328,91 @@ docker compose up -d
 
 ### ✅ **DO's (Hacer)**
 
-1. **Siempre usar `-d`** para iniciar en segundo plano  
+1. **Siempre usar `-d`** para iniciar en segundo plano
+
    ```bash
    docker compose up -d
    ```
 
-2. **Verificar estado antes de depurar**  
+2. **Verificar estado antes de depurar**
+
    ```bash
    docker compose ps
    ```
 
-3. **Ver logs con `-f` para seguimiento en tiempo real**  
+3. **Ver logs con `-f` para seguimiento en tiempo real**
+
    ```bash
    docker compose logs -f
    ```
 
-4. **Validar YAML antes de iniciar**  
+4. **Validar YAML antes de iniciar**
+
    ```bash
    docker compose config
    ```
 
-5. **Usar nombres de servicios para comunicación interna**  
+5. **Usar nombres de servicios para comunicación interna**
    ```yaml
    # En backend, conectar a PostgreSQL:
-   DB_HOST=db  # ✅ Correcto (nombre del servicio)
+   DB_HOST=db # ✅ Correcto (nombre del servicio)
    ```
 
 ---
 
 ### ❌ **DON'Ts (Evitar)**
 
-1. **NO usar `docker-compose` (con guion)**  
+1. **NO usar `docker-compose` (con guion)**
+
    ```bash
    docker-compose up  # ❌ Sintaxis antigua (v1)
    docker compose up  # ✅ Sintaxis correcta (v2)
    ```
 
-2. **NO usar `localhost` dentro de contenedores**  
+2. **NO usar `localhost` dentro de contenedores**
+
    ```yaml
    # ❌ Incorrecto:
    DB_HOST=localhost
-   
+
    # ✅ Correcto:
    DB_HOST=db  # Nombre del servicio
    ```
 
-3. **NO olvidar `-d` (ocuparás la terminal)**  
+3. **NO olvidar `-d` (ocuparás la terminal)**
+
    ```bash
    docker compose up     # ❌ Ocupa terminal
    docker compose up -d  # ✅ Libera terminal
    ```
 
-4. **NO usar `down -v` sin respaldar datos**  
+4. **NO usar `down -v` sin respaldar datos**
+
    ```bash
    docker compose down -v  # ⚠️ BORRA DATOS
    ```
 
-5. **NO exponer puertos sensibles en producción**  
+5. **NO exponer puertos sensibles en producción**
    ```yaml
    # ❌ En producción:
    ports:
-     - "5432:5432"  # PostgreSQL expuesto al público
+     - '5432:5432' # PostgreSQL expuesto al público
    ```
 
 ---
 
 ## 🆘 Solución Rápida de Errores Comunes
 
-| ❌ Error | ✅ Solución |
-|---------|-----------|
-| `port is already allocated` | Cambiar puerto en `docker-compose.yml`: `"5433:5432"` |
-| `connection refused` | Usar nombre del servicio (`db`), no `localhost` |
-| `Adminer no conecta` | Verificar credenciales en `.env` |
-| `permission denied` | `chmod -R 755` en carpetas montadas |
-| Cambios en `.env` no aplican | `docker compose restart <servicio>` |
-| `no such file or directory` | Verificar rutas en `volumes:` |
-| `unhealthy` en servicio | Ver logs: `docker compose logs -f <servicio>` |
-| Contenedor se reinicia constantemente | Error en la aplicación, ver logs |
+| ❌ Error                              | ✅ Solución                                           |
+| ------------------------------------- | ----------------------------------------------------- |
+| `port is already allocated`           | Cambiar puerto en `docker-compose.yml`: `"5433:5432"` |
+| `connection refused`                  | Usar nombre del servicio (`db`), no `localhost`       |
+| `Adminer no conecta`                  | Verificar credenciales en `.env`                      |
+| `permission denied`                   | `chmod -R 755` en carpetas montadas                   |
+| Cambios en `.env` no aplican          | `docker compose restart <servicio>`                   |
+| `no such file or directory`           | Verificar rutas en `volumes:`                         |
+| `unhealthy` en servicio               | Ver logs: `docker compose logs -f <servicio>`         |
+| Contenedor se reinicia constantemente | Error en la aplicación, ver logs                      |
 
 ---
 

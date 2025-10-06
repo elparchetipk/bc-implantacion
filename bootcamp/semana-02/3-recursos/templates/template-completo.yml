@@ -1,16 +1,16 @@
 # ============================================================================
 # TEMPLATE COMPLETO - Stack de producción con múltiples servicios
 # ============================================================================
-# 
+#
 # ¿QUÉ ES ESTO?
 # - Plantilla robusta para proyectos finales de implantación
 # - Incluye Frontend, Backend API, Base de datos y Administrador
-# 
+#
 # ¿PARA QUÉ SIRVE?
 # - Proyectos de mayor envergadura con separación de capas
 # - Simular arquitectura de aplicaciones reales
 # - Preparación para ambientes de producción
-# 
+#
 # ¿CÓMO USARLO?
 # 1. Copiar y adaptar según las necesidades del proyecto
 # 2. Ajustar puertos, volúmenes y variables de entorno
@@ -28,18 +28,18 @@ services:
     image: nginx:alpine
     container_name: proyecto_frontend
     restart: unless-stopped
-    
+
     volumes:
       - ./frontend:/usr/share/nginx/html:ro
       # Opcional: Configuración personalizada de Nginx
       # - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    
+
     ports:
-      - "80:80"
-    
+      - '80:80'
+
     depends_on:
       - backend
-    
+
     # Red personalizada para aislamiento
     networks:
       - frontend_net
@@ -51,7 +51,7 @@ services:
   # ¿Qué? - Servidor de aplicación con lógica de negocio
   # ¿Para qué? - Procesar peticiones, validar datos, comunicarse con la BD
   # ¿Cómo? - Expone API REST en el puerto 3000
-  # 
+  #
   # NOTA: Este es un ejemplo genérico. Debes adaptarlo según tu tecnología:
   # - Node.js: image: node:18-alpine + volumes con tu código
   # - Python: image: python:3.11-slim + requirements.txt
@@ -59,50 +59,50 @@ services:
   backend:
     # Opción 1: Usar imagen pre-construida
     image: node:18-alpine
-    
+
     # Opción 2: Construir desde Dockerfile local
     # build:
     #   context: ./backend
     #   dockerfile: Dockerfile
-    
+
     container_name: proyecto_backend
     restart: unless-stopped
-    
+
     # Working directory dentro del contenedor
     working_dir: /app
-    
+
     # Montar código fuente (para desarrollo)
     # ¿Qué? - Carpeta backend/ montada en el contenedor
     # ¿Para qué? - Hot reload durante desarrollo
     volumes:
       - ./backend:/app
-      - backend_node_modules:/app/node_modules  # Cache de dependencias
-    
+      - backend_node_modules:/app/node_modules # Cache de dependencias
+
     # Puertos - API REST
     ports:
-      - "3000:3000"
-    
+      - '3000:3000'
+
     # Variables de entorno - Configuración de la aplicación
     environment:
       NODE_ENV: development
       PORT: 3000
-      DB_HOST: db          # ¡IMPORTANTE! Usar nombre del servicio, no 'localhost'
+      DB_HOST: db # ¡IMPORTANTE! Usar nombre del servicio, no 'localhost'
       DB_PORT: 5432
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       # JWT Secret (para autenticación)
       JWT_SECRET: ${JWT_SECRET}
-    
+
     # Comando de inicio (ajustar según tu framework)
     command: npm start
     # Para Python: command: python app.py
     # Para Java: command: java -jar app.jar
-    
+
     depends_on:
       db:
         condition: service_healthy
-    
+
     networks:
       - backend_net
 
@@ -115,7 +115,7 @@ services:
     image: postgres:15-alpine
     container_name: proyecto_db
     restart: unless-stopped
-    
+
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -125,24 +125,24 @@ services:
       POSTGRES_MAX_CONNECTIONS: 100
       # Configuración de memoria (ajustar según recursos disponibles)
       POSTGRES_SHARED_BUFFERS: 256MB
-    
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
       # Scripts de inicialización
       - ./database/init.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
       - ./database/seed.sql:/docker-entrypoint-initdb.d/02-data.sql:ro
-    
+
     # Puerto expuesto (comentar en producción por seguridad)
     ports:
-      - "5432:5432"
-    
+      - '5432:5432'
+
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER} -d ${DB_NAME}']
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 30s
-    
+
     networks:
       - backend_net
 
@@ -155,18 +155,18 @@ services:
     image: adminer:latest
     container_name: proyecto_adminer
     restart: unless-stopped
-    
+
     ports:
-      - "8080:8080"
-    
+      - '8080:8080'
+
     environment:
       ADMINER_DEFAULT_SERVER: db
-      ADMINER_DESIGN: pepa-linha  # Tema visual (opcional)
-    
+      ADMINER_DESIGN: pepa-linha # Tema visual (opcional)
+
     depends_on:
       db:
         condition: service_healthy
-    
+
     networks:
       - backend_net
 
@@ -181,7 +181,7 @@ networks:
   frontend_net:
     driver: bridge
     name: frontend_network
-  
+
   backend_net:
     driver: bridge
     name: backend_network
@@ -197,10 +197,9 @@ volumes:
     #   type: none
     #   o: bind
     #   device: /ruta/en/el/host/postgres_data
-  
+
   backend_node_modules:
     driver: local
-
 # =============================================================================
 # ESTRUCTURA DE CARPETAS REQUERIDA
 # =============================================================================
