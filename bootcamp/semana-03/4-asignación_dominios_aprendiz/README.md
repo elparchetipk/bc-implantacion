@@ -57,6 +57,7 @@ Esta carpeta almacena las asignaciones personalizadas que se generan para cada a
 **Dominio:** Restaurante
 
 **Su asignación contiene:**
+
 - Base de datos: `restaurante_jgarcia`
 - Tablas: `mesas`, `pedidos`, `platos`, `empleados`
 - Variables de ejemplo: `nombrePlato`, `numeroMesa`, `precioTotal`
@@ -66,6 +67,7 @@ Esta carpeta almacena las asignaciones personalizadas que se generan para cada a
 **Dominio:** Biblioteca
 
 **Su asignación contiene:**
+
 - Base de datos: `biblioteca_mmartinez`
 - Tablas: `libros`, `prestamos`, `usuarios`, `multas`
 - Variables de ejemplo: `tituloLibro`, `fechaPrestamo`, `montoMulta`
@@ -78,6 +80,7 @@ Los dominios se seleccionan de una lista pre-definida y NO se repiten en la mism
 **Categorías:**
 
 ### Negocios
+
 - Restaurante
 - Cafetería
 - Panadería
@@ -88,6 +91,7 @@ Los dominios se seleccionan de una lista pre-definida y NO se repiten en la mism
 - Librería
 
 ### Servicios
+
 - Peluquería/Barbería
 - Lavandería
 - Gimnasio
@@ -98,6 +102,7 @@ Los dominios se seleccionan de una lista pre-definida y NO se repiten en la mism
 - Clínica médica
 
 ### Entretenimiento
+
 - Cine
 - Teatro
 - Museo
@@ -108,6 +113,7 @@ Los dominios se seleccionan de una lista pre-definida y NO se repiten en la mism
 - Centro de yoga
 
 ### Educación
+
 - Academia de idiomas
 - Centro de tutorías
 - Jardín infantil
@@ -115,6 +121,7 @@ Los dominios se seleccionan de una lista pre-definida y NO se repiten en la mism
 - Centro de capacitación
 
 ### Turismo y Hotelería
+
 - Hotel
 - Hostal
 - Agencia de viajes
@@ -122,17 +129,20 @@ Los dominios se seleccionan de una lista pre-definida y NO se repiten en la mism
 - Parque temático
 
 ### Tecnología
+
 - Tienda de computadores
 - Centro de reparación
 - Cibercafé
 - Tienda de videojuegos
 
 ### Inmobiliaria
+
 - Inmobiliaria
 - Arrendadora
 - Administradora de propiedades
 
 ### Otros
+
 - Funeraria
 - Ferretería
 - Vivero/Jardín
@@ -144,6 +154,7 @@ Los dominios se seleccionan de una lista pre-definida y NO se repiten en la mism
 Ver archivo: `plantilla-asignacion.md`
 
 Incluye:
+
 - Objetivos específicos
 - Contexto del dominio
 - Requisitos técnicos adaptados
@@ -155,6 +166,7 @@ Incluye:
 ### .gitignore
 
 Esta carpeta está configurada en `.gitignore` para:
+
 - ✅ NO subir a GitHub las asignaciones personalizadas
 - ✅ Mantener privacidad de aprendices
 - ✅ Evitar que vean asignaciones de otros
@@ -162,6 +174,7 @@ Esta carpeta está configurada en `.gitignore` para:
 ### Archivos Públicos
 
 Solo estos archivos son compartidos:
+
 - `README.md` (este archivo)
 - `lista-dominios.txt` (lista genérica de dominios)
 - `plantilla-asignacion.md` (template sin datos)
@@ -169,6 +182,7 @@ Solo estos archivos son compartidos:
 ### Archivos Privados
 
 Estos NO se comparten:
+
 - `asignaciones/*.md` (archivos individuales)
 - Cualquier archivo con nombres de aprendices
 
@@ -179,16 +193,19 @@ Estos NO se comparten:
 El instructor verifica:
 
 1. **Coherencia con dominio**
+
    - ✅ Nombres de tablas relacionados con dominio
    - ✅ Variables con nombres del contexto
    - ✅ Casos de uso realistas
 
 2. **Comprensión técnica**
+
    - ✅ Código comentado correctamente
    - ✅ Decisiones técnicas justificadas
    - ✅ Solución de problemas documentada
 
 3. **Originalidad**
+
    - ✅ No es copia directa de ejemplos
    - ✅ Adaptación creativa al dominio
    - ✅ Personalización evidente
@@ -200,24 +217,26 @@ El instructor verifica:
 
 ### Rúbrica
 
-| Criterio | Insuficiente (0-3) | Básico (3-4) | Competente (4-4.5) | Sobresaliente (4.5-5) |
-|----------|-------------------|--------------|-------------------|----------------------|
-| **Adaptación al dominio** | No relacionado | Parcialmente adaptado | Bien adaptado | Perfectamente contextualizado |
-| **Comprensión técnica** | No funciona | Funciona con errores | Funciona correctamente | Funciona + optimizado |
-| **Código comentado** | Sin comentarios | Comentarios básicos | Bien comentado | Comentarios educativos |
-| **Documentación** | Ausente o mínima | Básica | Completa | Excepcional |
+| Criterio                  | Insuficiente (0-3) | Básico (3-4)          | Competente (4-4.5)     | Sobresaliente (4.5-5)         |
+| ------------------------- | ------------------ | --------------------- | ---------------------- | ----------------------------- |
+| **Adaptación al dominio** | No relacionado     | Parcialmente adaptado | Bien adaptado          | Perfectamente contextualizado |
+| **Comprensión técnica**   | No funciona        | Funciona con errores  | Funciona correctamente | Funciona + optimizado         |
+| **Código comentado**      | Sin comentarios    | Comentarios básicos   | Bien comentado         | Comentarios educativos        |
+| **Documentación**         | Ausente o mínima   | Básica                | Completa               | Excepcional                   |
 
 ## 📊 Uso de Esta Carpeta
 
 ### Para el Instructor
 
 1. **Generar asignaciones**
+
    ```bash
    cd semana-03/4-asignación_dominios_aprendiz/
    python3 generar-asignaciones.py lista-aprendices.txt
    ```
 
 2. **Distribuir individualmente**
+
    - Enviar por correo o plataforma LMS
    - NO compartir en grupo o repositorio público
 
@@ -229,6 +248,7 @@ El instructor verifica:
 ### Para Desarrollo (Copilot)
 
 Al generar contenido:
+
 - ❌ **NO mencionar** nombres de aprendices específicos
 - ❌ **NO incluir** dominios específicos en ejemplos públicos
 - ✅ **SÍ usar** placeholders genéricos (`[TU_DOMINIO]`, `[NOMBRE_TABLA]`)

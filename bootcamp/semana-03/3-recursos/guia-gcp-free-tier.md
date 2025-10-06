@@ -27,6 +27,7 @@
 ### ¿Por Qué GCP?
 
 **Ventajas:**
+
 - ✅ **$300 USD en créditos** (válidos 90 días)
 - ✅ **Always Free tier** (no expira)
 - ✅ **f1-micro** incluida en Free tier
@@ -34,6 +35,7 @@
 - ✅ **Buen rendimiento** para aprendizaje
 
 **Always Free incluye:**
+
 - 1 VM f1-micro (EE.UU. - regiones específicas)
 - 30 GB almacenamiento HDD
 - 1 GB tráfico de red saliente/mes
@@ -42,11 +44,13 @@
 ### ⚠️ Importante Sobre Costos
 
 **No se cobra SI:**
+
 - ✅ Usas f1-micro en regiones permitidas (us-west1, us-central1, us-east1)
 - ✅ No excedes 30 GB de disco
 - ✅ Apagas VM cuando no la uses
 
 **Se cobra SI:**
+
 - ❌ Usas e2-micro u otros tipos (no Free)
 - ❌ Usas regiones fuera de EE.UU.
 - ❌ Dejas VM corriendo 24/7 sin necesidad
@@ -64,6 +68,7 @@
 ### Paso 2: Completar Formulario
 
 **Información solicitada:**
+
 - **País**: Colombia
 - **Tipo de cuenta**: Individual
 - **Términos**: Lee y acepta
@@ -71,12 +76,14 @@
 ### Paso 3: Verificar Identidad
 
 **Información de tarjeta:**
+
 - Nombre del titular
 - Número de tarjeta
 - Fecha de vencimiento
 - CVV
 
 **⚠️ Importante:**
+
 - Solo es para **verificación de identidad**
 - No se realizará ningún cargo sin tu autorización
 - Puedes cancelar después del período de prueba
@@ -102,30 +109,37 @@
 ### Paso 2: Configuración Básica
 
 **Name (Nombre):**
+
 ```
 ubuntu-bootcamp
 ```
 
 **Region (Región):**
+
 ```
 us-central1 (Iowa)
 ```
+
 **⚠️ IMPORTANTE: Debe ser una región de EE.UU. para Free Tier**
 
 Regiones Always Free:
+
 - `us-west1` (Oregon)
 - `us-central1` (Iowa)
 - `us-east1` (South Carolina)
 
 **Zone (Zona):**
+
 ```
 us-central1-a
 ```
+
 (O cualquier zona con sufijo `-a`)
 
 ### Paso 3: Machine Configuration
 
 **Series:**
+
 ```
 E2
 ```
@@ -133,6 +147,7 @@ E2
 **Machine type:**
 
 Para **FREE TIER** (100% gratis):
+
 ```
 f1-micro
 - 1 vCPU (compartida)
@@ -141,6 +156,7 @@ f1-micro
 ```
 
 Para **mejor rendimiento** (~$7/mes):
+
 ```
 e2-micro
 - 2 vCPU
@@ -155,25 +171,31 @@ e2-micro
 Click en **"CHANGE"** (Cambiar):
 
 **Operating system:**
+
 ```
 Ubuntu
 ```
 
 **Version:**
+
 ```
 Ubuntu 22.04 LTS x86/64
 ```
+
 **⚠️ IMPORTANTE: Selecciona 22.04 LTS, no otras versiones**
 
 **Boot disk type:**
+
 ```
 Balanced persistent disk
 ```
 
 **Size (GB):**
+
 ```
 20 GB
 ```
+
 (Mínimo: 10 GB, Recomendado: 20 GB)
 
 Click en **"SELECT"** (Seleccionar)
@@ -181,6 +203,7 @@ Click en **"SELECT"** (Seleccionar)
 ### Paso 5: Firewall
 
 **Marcar AMBAS casillas:**
+
 - ☑ **Allow HTTP traffic** (puerto 80)
 - ☑ **Allow HTTPS traffic** (puerto 443)
 
@@ -189,14 +212,17 @@ Click en **"SELECT"** (Seleccionar)
 Click en **"Advanced options"** → **"Networking"**
 
 **External IPv4 address:**
+
 ```
 Ephemeral
 ```
+
 (O puedes reservar una IP estática - cuesta $)
 
 ### Paso 7: Revisar Costo Estimado
 
 **En el panel derecho verás:**
+
 - f1-micro: **$0.00/month** (Free Tier)
 - e2-micro: **~$6.50/month** (sin Free Tier)
 
@@ -219,10 +245,12 @@ Ephemeral
 3. Se abre ventana nueva con terminal
 
 **✅ Ventajas:**
+
 - No requiere configuración
 - Funciona desde cualquier lugar
 
 **❌ Desventajas:**
+
 - No puedes transferir archivos fácilmente
 - Depende del navegador
 
@@ -237,6 +265,7 @@ Ejemplo: `34.123.45.67`
 #### Paso 2: Obtener tu Username
 
 **Método 1: Desde GCP Console**
+
 1. Click en **"SSH"** (se abre ventana)
 2. El username aparece en el prompt:
    ```
@@ -244,6 +273,7 @@ Ejemplo: `34.123.45.67`
    ```
 
 **Método 2: Calcular**
+
 - Si tu email es `juan.perez@gmail.com`
 - Tu username es: `juan_perez` (reemplaza `.` por `_`)
 
@@ -295,6 +325,7 @@ ssh usuario@ip-externa
 ### Firewall de GCP (Reglas de Red)
 
 Por defecto, GCP permite:
+
 - ✅ Puerto 22 (SSH)
 - ✅ Puerto 80 (HTTP) - si marcaste la casilla
 - ✅ Puerto 443 (HTTPS) - si marcaste la casilla
@@ -306,6 +337,7 @@ Por defecto, GCP permite:
 1. Ve a: **VPC Network** → **Firewall** → **CREATE FIREWALL RULE**
 
 2. Configuración:
+
    ```
    Name: allow-app-port-3000
    Direction of traffic: Ingress
@@ -318,6 +350,7 @@ Por defecto, GCP permite:
 3. Click **"CREATE"**
 
 **Puertos comunes a abrir:**
+
 - `3000` - Frontend (React, Vue)
 - `5000` - Backend (Flask, Express)
 - `8080` - Adminer, Jenkins
@@ -409,6 +442,7 @@ htop
 4. Click **"FINISH"**
 
 **Recibirás email cuando:**
+
 - Gastes $5 (50%)
 - Gastes $7.50 (75%)
 - Gastes $10 (100%)
@@ -429,6 +463,7 @@ sudo shutdown -h now
 ```
 
 **Para volver a encenderla:**
+
 ```bash
 # Desde GCP Console
 # VM instances → ⋮ → Start
@@ -438,6 +473,7 @@ gcloud compute instances start ubuntu-bootcamp --zone=us-central1-a
 ```
 
 **⚠️ Importante:**
+
 - VM detenida: $0/hora (solo pagas disco: ~$0.04/día)
 - VM corriendo: $0.00/hora (f1-micro) o $0.01/hora (e2-micro)
 
@@ -452,6 +488,7 @@ gcloud compute instances delete ubuntu-bootcamp --zone=us-central1-a
 ```
 
 **⚠️ Esto eliminará:**
+
 - La VM
 - El disco (⚠️ PERDERÁS DATOS)
 - La IP externa
@@ -459,15 +496,18 @@ gcloud compute instances delete ubuntu-bootcamp --zone=us-central1-a
 ### Mejores Prácticas de Costos
 
 1. **Detén VM cuando no la uses**
+
    - Fin de clase: Stop
    - Fin de semana: Stop
    - Solo enciende cuando vayas a trabajar
 
 2. **Usa f1-micro para pruebas**
+
    - 100% gratis
    - Suficiente para aprendizaje
 
 3. **Elimina recursos no usados**
+
    - Discos huérfanos
    - IPs estáticas no asignadas
    - Snapshots viejos
@@ -485,6 +525,7 @@ gcloud compute instances delete ubuntu-bootcamp --zone=us-central1-a
 **Causa:** Límite de Free Trial alcanzado
 
 **Solución:**
+
 1. Ve a: **IAM & Admin** → **Quotas**
 2. Busca: "CPUs"
 3. Solicita aumento de cuota (gratis)
@@ -494,6 +535,7 @@ gcloud compute instances delete ubuntu-bootcamp --zone=us-central1-a
 **Causa:** Usas IP efímera (por defecto)
 
 **Solución: Reservar IP estática**
+
 1. Ve a: **VPC Network** → **External IP addresses**
 2. Encuentra tu IP → Type: **Static**
 3. Costo: ~$0.01/hora cuando no está asignada
@@ -501,11 +543,13 @@ gcloud compute instances delete ubuntu-bootcamp --zone=us-central1-a
 ### "Me están cobrando"
 
 **Verifica:**
+
 1. ¿Usas f1-micro en región permitida?
 2. ¿Dejaste VM corriendo 24/7?
 3. ¿Tienes recursos adicionales? (IPs, discos)
 
 **Solución:**
+
 - Detén o elimina recursos no necesarios
 - Contacta soporte de GCP si crees que es error
 
@@ -567,11 +611,13 @@ Antes de dar por completada la configuración:
 ✅ VM lista para usar!
 
 **Ahora puedes:**
+
 1. Continuar con [Práctica 1](../../2-practicas/01-setup-servidor-cloud.md)
 2. Instalar Docker
 3. Desplegar tu primera aplicación
 
 **No olvides:**
+
 - 🛑 **Detener VM** cuando termines
 - 💰 **Monitorear costos** semanalmente
 - 📝 **Anotar IP y usuario** para futuras conexiones
@@ -579,6 +625,7 @@ Antes de dar por completada la configuración:
 ---
 
 > **Tip:** Crea un archivo local con tus datos de acceso:
+>
 > ```
 > IP: 34.123.45.67
 > Usuario: juan_perez
