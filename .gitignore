@@ -195,7 +195,11 @@ config/database.yml
 !**/submissions/.gitkeep
 
 # Asignaciones individuales por aprendiz (ignorar en git, visible en proyecto)
-**/4-asignación_dominios_aprendiz/
+# Permite que la estructura sea visible pero ignora carpetas de aprendices individuales
+**/4-asignación_dominios_aprendiz/aprendiz-*/
+# Mantiene visibles archivos de documentación de la carpeta
+!**/4-asignación_dominios_aprendiz/README.md
+!**/4-asignación_dominios_aprendiz/.gitkeep
 
 # Archivo de listado de aprendices (ignorar en git, visible en proyecto)
 _docs/APRENDICES-3147234.md

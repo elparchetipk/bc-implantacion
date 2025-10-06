@@ -1,0 +1,3 @@
+# Este directorio contiene asignaciones individuales por aprendiz
+# Cada carpeta sigue el formato: aprendiz-XXX-[nombre]
+# Esta carpeta es ignorada en git pero visible en el proyecto
