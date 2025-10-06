@@ -1,0 +1,244 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700">
+  <!-- Background -->
+  <rect width="900" height="700" fill="#1e1e1e"/>
+  
+  <!-- Title -->
+  <text x="450" y="40" font-family="Arial, sans-serif" font-size="24" fill="#ffffff" text-anchor="middle" font-weight="bold">
+    Flujo de Trabajo con Docker Compose
+  </text>
+  
+  <!-- Step 1: Development -->
+  <rect x="50" y="80" width="250" height="180" fill="#2d2d2d" stroke="#58a6ff" stroke-width="3" rx="10"/>
+  <text x="175" y="110" font-family="Arial, sans-serif" font-size="16" fill="#58a6ff" text-anchor="middle" font-weight="bold">
+    1. Desarrollo
+  </text>
+  
+  <rect x="70" y="130" width="210" height="110" fill="#383838" stroke="#7ee787" stroke-width="2" rx="5"/>
+  <text x="175" y="155" font-family="monospace" font-size="11" fill="#ffffff" text-anchor="middle" font-weight="bold">
+    docker-compose.yml
+  </text>
+  <text x="80" y="180" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="start">
+    version: '3.8'
+  </text>
+  <text x="80" y="195" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="start">
+    services:
+  </text>
+  <text x="90" y="210" font-family="monospace" font-size="9" fill="#ffa657" text-anchor="start">
+    nginx:
+  </text>
+  <text x="90" y="222" font-family="monospace" font-size="9" fill="#ffa657" text-anchor="start">
+    api:
+  </text>
+  <text x="90" y="234" font-family="monospace" font-size="9" fill="#ffa657" text-anchor="start">
+    postgres:
+  </text>
+  
+  <!-- Step 2: Build -->
+  <rect x="325" y="80" width="250" height="180" fill="#2d2d2d" stroke="#d2a8ff" stroke-width="3" rx="10"/>
+  <text x="450" y="110" font-family="Arial, sans-serif" font-size="16" fill="#d2a8ff" text-anchor="middle" font-weight="bold">
+    2. Construcción
+  </text>
+  
+  <rect x="345" y="130" width="210" height="50" fill="#383838" stroke="#7ee787" stroke-width="2" rx="5"/>
+  <text x="450" y="155" font-family="monospace" font-size="12" fill="#7ee787" text-anchor="middle" font-weight="bold">
+    docker-compose build
+  </text>
+  <text x="450" y="170" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    Construye imágenes
+  </text>
+  
+  <!-- Build process -->
+  <rect x="365" y="190" width="60" height="35" fill="#2d2d2d" stroke="#58a6ff" stroke-width="1" rx="3"/>
+  <text x="395" y="210" font-family="monospace" font-size="9" fill="#ffffff" text-anchor="middle">
+    nginx
+  </text>
+  <text x="395" y="220" font-family="monospace" font-size="8" fill="#7ee787" text-anchor="middle">
+    ✓
+  </text>
+  
+  <rect x="435" y="190" width="60" height="35" fill="#2d2d2d" stroke="#58a6ff" stroke-width="1" rx="3"/>
+  <text x="465" y="210" font-family="monospace" font-size="9" fill="#ffffff" text-anchor="middle">
+    api
+  </text>
+  <text x="465" y="220" font-family="monospace" font-size="8" fill="#7ee787" text-anchor="middle">
+    ✓
+  </text>
+  
+  <rect x="505" y="190" width="40" height="35" fill="#2d2d2d" stroke="#58a6ff" stroke-width="1" rx="3"/>
+  <text x="525" y="207" font-family="monospace" font-size="9" fill="#ffffff" text-anchor="middle">
+    db
+  </text>
+  <text x="525" y="220" font-family="monospace" font-size="8" fill="#7ee787" text-anchor="middle">
+    ✓
+  </text>
+  
+  <text x="450" y="245" font-family="monospace" font-size="10" fill="#8b949e" text-anchor="middle">
+    Imágenes listas
+  </text>
+  
+  <!-- Step 3: Deploy -->
+  <rect x="600" y="80" width="250" height="180" fill="#2d2d2d" stroke="#ffa657" stroke-width="3" rx="10"/>
+  <text x="725" y="110" font-family="Arial, sans-serif" font-size="16" fill="#ffa657" text-anchor="middle" font-weight="bold">
+    3. Despliegue
+  </text>
+  
+  <rect x="620" y="130" width="210" height="50" fill="#383838" stroke="#7ee787" stroke-width="2" rx="5"/>
+  <text x="725" y="155" font-family="monospace" font-size="12" fill="#7ee787" text-anchor="middle" font-weight="bold">
+    docker-compose up -d
+  </text>
+  <text x="725" y="170" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    Inicia servicios
+  </text>
+  
+  <!-- Running containers -->
+  <rect x="640" y="190" width="60" height="35" fill="#2d2d2d" stroke="#7ee787" stroke-width="2" rx="3"/>
+  <circle cx="670" cy="207" r="6" fill="#7ee787"/>
+  <text x="670" y="222" font-family="monospace" font-size="8" fill="#ffffff" text-anchor="middle">
+    nginx
+  </text>
+  
+  <rect x="710" y="190" width="60" height="35" fill="#2d2d2d" stroke="#7ee787" stroke-width="2" rx="3"/>
+  <circle cx="740" cy="207" r="6" fill="#7ee787"/>
+  <text x="740" y="222" font-family="monospace" font-size="8" fill="#ffffff" text-anchor="middle">
+    api
+  </text>
+  
+  <rect x="780" y="190" width="40" height="35" fill="#2d2d2d" stroke="#7ee787" stroke-width="2" rx="3"/>
+  <circle cx="800" cy="207" r="6" fill="#7ee787"/>
+  <text x="800" y="222" font-family="monospace" font-size="8" fill="#ffffff" text-anchor="middle">
+    db
+  </text>
+  
+  <text x="725" y="245" font-family="monospace" font-size="10" fill="#7ee787" text-anchor="middle">
+    Contenedores activos
+  </text>
+  
+  <!-- Management Commands -->
+  <rect x="50" y="290" width="800" height="180" fill="#2d2d2d" stroke="#f78166" stroke-width="3" rx="10"/>
+  <text x="450" y="320" font-family="Arial, sans-serif" font-size="16" fill="#f78166" text-anchor="middle" font-weight="bold">
+    Comandos de Gestión
+  </text>
+  
+  <!-- Command boxes -->
+  <rect x="70" y="340" width="180" height="110" fill="#383838" stroke="#58a6ff" stroke-width="2" rx="5"/>
+  <text x="160" y="365" font-family="monospace" font-size="11" fill="#58a6ff" text-anchor="middle" font-weight="bold">
+    Ver estado
+  </text>
+  <text x="160" y="390" font-family="monospace" font-size="9" fill="#7ee787" text-anchor="middle">
+    docker-compose ps
+  </text>
+  <text x="160" y="410" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    Lista contenedores
+  </text>
+  <text x="160" y="425" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    activos y su estado
+  </text>
+  <text x="160" y="440" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    de salud
+  </text>
+  
+  <rect x="270" y="340" width="180" height="110" fill="#383838" stroke="#58a6ff" stroke-width="2" rx="5"/>
+  <text x="360" y="365" font-family="monospace" font-size="11" fill="#58a6ff" text-anchor="middle" font-weight="bold">
+    Ver logs
+  </text>
+  <text x="360" y="390" font-family="monospace" font-size="9" fill="#7ee787" text-anchor="middle">
+    docker-compose logs
+  </text>
+  <text x="360" y="410" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    Ver logs en tiempo
+  </text>
+  <text x="360" y="425" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    real de todos los
+  </text>
+  <text x="360" y="440" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    servicios
+  </text>
+  
+  <rect x="470" y="340" width="180" height="110" fill="#383838" stroke="#58a6ff" stroke-width="2" rx="5"/>
+  <text x="560" y="365" font-family="monospace" font-size="11" fill="#58a6ff" text-anchor="middle" font-weight="bold">
+    Reiniciar
+  </text>
+  <text x="560" y="390" font-family="monospace" font-size="9" fill="#7ee787" text-anchor="middle">
+    docker-compose restart
+  </text>
+  <text x="560" y="410" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    Reinicia servicios
+  </text>
+  <text x="560" y="425" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    sin perder datos
+  </text>
+  <text x="560" y="440" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    en volúmenes
+  </text>
+  
+  <rect x="670" y="340" width="180" height="110" fill="#383838" stroke="#58a6ff" stroke-width="2" rx="5"/>
+  <text x="760" y="365" font-family="monospace" font-size="11" fill="#58a6ff" text-anchor="middle" font-weight="bold">
+    Detener
+  </text>
+  <text x="760" y="390" font-family="monospace" font-size="9" fill="#f78166" text-anchor="middle">
+    docker-compose down
+  </text>
+  <text x="760" y="410" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    Detiene y elimina
+  </text>
+  <text x="760" y="425" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    contenedores y
+  </text>
+  <text x="760" y="440" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    redes
+  </text>
+  
+  <!-- Monitoring Section -->
+  <rect x="50" y="500" width="390" height="160" fill="#2d2d2d" stroke="#7ee787" stroke-width="3" rx="10"/>
+  <text x="245" y="530" font-family="Arial, sans-serif" font-size="16" fill="#7ee787" text-anchor="middle" font-weight="bold">
+    Monitoreo
+  </text>
+  
+  <rect x="70" y="550" width="350" height="90" fill="#383838" stroke="#d2a8ff" stroke-width="2" rx="5"/>
+  <text x="245" y="575" font-family="monospace" font-size="10" fill="#ffffff" text-anchor="middle" font-weight="bold">
+    docker stats
+  </text>
+  <text x="245" y="595" font-family="monospace" font-size="9" fill="#8b949e" text-anchor="middle">
+    CPU | RAM | NETWORK | DISK I/O
+  </text>
+  <text x="80" y="615" font-family="monospace" font-size="8" fill="#7ee787" text-anchor="start">
+    nginx: CPU 2% | RAM 45MB
+  </text>
+  <text x="80" y="627" font-family="monospace" font-size="8" fill="#7ee787" text-anchor="start">
+    api: CPU 15% | RAM 180MB
+  </text>
+  
+  <!-- Backup Section -->
+  <rect x="460" y="500" width="390" height="160" fill="#2d2d2d" stroke="#ffa657" stroke-width="3" rx="10"/>
+  <text x="655" y="530" font-family="Arial, sans-serif" font-size="16" fill="#ffa657" text-anchor="middle" font-weight="bold">
+    Respaldo de Volúmenes
+  </text>
+  
+  <rect x="480" y="550" width="350" height="90" fill="#383838" stroke="#d2a8ff" stroke-width="2" rx="5"/>
+  <text x="655" y="575" font-family="monospace" font-size="9" fill="#ffffff" text-anchor="middle" font-weight="bold">
+    docker run --rm --volumes-from postgres
+  </text>
+  <text x="655" y="590" font-family="monospace" font-size="9" fill="#7ee787" text-anchor="middle">
+    -v $(pwd):/backup ubuntu tar cvf
+  </text>
+  <text x="655" y="605" font-family="monospace" font-size="9" fill="#7ee787" text-anchor="middle">
+    /backup/postgres-data.tar
+  </text>
+  <text x="655" y="620" font-family="monospace" font-size="9" fill="#7ee787" text-anchor="middle">
+    /var/lib/postgresql/data
+  </text>
+  <text x="655" y="635" font-family="monospace" font-size="8" fill="#8b949e" text-anchor="middle">
+    Respaldo completo del volumen
+  </text>
+  
+  <!-- Arrows between steps -->
+  <path d="M 300 170 L 325 170" stroke="#ffffff" stroke-width="2" fill="none" marker-end="url(#arrowright)"/>
+  <path d="M 575 170 L 600 170" stroke="#ffffff" stroke-width="2" fill="none" marker-end="url(#arrowright)"/>
+  
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowright" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ffffff"/>
+    </marker>
+  </defs>
+</svg>

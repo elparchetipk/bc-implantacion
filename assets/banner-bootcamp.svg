@@ -1,0 +1,99 @@
+<svg width="1200" height="300" viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="300" fill="#1e1e1e"/>
+  
+  <!-- Grid pattern -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#2d2d2d" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="300" fill="url(#grid)"/>
+  
+  <!-- Decorative lines -->
+  <line x1="0" y1="50" x2="1200" y2="50" stroke="#58a6ff" stroke-width="2" opacity="0.3"/>
+  <line x1="0" y1="250" x2="1200" y2="250" stroke="#58a6ff" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Docker icon representation -->
+  <g transform="translate(100, 80)">
+    <!-- Container boxes -->
+    <rect x="0" y="0" width="40" height="35" fill="#58a6ff" opacity="0.8"/>
+    <rect x="50" y="0" width="40" height="35" fill="#58a6ff" opacity="0.8"/>
+    <rect x="100" y="0" width="40" height="35" fill="#58a6ff" opacity="0.8"/>
+    <rect x="25" y="45" width="40" height="35" fill="#58a6ff" opacity="0.6"/>
+    <rect x="75" y="45" width="40" height="35" fill="#58a6ff" opacity="0.6"/>
+    
+    <!-- Base platform -->
+    <rect x="-10" y="90" width="160" height="10" fill="#7ee787"/>
+  </g>
+  
+  <!-- Server icon -->
+  <g transform="translate(950, 90)">
+    <rect x="0" y="0" width="120" height="30" fill="#2d2d2d" stroke="#8b949e" stroke-width="2"/>
+    <circle cx="15" cy="15" r="4" fill="#7ee787"/>
+    <circle cx="30" cy="15" r="4" fill="#ffa657"/>
+    <rect x="45" y="10" width="60" height="3" fill="#8b949e"/>
+    <rect x="45" y="17" width="40" height="3" fill="#8b949e"/>
+    
+    <rect x="0" y="40" width="120" height="30" fill="#2d2d2d" stroke="#8b949e" stroke-width="2"/>
+    <circle cx="15" cy="55" r="4" fill="#7ee787"/>
+    <circle cx="30" cy="55" r="4" fill="#7ee787"/>
+    <rect x="45" y="50" width="60" height="3" fill="#8b949e"/>
+    <rect x="45" y="57" width="40" height="3" fill="#8b949e"/>
+    
+    <rect x="0" y="80" width="120" height="30" fill="#2d2d2d" stroke="#8b949e" stroke-width="2"/>
+    <circle cx="15" cy="95" r="4" fill="#7ee787"/>
+    <circle cx="30" cy="95" r="4" fill="#f78166"/>
+    <rect x="45" y="90" width="60" height="3" fill="#8b949e"/>
+    <rect x="45" y="97" width="40" height="3" fill="#8b949e"/>
+  </g>
+  
+  <!-- Main title -->
+  <text x="600" y="110" font-family="'Segoe UI', Arial, sans-serif" font-size="56" font-weight="bold" fill="#ffffff" text-anchor="middle">
+    SOFTWARE DEPLOYMENT
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="150" font-family="'Segoe UI', Arial, sans-serif" font-size="28" fill="#8b949e" text-anchor="middle">
+    Bootcamp - 9 Week Intensive Training
+  </text>
+  
+  <!-- Tech stack badges -->
+  <g transform="translate(300, 190)">
+    <!-- Docker badge -->
+    <rect x="0" y="0" width="110" height="35" rx="5" fill="#58a6ff" opacity="0.2" stroke="#58a6ff" stroke-width="1"/>
+    <text x="55" y="23" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="#58a6ff" text-anchor="middle">
+      DOCKER
+    </text>
+    
+    <!-- PostgreSQL badge -->
+    <rect x="125" y="0" width="130" height="35" rx="5" fill="#7ee787" opacity="0.2" stroke="#7ee787" stroke-width="1"/>
+    <text x="190" y="23" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="#7ee787" text-anchor="middle">
+      POSTGRESQL 15+
+    </text>
+    
+    <!-- Nginx badge -->
+    <rect x="270" y="0" width="90" height="35" rx="5" fill="#7ee787" opacity="0.2" stroke="#7ee787" stroke-width="1"/>
+    <text x="315" y="23" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="#7ee787" text-anchor="middle">
+      NGINX
+    </text>
+    
+    <!-- REST API badge -->
+    <rect x="375" y="0" width="110" height="35" rx="5" fill="#d2a8ff" opacity="0.2" stroke="#d2a8ff" stroke-width="1"/>
+    <text x="430" y="23" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="#d2a8ff" text-anchor="middle">
+      REST API
+    </text>
+    
+    <!-- Linux badge -->
+    <rect x="500" y="0" width="90" height="35" rx="5" fill="#ffa657" opacity="0.2" stroke="#ffa657" stroke-width="1"/>
+    <text x="545" y="23" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="#ffa657" text-anchor="middle">
+      LINUX
+    </text>
+  </g>
+  
+  <!-- Decorative corner elements -->
+  <circle cx="50" cy="50" r="3" fill="#58a6ff"/>
+  <circle cx="1150" cy="50" r="3" fill="#58a6ff"/>
+  <circle cx="50" cy="250" r="3" fill="#7ee787"/>
+  <circle cx="1150" cy="250" r="3" fill="#7ee787"/>
+</svg>

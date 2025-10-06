@@ -1,0 +1,255 @@
+# ============================================
+# EJEMPLO DE CÓDIGO COMENTADO PARA EL BOOTCAMP
+# ============================================
+# Este archivo sirve como plantilla y guía para comentar código
+# de manera educativa durante todo el bootcamp
+# ============================================
+
+# ============================================
+# EJEMPLO 1: Docker Compose File
+# ============================================
+
+# docker-compose.yml
+# ¿Qué? Archivo de configuración para orquestar múltiples contenedores Docker
+# ¿Para qué? Definir y ejecutar aplicaciones multi-contenedor de forma declarativa
+# ¿Cómo? Docker Compose lee este archivo y crea/inicia todos los servicios definidos
+
+version:
+  '3.8' # ¿Qué? Versión del formato de Docker Compose
+  # ¿Para qué? Asegurar compatibilidad con características específicas
+
+services: # ¿Qué? Sección que define todos los contenedores de la aplicación
+  # ¿Para qué? Organizar y configurar cada servicio independientemente
+
+  # ============================================
+  # Servicio: Nginx (Reverse Proxy)
+  # ============================================
+  nginx: # ¿Qué? Nombre del servicio de servidor web
+    # ¿Para qué? Actuar como proxy reverso y servir contenido estático
+
+    image:
+      nginx:alpine # ¿Qué? Imagen oficial de Nginx basada en Alpine Linux
+      # ¿Para qué? Usar imagen ligera y optimizada para producción
+      # ¿Cómo? Alpine reduce el tamaño de ~130MB a ~23MB
+
+    container_name:
+      bootcamp-nginx # ¿Qué? Nombre personalizado del contenedor
+      # ¿Para qué? Facilitar identificación en docker ps
+
+    ports: # ¿Qué? Mapeo de puertos entre host y contenedor
+      # ¿Para qué? Permitir acceso externo a los servicios del contenedor
+      - '80:80' # ¿Cómo? Host:80 -> Container:80 (HTTP)
+      - '443:443' # ¿Cómo? Host:443 -> Container:443 (HTTPS)
+
+    volumes: # ¿Qué? Montaje de directorios y archivos en el contenedor
+      # ¿Para qué? Persistir configuración y datos fuera del contenedor
+      # ¿Cómo? Los cambios en host se reflejan automáticamente en container
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro # :ro = read-only
+      - ./nginx/logs:/var/log/nginx # logs persistentes
+      - nginx-cache:/var/cache/nginx # cache en volumen Docker
+
+    depends_on: # ¿Qué? Define dependencias de inicio entre servicios
+      # ¿Para qué? Asegurar orden de arranque de contenedores
+      # ¿Cómo? Nginx espera a que API esté "iniciada" (no necesariamente lista)
+      - api
+
+    networks: # ¿Qué? Redes a las que se conecta este contenedor
+      # ¿Para qué? Permitir comunicación entre contenedores
+      - app-network
+
+    restart:
+      unless-stopped # ¿Qué? Política de reinicio del contenedor
+      # ¿Para qué? Reiniciar automáticamente si falla
+      # ¿Cómo? Se reinicia siempre excepto si se detiene manualmente
+
+  # ============================================
+  # Servicio: REST API
+  # ============================================
+  api:
+    build: # ¿Qué? Construir imagen desde Dockerfile en lugar de usar imagen existente
+      # ¿Para qué? Personalizar la imagen con dependencias específicas
+      context:
+        ./api # ¿Qué? Directorio con el código fuente y Dockerfile
+        # ¿Para qué? Establecer contexto de build
+      dockerfile:
+        Dockerfile # ¿Qué? Nombre del archivo de construcción
+        # ¿Para qué? Especificar instrucciones de build
+
+    container_name: bootcamp-api
+
+    environment: # ¿Qué? Variables de entorno del contenedor
+      # ¿Para qué? Configurar la aplicación sin modificar código
+      # ¿Cómo? Node.js/Python leen process.env o os.environ
+      - NODE_ENV=production # Modo de ejecución
+      - PORT=3000 # Puerto interno de la API
+      - DB_HOST=postgres # ¿Cómo? Usa nombre del servicio como hostname
+      - DB_PORT=5432
+      - DB_NAME=bootcamp_db
+      - DB_USER=bootcamp_user
+      - DB_PASSWORD_FILE=/run/secrets/db_password # Usar Docker secrets
+
+    secrets: # ¿Qué? Manejo seguro de información sensible
+      # ¿Para qué? Evitar exponer credenciales en variables de entorno
+      # ¿Cómo? Docker monta secrets como archivos en /run/secrets/
+      - db_password
+
+    volumes:
+      - ./api/src:/app/src # ¿Qué? Hot-reload en desarrollo
+        # ¿Para qué? Ver cambios sin reconstruir imagen
+      - api-logs:/app/logs # Logs persistentes en volumen
+
+    depends_on:
+      postgres: # ¿Qué? Condición de salud del servicio dependiente
+        # ¿Para qué? Esperar a que PostgreSQL esté realmente listo
+        condition: service_healthy # ¿Cómo? Usa healthcheck de postgres
+
+    networks:
+      - app-network
+
+    healthcheck: # ¿Qué? Verificación periódica del estado del servicio
+      # ¿Para qué? Detectar cuando la API está realmente lista
+      # ¿Cómo? Docker ejecuta el comando cada intervalo definido
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/health']
+      interval: 30s # Frecuencia de verificación
+      timeout: 10s # Tiempo máximo de espera
+      retries: 3 # Intentos antes de marcar como unhealthy
+      start_period: 40s # Tiempo de gracia al iniciar
+
+    restart: unless-stopped
+
+  # ============================================
+  # Servicio: PostgreSQL Database
+  # ============================================
+  postgres:
+    image:
+      postgres:15-alpine # ¿Qué? PostgreSQL 15 en Alpine Linux
+      # ¿Para qué? Base de datos relacional optimizada
+      # ¿Cómo? Versión 15 incluye mejoras de rendimiento
+
+    container_name: bootcamp-postgres
+
+    environment:
+      # ¿Qué? Variables de inicialización de PostgreSQL
+      # ¿Para qué? Configurar base de datos y usuario inicial
+      POSTGRES_DB: bootcamp_db # Nombre de la base de datos
+      POSTGRES_USER: bootcamp_user # Usuario de la base de datos
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password # Password desde secret
+      PGDATA:
+        /var/lib/postgresql/data/pgdata # ¿Para qué? Subdirectorio para datos
+        # ¿Cómo? Evita problemas de permisos
+
+    secrets:
+      - db_password
+
+    volumes:
+      # ¿Qué? Persistencia de datos y scripts de inicialización
+      # ¿Para qué? Mantener datos entre reinicios y automatizar setup
+      - postgres-data:/var/lib/postgresql/data # Datos persistentes
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro # Scripts SQL iniciales
+      - ./postgres/backups:/backups # Directorio para respaldos
+
+    ports:
+      # ¿Qué? Puerto expuesto al host
+      # ¿Para qué? Permitir conexión desde herramientas externas (pgAdmin, DBeaver)
+      # Nota: En producción, comentar esta línea para mayor seguridad
+      - '5432:5432'
+
+    networks:
+      - app-network
+
+    healthcheck:
+      # ¿Qué? Verificar que PostgreSQL está aceptando conexiones
+      # ¿Para qué? Garantizar que la DB está lista antes de iniciar API
+      # ¿Cómo? pg_isready es utilidad incluida en PostgreSQL
+      test: ['CMD-SHELL', 'pg_isready -U bootcamp_user -d bootcamp_db']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    restart: unless-stopped
+
+# ============================================
+# Definición de Redes
+# ============================================
+networks:
+  app-network: # ¿Qué? Red privada para comunicación entre contenedores
+    # ¿Para qué? Aislar tráfico interno de la red host
+    # ¿Cómo? Docker DNS resuelve nombres de servicios a IPs internas
+    driver:
+      bridge # ¿Qué? Tipo de driver de red
+      # ¿Para qué? Crear red aislada en el host
+      # ¿Cómo? Bridge permite comunicación container-to-container
+    ipam: # ¿Qué? IP Address Management
+      # ¿Para qué? Configurar rango de IPs personalizado
+      config:
+        - subnet: 172.20.0.0/16 # Rango de IPs disponibles
+          gateway: 172.20.0.1 # IP del gateway
+
+# ============================================
+# Definición de Volúmenes
+# ============================================
+volumes:
+  # ¿Qué? Volúmenes nombrados gestionados por Docker
+  # ¿Para qué? Persistir datos más allá del ciclo de vida de contenedores
+  # ¿Cómo? Docker almacena en /var/lib/docker/volumes/ por defecto
+
+  postgres-data: # Datos de PostgreSQL
+    driver: local # Almacenamiento local en el host
+
+  nginx-cache: # Cache de Nginx
+    driver: local
+
+  api-logs: # Logs de la API
+    driver: local
+
+# ============================================
+# Definición de Secrets
+# ============================================
+secrets:
+  # ¿Qué? Manejo seguro de información sensible
+  # ¿Para qué? Evitar hardcodear contraseñas en código o variables
+  # ¿Cómo? Docker monta como archivos de solo lectura en /run/secrets/
+
+  db_password:
+    file:
+      ./secrets/db_password.txt # ¿Qué? Archivo con la contraseña
+      # ¿Para qué? Leer password desde archivo
+      # Nota: Este archivo debe estar en .gitignore
+# ============================================
+# COMANDOS ÚTILES
+# ============================================
+# ¿Qué? Comandos comunes para gestionar esta stack
+# ¿Para qué? Referencia rápida durante el bootcamp
+
+# Iniciar todos los servicios:
+# docker-compose up -d
+# -d = detached mode (en segundo plano)
+
+# Ver logs de todos los servicios:
+# docker-compose logs -f
+# -f = follow (seguir en tiempo real)
+
+# Ver logs de un servicio específico:
+# docker-compose logs -f api
+
+# Detener todos los servicios:
+# docker-compose down
+
+# Detener y eliminar volúmenes (¡CUIDADO! Borra datos):
+# docker-compose down -v
+
+# Reconstruir imágenes:
+# docker-compose build
+
+# Reconstruir sin cache:
+# docker-compose build --no-cache
+
+# Ver estado de servicios:
+# docker-compose ps
+
+# Ejecutar comando en contenedor:
+# docker-compose exec api sh
+
+# Ver uso de recursos:
+# docker stats
