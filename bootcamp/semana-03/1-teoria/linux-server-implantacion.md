@@ -20,19 +20,20 @@
 
 ### Comparación: Linux Server vs Desktop vs Windows Server
 
-| Característica | Linux Server | Linux Desktop | Windows Server |
-|----------------|--------------|---------------|----------------|
-| **Interfaz gráfica** | No (solo terminal) | Sí | Sí (opcional) |
-| **Consumo de recursos** | Muy bajo | Medio | Alto |
-| **Costo** | Gratuito | Gratuito | Licencia costosa |
-| **Estabilidad** | Excelente (uptime meses) | Buena | Buena |
-| **Seguridad** | Muy alta | Alta | Media-Alta |
-| **Actualizaciones** | Sin reinicio (mayoría) | Requiere reinicio | Requiere reinicio |
-| **Ideal para** | Servidores web, BD, APIs | Desarrollo local | Apps empresariales |
+| Característica          | Linux Server             | Linux Desktop     | Windows Server     |
+| ----------------------- | ------------------------ | ----------------- | ------------------ |
+| **Interfaz gráfica**    | No (solo terminal)       | Sí                | Sí (opcional)      |
+| **Consumo de recursos** | Muy bajo                 | Medio             | Alto               |
+| **Costo**               | Gratuito                 | Gratuito          | Licencia costosa   |
+| **Estabilidad**         | Excelente (uptime meses) | Buena             | Buena              |
+| **Seguridad**           | Muy alta                 | Alta              | Media-Alta         |
+| **Actualizaciones**     | Sin reinicio (mayoría)   | Requiere reinicio | Requiere reinicio  |
+| **Ideal para**          | Servidores web, BD, APIs | Desarrollo local  | Apps empresariales |
 
 ### ¿Cuándo usar Linux Server?
 
 ✅ **Úsalo cuando:**
+
 - Necesites desplegar aplicaciones web
 - Trabajes con contenedores (Docker)
 - Requieras alta disponibilidad
@@ -40,6 +41,7 @@
 - Necesites control total del sistema
 
 ❌ **No lo uses cuando:**
+
 - La aplicación es exclusiva de Windows (ej: .NET Framework antiguo)
 - El equipo no tiene experiencia con terminal Linux
 - Requieres software específico de Windows (ej: Active Directory)
@@ -62,6 +64,7 @@
 **¿Qué es?** La versión sin interfaz gráfica de Ubuntu, optimizada para servidores.
 
 **¿Por qué?**
+
 - ✅ LTS (Long Term Support): 5 años de actualizaciones
 - ✅ Documentación extensa en español
 - ✅ Gestor de paquetes APT (amigable)
@@ -71,6 +74,7 @@
 **¿Para qué?** Despliegue de aplicaciones web, APIs, bases de datos.
 
 **Requisitos mínimos:**
+
 - CPU: 1 core
 - RAM: 512 MB (mínimo), 2 GB (recomendado)
 - Disco: 10 GB (mínimo), 20 GB (recomendado)
@@ -80,6 +84,7 @@
 **¿Qué es?** Reemplazo de CentOS, basado en Red Hat Enterprise Linux (RHEL).
 
 **¿Por qué?**
+
 - ✅ Muy estable (usado en grandes empresas)
 - ✅ Soporte a largo plazo
 - ✅ Compatible binariamente con RHEL
@@ -91,13 +96,13 @@
 
 ### Comparación de Gestores de Paquetes
 
-| Acción | Ubuntu Server (APT) | Rocky Linux (DNF/YUM) |
-|--------|---------------------|------------------------|
-| Actualizar lista | `sudo apt update` | `sudo dnf check-update` |
-| Actualizar sistema | `sudo apt upgrade` | `sudo dnf upgrade` |
-| Instalar paquete | `sudo apt install docker` | `sudo dnf install docker` |
-| Buscar paquete | `apt search nginx` | `dnf search nginx` |
-| Eliminar paquete | `sudo apt remove docker` | `sudo dnf remove docker` |
+| Acción             | Ubuntu Server (APT)       | Rocky Linux (DNF/YUM)     |
+| ------------------ | ------------------------- | ------------------------- |
+| Actualizar lista   | `sudo apt update`         | `sudo dnf check-update`   |
+| Actualizar sistema | `sudo apt upgrade`        | `sudo dnf upgrade`        |
+| Instalar paquete   | `sudo apt install docker` | `sudo dnf install docker` |
+| Buscar paquete     | `apt search nginx`        | `dnf search nginx`        |
+| Eliminar paquete   | `sudo apt remove docker`  | `sudo dnf remove docker`  |
 
 ---
 
@@ -211,6 +216,7 @@ ssh -p 2222 usuario@servidor.com
 ```
 
 **Componentes:**
+
 - `ssh`: El comando
 - `usuario`: Cuenta en el servidor remoto
 - `@`: Separador
@@ -218,10 +224,10 @@ ssh -p 2222 usuario@servidor.com
 
 ### Autenticación por Contraseña vs Clave SSH
 
-| Método | Seguridad | Facilidad | Recomendado |
-|--------|-----------|-----------|-------------|
-| **Contraseña** | Media | Alta | Solo para inicio |
-| **Clave SSH** | Muy alta | Media | Producción ✅ |
+| Método         | Seguridad | Facilidad | Recomendado      |
+| -------------- | --------- | --------- | ---------------- |
+| **Contraseña** | Media     | Alta      | Solo para inicio |
+| **Clave SSH**  | Muy alta  | Media     | Producción ✅    |
 
 ### Generar y Usar Claves SSH
 
@@ -275,6 +281,7 @@ rsync -avz carpeta/ usuario@servidor:/home/ubuntu/carpeta/
 ### Tipos de Usuarios
 
 1. **root**: Usuario administrador (poder total)
+
    - ⚠️ Peligroso usar directamente
    - ✅ Mejor: Usar `sudo` con usuario normal
 
@@ -308,6 +315,7 @@ ls -l
 ```
 
 **Permisos:**
+
 - `r` (read): Leer el archivo
 - `w` (write): Modificar el archivo
 - `x` (execute): Ejecutar el archivo (si es script/programa)
@@ -592,6 +600,7 @@ sudo ufw status
 ```
 
 **Resultado esperado:**
+
 ```
 Status: active
 
@@ -879,11 +888,13 @@ sudo systemctl restart docker # Reiniciar servicio
 <summary>Ver respuesta</summary>
 
 **Comando:**
+
 ```bash
 ssh deploy@35.123.45.67
 ```
 
 **Mejor método**: Clave SSH
+
 - Más seguro (no se puede adivinar como una contraseña)
 - Sin riesgo de ataques de fuerza bruta
 - Permite automatización
@@ -934,4 +945,3 @@ sudo ufw status
 ---
 
 > **Nota**: Este contenido está enfocado en lo **justo y necesario** para implantar software. No es un curso completo de administración de sistemas Linux, sino las habilidades prácticas para desplegar aplicaciones en producción.
-
