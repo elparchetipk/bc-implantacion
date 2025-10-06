@@ -84,6 +84,7 @@ bootcamp/
 ### 💻 Código
 
 **Nomenclatura:**
+
 - Variables, funciones, clases: `inglés` (camelCase o snake_case según lenguaje)
 - Comentarios: `español` con formato educativo (¿Qué? ¿Para qué? ¿Cómo?)
 - Archivos: `kebab-case` en inglés
@@ -191,6 +192,7 @@ git push origin feature/add-week-03-content
 ```
 
 Luego en GitHub:
+
 1. Crear Pull Request
 2. Describir cambios claramente
 3. Referenciar issues relacionados
@@ -220,6 +222,7 @@ Luego en GitHub:
 ## 🎓 Áreas de Contribución Prioritarias
 
 ### Alta Prioridad
+
 - [ ] Contenido para semanas 2-9
 - [ ] Ejercicios prácticos con Docker
 - [ ] Casos de estudio reales
@@ -227,6 +230,7 @@ Luego en GitHub:
 - [ ] Rúbricas de evaluación
 
 ### Prioridad Media
+
 - [ ] Traducciones de recursos
 - [ ] Videos tutoriales
 - [ ] Quizzes interactivos
@@ -234,6 +238,7 @@ Luego en GitHub:
 - [ ] Mejoras de documentación
 
 ### Prioridad Baja
+
 - [ ] Optimización de scripts
 - [ ] Mejoras estéticas
 - [ ] Refactorización de código

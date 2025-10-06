@@ -24,15 +24,15 @@ Bootcamp intensivo de 9 semanas enfocado en la competencia de **Implantación de
 
 ## 🗓️ Estructura del Programa
 
-| Semana  | Tema                                 | Área de Enfoque                                                          |
-| ------- | ------------------------------------ | ------------------------------------------------------------------------ |
-| **1-2** | Hardware y Plataformas               | Hardware de servidores, requisitos mínimos, preparación de plataforma    |
-| **3-4** | Sistemas Operativos de Servidor      | Linux Server, Windows Server, selección de SO                            |
-| **5**   | Contenedores y Software de Servidor  | Docker, Docker Compose, PostgreSQL 15+, Nginx                            |
-| **6**   | Hosting y Dominios                   | Tipos de hosting, gestión de dominios, FTP, CMS                          |
-| **7**   | Migración y Respaldo de Datos        | Planes de migración, estrategias de backup, restauración                 |
-| **8**   | Planificación de Instalación         | Elaboración de plan de instalación, verificación de requisitos           |
-| **9**   | Integración y Proyecto Final         | Implantación completa de sistema, evaluación                             |
+| Semana  | Tema                                | Área de Enfoque                                                       |
+| ------- | ----------------------------------- | --------------------------------------------------------------------- |
+| **1-2** | Hardware y Plataformas              | Hardware de servidores, requisitos mínimos, preparación de plataforma |
+| **3-4** | Sistemas Operativos de Servidor     | Linux Server, Windows Server, selección de SO                         |
+| **5**   | Contenedores y Software de Servidor | Docker, Docker Compose, PostgreSQL 15+, Nginx                         |
+| **6**   | Hosting y Dominios                  | Tipos de hosting, gestión de dominios, FTP, CMS                       |
+| **7**   | Migración y Respaldo de Datos       | Planes de migración, estrategias de backup, restauración              |
+| **8**   | Planificación de Instalación        | Elaboración de plan de instalación, verificación de requisitos        |
+| **9**   | Integración y Proyecto Final        | Implantación completa de sistema, evaluación                          |
 
 ---
 
@@ -120,10 +120,9 @@ Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](.
 ## 📞 Soporte
 
 - **Issues**: [GitHub Issues](../../issues)
-- **Documentación**: [_docs/](./_docs/)
+- **Documentación**: [\_docs/](./_docs/)
 - **Discusiones**: [GitHub Discussions](../../discussions)
 
 ---
 
 Hecho con ❤️ para educación y código abierto
-
