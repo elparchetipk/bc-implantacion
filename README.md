@@ -2,125 +2,128 @@
 
 ![Banner](./assets/banner-bootcamp.svg)
 
-## 📋 Overview
+## 📋 Descripción General
 
-Intensive 9-week bootcamp focused on **Software Deployment competency**, designed to train participants in planning and executing software deployment activities according to system conditions.
+Bootcamp intensivo de 9 semanas enfocado en la competencia de **Implantación de Software**, diseñado para capacitar a los participantes en la planificación y ejecución de actividades de implantación de software de acuerdo con las condiciones del sistema.
 
-### Learning Outcome
+### Resultado de Aprendizaje
 
-**Plan software deployment activities according to system conditions**
-
----
-
-## 🎯 Key Skills
-
-- Prepare technology platforms based on selected operating systems
-- Verify minimum hardware requirements for developed software
-- Design data migration plans according to implementation conditions
-- Design data backup plans to mitigate risks
-- Develop installation plans based on software characteristics
+**Planear actividades de implantación del software de acuerdo con las condiciones del sistema**
 
 ---
 
-## 🗓️ Program Structure
+## 🎯 Competencias Clave
 
-| Week    | Topic                        | Focus Area                                                  |
-| ------- | ---------------------------- | ----------------------------------------------------------- |
-| **1-2** | Hardware & Platforms         | Server hardware, minimum requirements, platform preparation |
-| **3-4** | Server Operating Systems     | Linux Server, Windows Server, OS selection                  |
-| **5**   | Containers & Server Software | Docker, Docker Compose, PostgreSQL 15+, Nginx               |
-| **6**   | Hosting & Domains            | Hosting types, domain management, FTP, CMS                  |
-| **7**   | Data Migration & Backup      | Migration plans, backup strategies, restoration             |
-| **8**   | Installation Planning        | Installation plan development, requirements verification    |
-| **9**   | Integration & Final Project  | Complete system deployment, evaluation                      |
+- Preparar la plataforma tecnológica con base en el sistema operativo seleccionado
+- Verificar el cumplimiento de características mínimas de hardware requeridas
+- Diseñar planes de migración de datos según condiciones de implementación
+- Diseñar planes de respaldo de datos para mitigar riesgos
+- Elaborar planes de instalación según características del software
 
 ---
 
-## 🛠️ Technology Stack
+## 🗓️ Estructura del Programa
 
-- **Containers**: Docker & Docker Compose v2
-- **Database**: PostgreSQL 15+
-- **Web Server**: Nginx
-- **API**: REST Architecture
-- **Operating Systems**: Ubuntu Server, Rocky Linux
-- **Version Control**: Git with Conventional Commits
+| Semana  | Tema                                 | Área de Enfoque                                                          |
+| ------- | ------------------------------------ | ------------------------------------------------------------------------ |
+| **1-2** | Hardware y Plataformas               | Hardware de servidores, requisitos mínimos, preparación de plataforma    |
+| **3-4** | Sistemas Operativos de Servidor      | Linux Server, Windows Server, selección de SO                            |
+| **5**   | Contenedores y Software de Servidor  | Docker, Docker Compose, PostgreSQL 15+, Nginx                            |
+| **6**   | Hosting y Dominios                   | Tipos de hosting, gestión de dominios, FTP, CMS                          |
+| **7**   | Migración y Respaldo de Datos        | Planes de migración, estrategias de backup, restauración                 |
+| **8**   | Planificación de Instalación         | Elaboración de plan de instalación, verificación de requisitos           |
+| **9**   | Integración y Proyecto Final         | Implantación completa de sistema, evaluación                             |
 
 ---
 
-## 🚀 Quick Start
+## 🛠️ Stack Tecnológico
 
-1. **Clone the repository**
+- **Contenedores**: Docker & Docker Compose v2 _(sintaxis: `docker compose`)_
+- **Base de Datos**: PostgreSQL 15+
+- **Servidor Web**: Nginx
+- **API**: Arquitectura REST
+- **Sistemas Operativos**: Ubuntu Server, Rocky Linux
+- **Control de Versiones**: Git con Conventional Commits
+
+> **Nota**: Todo el código y nomenclatura técnica está en inglés. La documentación está en español.
+
+---
+
+## 🚀 Inicio Rápido
+
+1. **Clonar el repositorio**
 
    ```bash
    git clone <repository-url>
    cd bc-implantacion
    ```
 
-2. **Review documentation**
+2. **Revisar documentación**
 
-   - [Quick Start Guide](./_docs/QUICK-START.md)
-   - [Copilot Instructions](./.github/copilot-instructions.md)
+   - [Guía de Inicio Rápido](./_docs/QUICK-START.md)
+   - [Instrucciones de Copilot](./.github/copilot-instructions.md)
 
-3. **Set up auto-commit (optional)**
+3. **Configurar auto-commit (opcional)**
    ```bash
    ./scripts/install-cron.sh
    ```
 
 ---
 
-## 📚 Documentation
+## 📚 Documentación
 
-- **[Quick Start Guide](./_docs/QUICK-START.md)** - Installation and setup
-- **[SVG Naming Convention](./_docs/CAMBIOS-NOMENCLATURA-SVG.md)** - Graphic resources guidelines
-- **[Code Example](./_docs/ejemplo-codigo-comentado.yml)** - Educational code template
-- **[Scripts Documentation](./scripts/README.md)** - Automation scripts
-- **[Copilot Instructions](./.github/copilot-instructions.md)** - AI-assisted development guidelines
+- **[Guía de Inicio Rápido](./_docs/QUICK-START.md)** - Instalación y configuración
+- **[Convención de Nomenclatura SVG](./_docs/CAMBIOS-NOMENCLATURA-SVG.md)** - Lineamientos de recursos gráficos
+- **[Ejemplo de Código](./_docs/ejemplo-codigo-comentado.yml)** - Plantilla de código educativo
+- **[Documentación de Scripts](./scripts/README.md)** - Scripts de automatización
+- **[Instrucciones de Copilot](./.github/copilot-instructions.md)** - Lineamientos para desarrollo asistido por IA
 
 ---
 
-## 📂 Repository Structure
+## 📂 Estructura del Repositorio
 
 ```
 bc-implantacion/
-├── bootcamp/              # Bootcamp content (9 weeks)
-│   └── semana-XX/         # Weekly content
-│       ├── 1-teoria/      # Theoretical material
-│       ├── 2-practicas/   # Practical exercises
-│       ├── 3-recursos/    # Complementary resources
-│       └── 4-asignación_dominios_aprendiz/  # Assignments
-├── _docs/                 # Detailed documentation
-├── scripts/               # Automation scripts
-├── assets/                # Global assets (banners, etc.)
-└── secrets/               # Sensitive data (gitignored)
+├── bootcamp/              # Contenido del bootcamp (9 semanas)
+│   └── semana-XX/         # Contenido semanal
+│       ├── 1-teoria/      # Material teórico
+│       ├── 2-practicas/   # Ejercicios prácticos
+│       ├── 3-recursos/    # Recursos complementarios
+│       └── 4-asignación_dominios_aprendiz/  # Asignaciones
+├── _docs/                 # Documentación detallada
+├── scripts/               # Scripts de automatización
+├── assets/                # Assets globales (banners, etc.)
+└── secrets/               # Datos sensibles (en .gitignore)
 ```
 
 ---
 
-## 🤝 Contributing
+## 🤝 Contribuciones
 
-This is an educational project. Contributions are welcome! Please read our [Contributing Guidelines](./CONTRIBUTING.md) and [Code of Conduct](./CODE_OF_CONDUCT.md).
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+Este es un proyecto educativo. ¡Las contribuciones son bienvenidas! Por favor lee nuestras [Guías de Contribución](./CONTRIBUTING.md) y [Código de Conducta](./CODE_OF_CONDUCT.md).
 
 ---
 
-## 👥 Authors & Acknowledgments
+## 📄 Licencia
 
-- **EPTI Development Team** - Initial work
-- See [AUTHORS](./AUTHORS.md) for a complete list of contributors
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](./LICENSE) para más detalles.
 
 ---
 
-## 📞 Support
+## 👥 Autores y Reconocimientos
+
+- **EPTI Development Team** - Trabajo inicial
+- Ver [AUTHORS](./AUTHORS.md) para la lista completa de contribuidores
+
+---
+
+## 📞 Soporte
 
 - **Issues**: [GitHub Issues](../../issues)
-- **Documentation**: [\_docs/](./_docs/)
-- **Discussions**: [GitHub Discussions](../../discussions)
+- **Documentación**: [_docs/](./_docs/)
+- **Discusiones**: [GitHub Discussions](../../discussions)
 
 ---
 
-**Made with ❤️ for education and open source**
+Hecho con ❤️ para educación y código abierto
+
