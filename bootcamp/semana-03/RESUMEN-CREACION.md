@@ -378,25 +378,25 @@ sudo bash script-setup-server.sh
 
 ### Por Tipo de Contenido
 
-| Tipo | Archivos | Líneas | % |
-|------|----------|--------|---|
-| Teoría | 1 | 846 | 13% |
-| Prácticas | 2 | 1,924 | 29% |
-| Recursos | 6 | 2,569 | 39% |
-| Asignaciones | 1 | 207 | 3% |
-| READMEs | 2 | 988 | 15% |
-| **TOTAL** | **12** | **6,534** | **100%** |
+| Tipo         | Archivos | Líneas    | %        |
+| ------------ | -------- | --------- | -------- |
+| Teoría       | 1        | 846       | 13%      |
+| Prácticas    | 2        | 1,924     | 29%      |
+| Recursos     | 6        | 2,569     | 39%      |
+| Asignaciones | 1        | 207       | 3%       |
+| READMEs      | 2        | 988       | 15%      |
+| **TOTAL**    | **12**   | **6,534** | **100%** |
 
 ### Comparación con Semana 2
 
-| Métrica | Semana 2 | Semana 3 | Diferencia |
-|---------|----------|----------|------------|
-| Archivos | 14 | 12 | -2 (-14%) |
-| Líneas totales | 7,136 | 6,534 | -602 (-8%) |
-| Teoría | 916 | 846 | -70 (-8%) |
-| Prácticas | 1,260 (2) | 1,924 (2) | +664 (+53%) |
-| Recursos | 3,380 | 2,569 | -811 (-24%) |
-| SVG diagramas | 5 | 0 | -5 |
+| Métrica        | Semana 2  | Semana 3  | Diferencia  |
+| -------------- | --------- | --------- | ----------- |
+| Archivos       | 14        | 12        | -2 (-14%)   |
+| Líneas totales | 7,136     | 6,534     | -602 (-8%)  |
+| Teoría         | 916       | 846       | -70 (-8%)   |
+| Prácticas      | 1,260 (2) | 1,924 (2) | +664 (+53%) |
+| Recursos       | 3,380     | 2,569     | -811 (-24%) |
+| SVG diagramas  | 5         | 0         | -5          |
 
 **Razón de reducción:**
 
